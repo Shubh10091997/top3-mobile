@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ seo_title }}</title>
+    <meta name="description" content="{{ seo_desc }}">
+</head>
+<body>
+
+<h2>Best {{ category }} of {{ year }}</h2>
+
+{% for item in items %}
+<hr>
+<h3>#{{ loop.index }} {{ item.name }}</h3>
+<p>Price: ₹{{ item.price }}</p>
+<p>{{ item.reason }}</p>
+
+{% if item.amazon %}
+<a href="{{ item.amazon }}">Amazon</a>
+{% endif %}
+{% if item.flipkart %}
+ | <a href="{{ item.flipkart }}">Flipkart</a>
+{% endif %}
+{% endfor %}
+
+</body>
+</html>

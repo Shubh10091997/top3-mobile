@@ -1,0 +1,46 @@
+{
+  "mobiles": [
+    {
+      "name": "Samsung F14",
+      "price": 10000,
+      "gaming": 5,
+      "camera": 7,
+      "battery": 9,
+      "reason": "Best battery life under ₹10000 with reliable Samsung camera performance",
+      "amazon": "https://www.amazon.in/",
+      "flipkart": "https://www.flipkart.com/"
+    },
+    {
+      "name": "Redmi 13C",
+      "price": 10000,
+      "gaming": 6,
+      "camera": 6,
+      "battery": 8,
+      "reason": "Good all-round phone with balanced performance and strong battery backup",
+      "amazon": "https://www.amazon.in/",
+      "flipkart": "https://www.flipkart.com/"
+    },
+    {
+      "name": "Realme C55",
+      "price": 10000,
+      "gaming": 7,
+      "camera": 6,
+      "battery": 7,
+      "reason": "Best gaming performance in this price range with smooth UI experience",
+      "amazon": "https://www.amazon.in/",
+      "flipkart": "https://www.flipkart.com/"
+    }
+  ],
+  "bikes": [
+    {
+      "name": "Hero Splendor Plus",
+      "price": 100000,
+      "mileage": 9,
+      "performance": 5,
+      "comfort": 7,
+      "reason": "Most fuel efficient and reliable bike for daily commuting",
+      "amazon": "https://www.amazon.in/",
+      "flipkart": "https://www.flipkart.com/"
+    }
+  ]
+}

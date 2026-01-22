@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- GOOGLE SEARCH CONSOLE VERIFICATION -->
+  <meta name="google-site-verification" content="AbCdEf123456">
+
+  <title>Top 3 Best Options</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .card {
+      width: 420px;
+      margin: 80px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>Top 3 Best Options</h2>
+
+  <form method="POST">
+
+    <select name="category" id="category" required>
+      <option value="">Select Category</option>
+      <option value="mobile">Mobile</option>
+      <option value="bike">Bike</option>
+    </select>
+
+    <select name="budget" id="budget" required>
+      <option value="">Select Budget</option>
+    </select>
+
+    <select name="use" id="use" required>
+      <option value="">Select Use</option>
+    </select>
+
+    <button type="submit">Show Top 3</button>
+  </form>
+</div>
+
+<script>
+  const categorySelect = document.getElementById("category");
+  const budgetSelect = document.getElementById("budget");
+  const useSelect = document.getElementById("use");
+
+  const mobileBudgets = [
+    { value: 10000, label: "₹10,000" },
+    { value: 15000, label: "₹15,000" },
+    { value: 20000, label: "₹20,000" }
+  ];
+
+  const bikeBudgets = [
+    { value: 100000, label: "₹1,00,000" },
+    { value: 150000, label: "₹1,50,000" },
+    { value: 200000, label: "₹2,00,000" }
+  ];
+
+  const mobileUses = [
+    { value: "gaming", label: "Gaming" },
+    { value: "camera", label: "Camera" },
+    { value: "battery", label: "Battery" },
+    { value: "overall", label: "Overall" }
+  ];
+
+  const bikeUses = [
+    { value: "mileage", label: "Mileage" },
+    { value: "performance", label: "Performance" },
+    { value: "comfort", label: "Comfort" },
+    { value: "overall", label: "Overall" }
+  ];
+
+  function updateDropdowns() {
+    budgetSelect.innerHTML = '<option value="">Select Budget</option>';
+    useSelect.innerHTML = '<option value="">Select Use</option>';
+
+    let budgets = [];
+    let uses = [];
+
+    if (categorySelect.value === "mobile") {
+      budgets = mobileBudgets;
+      uses = mobileUses;
+    } else if (categorySelect.value === "bike") {
+      budgets = bikeBudgets;
+      uses = bikeUses;
+    }
+
+    budgets.forEach(b => {
+      const opt = document.createElement("option");
+      opt.value = b.value;
+      opt.textContent = b.label;
+      budgetSelect.appendChild(opt);
+    });
+
+    uses.forEach(u => {
+      const opt = document.createElement("option");
+      opt.value = u.value;
+      opt.textContent = u.label;
+      useSelect.appendChild(opt);
+    });
+  }
+
+  categorySelect.addEventListener("change", updateDropdowns);
+</script>
+
+</body>
+</html>

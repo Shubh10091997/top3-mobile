@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel – Top 3 Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+        .container {
+            width: 520px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 9px;
+            margin-top: 6px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            margin-top: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .group {
+            display: none;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+    </style>
+
+    <script>
+        function toggleFields() {
+            let category = document.getElementById("category").value;
+            document.getElementById("mobileFields").style.display =
+                category === "mobile" ? "block" : "none";
+            document.getElementById("bikeFields").style.display =
+                category === "bike" ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Panel – Add Item</h2>
+
+    <form method="POST">
+
+        <label>Category</label>
+        <select name="category" id="category" onchange="toggleFields()" required>
+            <option value="">Select</option>
+            <option value="mobile">Mobile</option>
+            <option value="bike">Bike</option>
+        </select>
+
+        <label>Product Name</label>
+        <input type="text" name="name" required>
+
+        <label>Price (₹)</label>
+        <input type="number" name="price" required>
+
+        <!-- MOBILE FIELDS -->
+        <div id="mobileFields" class="group">
+            <label>Gaming (0–10)</label>
+            <input type="number" name="gaming" min="0" max="10">
+
+            <label>Camera (0–10)</label>
+            <input type="number" name="camera" min="0" max="10">
+
+            <label>Battery (0–10)</label>
+            <input type="number" name="battery" min="0" max="10">
+        </div>
+
+        <!-- BIKE FIELDS -->
+        <div id="bikeFields" class="group">
+            <label>Mileage (0–10)</label>
+            <input type="number" name="mileage" min="0" max="10">
+
+            <label>Performance (0–10)</label>
+            <input type="number" name="performance" min="0" max="10">
+
+            <label>Comfort (0–10)</label>
+            <input type="number" name="comfort" min="0" max="10">
+        </div>
+
+        <label>Why this is Top 3</label>
+        <textarea name="reason" rows="3" required></textarea>
+
+        <label>Amazon Link</label>
+        <input type="url" name="amazon">
+
+        <label>Flipkart Link</label>
+        <input type="url" name="flipkart">
+
+        <button type="submit">Add Item</button>
+    </form>
+</div>
+
+</body>
+</html>

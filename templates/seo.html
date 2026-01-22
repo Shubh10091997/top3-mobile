@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Top 3 Best {{ category }} under ₹{{ budget }} for {{ use }}</title>
+
+    <meta name="description"
+          content="Find Top 3 Best {{ category }} under ₹{{ budget }} for {{ use }}. Compare mileage, performance, comfort and choose the best option for your needs.">
+
+    <meta name="keywords"
+          content="best {{ category }} under {{ budget }}, best {{ category }} for {{ use }}, top 3 {{ category }}">
+</head>
+<body>
+
+<h1>Top 3 Best {{ category }} under ₹{{ budget }} for {{ use }}</h1>
+
+<!-- INTRO PARAGRAPH -->
+<p>
+Looking for the <strong>best {{ category }} under ₹{{ budget }} for {{ use }}</strong>?
+This list is created using a smart scoring system that compares important factors like
+performance, comfort, mileage and overall value.
+</p>
+
+<p>
+Instead of random suggestions, we rank options based on real-world usage needs so that
+you can make a confident buying decision.
+</p>
+
+<!-- LIST -->
+<h2>Top 3 Recommended {{ category }}</h2>
+
+<ol>
+{% for i in items %}
+    <li>
+        <strong>{{ i.name }}</strong><br>
+        {% for k,v in i.items() %}
+            {% if k not in ["name","price"] %}
+                {{ k.capitalize() }}: {{ v }}/10 |
+            {% endif %}
+        {% endfor %}
+    </li>
+{% endfor %}
+</ol>
+
+<!-- FAQ SECTION -->
+<h2>Frequently Asked Questions</h2>
+
+<h3>Which is the best {{ category }} under ₹{{ budget }} for {{ use }}?</h3>
+<p>
+Based on our scoring system, the top option listed above offers the best balance of features
+for {{ use }} within this budget range.
+</p>
+
+<h3>How are these {{ category }} ranked?</h3>
+<p>
+All options are ranked using a score out of 10 for key factors like performance, comfort,
+mileage and overall value.
+</p>
+
+<h3>Is this list updated?</h3>
+<p>
+Yes, this list is generated dynamically and can be updated as new models or data are added.
+</p>
+
+<p>
+<strong>Tip:</strong> Bookmark this page or check other budget categories to find the best option for you.
+</p>
+
+</body>
+</html>
