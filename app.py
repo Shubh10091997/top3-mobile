@@ -9,10 +9,6 @@ def load_data():
     with open("data/data.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
-def save_data(data):
-    with open("data/data.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-
 def load_clicks():
     with open("data/clicks.json", "r", encoding="utf-8") as f:
         return json.load(f)
@@ -41,10 +37,12 @@ def index():
         if not items:
             return render_template(
                 "result.html",
-                items=[],
+                top3=[],
+                others=[],
                 message="No options found 😕",
-                seo_title="No Results Found",
-                seo_desc="No products found for this filter"
+                category=category,
+                budget=budget,
+                use=use
             )
 
         items.sort(
@@ -52,9 +50,13 @@ def index():
             reverse=True
         )
 
+        top3 = items[:3]
+        others = items[3:]
+
         return render_template(
             "result.html",
-            items=items[:3],
+            top3=top3,
+            others=others,
             category=category.capitalize(),
             budget=budget,
             use=use.capitalize(),
@@ -82,10 +84,12 @@ def seo_page(category, budget, use):
     if not items:
         return render_template(
             "result.html",
-            items=[],
+            top3=[],
+            others=[],
             message="No results found",
-            seo_title="No Results Found",
-            seo_desc="No products found"
+            category=category,
+            budget=budget,
+            use=use
         )
 
     items.sort(
@@ -93,9 +97,13 @@ def seo_page(category, budget, use):
         reverse=True
     )
 
+    top3 = items[:3]
+    others = items[3:]
+
     return render_template(
         "result.html",
-        items=items[:3],
+        top3=top3,
+        others=others,
         category=category.capitalize(),
         budget=budget,
         use=use.capitalize(),
@@ -112,13 +120,9 @@ def go(platform):
         clicks[platform] += 1
         save_clicks(clicks)
 
-    # ✅ AMAZON AFFILIATE ID ADDED
     if platform == "amazon":
-        return redirect(
-            "https://www.amazon.in/?tag=bestofthree-21"
-        )
+        return redirect("https://www.amazon.in/?tag=bestofthree-21")
 
-    # ❌ Flipkart abhi normal (ID baad me)
     elif platform == "flipkart":
         return redirect("https://www.flipkart.com/")
 
