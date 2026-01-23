@@ -125,3 +125,87 @@
     }
   ]
 }
+{
+  "name": "Redmi Note 12",
+  "price": 12000,
+  "gaming": 6,
+  "camera": 7,
+  "battery": 8,
+  "display": 8,
+  "performance": 6,
+  "reason": "Excellent AMOLED display and balanced performance under ₹15000",
+  "amazon": "",
+  "flipkart": ""
+},
+{
+  "name": "Samsung Galaxy F23",
+  "price": 14000,
+  "gaming": 6,
+  "camera": 7,
+  "battery": 8,
+  "display": 7,
+  "performance": 6,
+  "reason": "Reliable Samsung phone with strong battery and OIS camera",
+  "amazon": "",
+  "flipkart": ""
+},
+{
+  "name": "Moto G34 5G",
+  "price": 11000,
+  "gaming": 6,
+  "camera": 6,
+  "battery": 7,
+  "display": 7,
+  "performance": 6,
+  "reason": "Clean Android experience with 5G support and good performance",
+  "amazon": "",
+  "flipkart": ""
+},
+{
+  "name": "iQOO Z6 Lite 5G",
+  "price": 13500,
+  "gaming": 6,
+  "camera": 6,
+  "battery": 7,
+  "display": 6,
+  "performance": 6,
+  "reason": "Affordable 5G phone with decent performance and stable software",
+  "amazon": "",
+  "flipkart": ""
+},
+{
+  "name": "Realme Narzo 60 5G",
+  "price": 15000,
+  "gaming": 7,
+  "camera": 7,
+  "battery": 7,
+  "display": 8,
+  "performance": 7,
+  "reason": "Premium design with AMOLED display and good overall performance",
+  "amazon": "",
+  "flipkart": ""
+},
+{
+  "name": "Samsung Galaxy F15",
+  "price": 13000,
+  "gaming": 5,
+  "camera": 7,
+  "battery": 9,
+  "display": 7,
+  "performance": 5,
+  "reason": "Massive battery life with dependable Samsung camera quality",
+  "amazon": "",
+  "flipkart": ""
+},
+{
+  "name": "Redmi 12 5G",
+  "price": 11500,
+  "gaming": 6,
+  "camera": 6,
+  "battery": 7,
+  "display": 7,
+  "performance": 6,
+  "reason": "Solid 5G phone with good display and balanced daily performance",
+  "amazon": "",
+  "flipkart": ""
+}
