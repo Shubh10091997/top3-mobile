@@ -1,9 +1,10 @@
 import json
-from flask import Flask, render_template, request, redirect
+import os
+from flask import Flask, render_template, request, redirect, send_from_directory
 
 app = Flask(__name__)
 
-# ---------------- JSON LOAD / SAVE ----------------
+# ================= JSON LOAD / SAVE =================
 def load_data():
     with open("data/data.json", "r", encoding="utf-8") as f:
         return json.load(f)
@@ -20,12 +21,12 @@ def save_clicks(data):
     with open("data/clicks.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-# ---------------- HELPER ----------------
+# ================= HELPER =================
 def overall_score(item):
     nums = [v for v in item.values() if isinstance(v, int)]
     return sum(nums) / len(nums) if nums else 0
 
-# ---------------- HOME PAGE ----------------
+# ================= HOME PAGE =================
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -41,7 +42,7 @@ def index():
             return render_template(
                 "result.html",
                 items=[],
-                message="No options found",
+                message="No options found 😕",
                 seo_title="No Results Found",
                 seo_desc="No products found for this filter"
             )
@@ -67,7 +68,42 @@ def index():
         seo_desc="Compare mobiles and bikes smartly before buying"
     )
 
-# ---------------- CLICK TRACKING ----------------
+# ================= SEO FRIENDLY URL =================
+@app.route("/<category>/<int:budget>/<use>")
+def seo_page(category, budget, use):
+    db = load_data()
+
+    if category not in ["mobile", "bike"]:
+        return "Invalid category", 404
+
+    items = db["mobiles"] if category == "mobile" else db["bikes"]
+    items = [i for i in items if i["price"] <= budget]
+
+    if not items:
+        return render_template(
+            "result.html",
+            items=[],
+            message="No results found",
+            seo_title="No Results Found",
+            seo_desc="No products found"
+        )
+
+    items.sort(
+        key=overall_score if use == "overall" else lambda x: x.get(use, 0),
+        reverse=True
+    )
+
+    return render_template(
+        "result.html",
+        items=items[:3],
+        category=category.capitalize(),
+        budget=budget,
+        use=use.capitalize(),
+        seo_title=f"Top 3 Best {category.capitalize()} Under ₹{budget} for {use.capitalize()}",
+        seo_desc=f"Compare top 3 best {category}s under ₹{budget}"
+    )
+
+# ================= CLICK TRACKING + AFFILIATE =================
 @app.route("/go/<platform>")
 def go(platform):
     clicks = load_clicks()
@@ -76,19 +112,41 @@ def go(platform):
         clicks[platform] += 1
         save_clicks(clicks)
 
-    # 👉 yahan baad me affiliate ID wali links daalna
+    # ✅ AMAZON AFFILIATE ID ADDED
     if platform == "amazon":
-        return redirect("https://www.amazon.in/")
+        return redirect(
+            "https://www.amazon.in/?tag=bestofthree-21"
+        )
+
+    # ❌ Flipkart abhi normal (ID baad me)
     elif platform == "flipkart":
         return redirect("https://www.flipkart.com/")
-    else:
-        return redirect("/")
 
-# ---------------- CLICK STATS (VIEW) ----------------
+    return redirect("/")
+
+# ================= CLICK STATS =================
 @app.route("/click-stats")
 def click_stats():
     return load_clicks()
 
-# ---------------- RUN ----------------
+# ================= SITEMAP =================
+@app.route("/sitemap.xml")
+def sitemap():
+    return send_from_directory(
+        directory=os.getcwd(),
+        path="sitemap.xml",
+        mimetype="application/xml"
+    )
+
+# ================= ROBOTS =================
+@app.route("/robots.txt")
+def robots():
+    return send_from_directory(
+        directory=os.getcwd(),
+        path="robots.txt",
+        mimetype="text/plain"
+    )
+
+# ================= RUN =================
 if __name__ == "__main__":
     app.run(debug=True)
