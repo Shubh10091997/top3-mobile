@@ -31,6 +31,11 @@
       margin: 30px 0 10px;
     }
 
+    h2 {
+      margin-top: 30px;
+      text-align: center;
+    }
+
     .subtitle {
       text-align: center;
       color: #555;
@@ -127,6 +132,25 @@
       font-weight: bold;
     }
 
+    .other-list {
+      margin-top: 30px;
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .other-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .other-item:last-child {
+      border-bottom: none;
+    }
+
     @media (max-width: 900px) {
       .card {
         width: 100%;
@@ -139,66 +163,81 @@
 
 <div class="container">
 
-  {% if items|length == 0 %}
-    <h1>No Results Found</h1>
-    <p style="text-align:center;">
-      {{ message if message else "Try increasing your budget or changing preference." }}
-    </p>
-  {% else %}
+{% if top3|length == 0 %}
+  <h1>No Results Found</h1>
+  <p style="text-align:center;">
+    {{ message if message else "Try increasing your budget or changing preference." }}
+  </p>
 
-    <h1>Top 3 {{ category }} under ₹{{ budget }}</h1>
-    <div class="subtitle">Best for {{ use }}</div>
+{% else %}
 
-    <div class="intro">
-      Looking for the best {{ category|lower }} under ₹{{ budget }} in India?
-      We compared performance, {{ use|lower }}, battery life and overall value
-      to bring you the <strong>top 3 best options</strong>.
-    </div>
+  <!-- TOP 3 SECTION -->
+  <h1>Top 3 {{ category }} under ₹{{ budget }}</h1>
+  <div class="subtitle">Best for {{ use }}</div>
 
-    <div class="cards">
-      {% for item in items %}
-      <div class="card">
+  <div class="intro">
+    Looking for the best {{ category|lower }} under ₹{{ budget }} in India?
+    We compared performance, {{ use|lower }}, battery life and overall value
+    to bring you the <strong>top 3 best options</strong>.
+  </div>
 
-        {% if loop.index == 1 %}
-          <span class="badge top">🏆 Top Choice</span>
-        {% else %}
-          <span class="badge alt">Best Alternative</span>
+  <div class="cards">
+    {% for item in top3 %}
+    <div class="card">
+
+      {% if loop.index == 1 %}
+        <span class="badge top">🏆 Top Choice</span>
+      {% else %}
+        <span class="badge alt">Best Alternative</span>
+      {% endif %}
+
+      <h3>#{{ loop.index }} {{ item.name }}</h3>
+
+      {% for key, value in item.items() %}
+        {% if key not in ["name","price","reason","amazon","flipkart"] %}
+          <div class="spec">
+            <strong>{{ key.capitalize() }}:</strong> {{ value }}/10
+          </div>
         {% endif %}
-
-        <h2>#{{ loop.index }} {{ item.name }}</h2>
-
-        {% for key, value in item.items() %}
-          {% if key not in ["name", "price", "reason", "amazon", "flipkart"] %}
-            <div class="spec">
-              <strong>{{ key.capitalize() }}:</strong> {{ value }}/10
-            </div>
-          {% endif %}
-        {% endfor %}
-
-        <div class="reason">
-          <strong>Why buy:</strong>
-          {{ item.reason if item.reason else "Best option in this price range" }}
-        </div>
-
-        <div class="price">
-          Price: ₹{{ item.price }}
-        </div>
-
-        <div class="buy-buttons">
-          <a class="amazon" href="/go/amazon" target="_blank">
-            Buy on Amazon
-          </a>
-
-          <a class="flipkart" href="/go/flipkart" target="_blank">
-            Buy on Flipkart
-          </a>
-        </div>
-
-      </div>
       {% endfor %}
-    </div>
 
+      <div class="reason">
+        <strong>Why buy:</strong>
+        {{ item.reason }}
+      </div>
+
+      <div class="price">
+        Price: ₹{{ item.price }}
+      </div>
+
+      <div class="buy-buttons">
+        <a class="amazon" href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">
+          Buy on Amazon
+        </a>
+        <a class="flipkart" href="{{ item.flipkart if item.flipkart else '/go/flipkart' }}" target="_blank">
+          Buy on Flipkart
+        </a>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- OTHER PHONES SECTION -->
+  {% if others|length > 0 %}
+  <h2>Other Good {{ category }} Options in this Range</h2>
+
+  <div class="other-list">
+    {% for item in others %}
+      <div class="other-item">
+        <span>{{ item.name }} – ₹{{ item.price }}</span>
+        <a href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">Amazon</a>
+      </div>
+    {% endfor %}
+  </div>
   {% endif %}
+
+{% endif %}
 
 </div>
 
