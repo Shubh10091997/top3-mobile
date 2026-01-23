@@ -1,13 +1,90 @@
 {
   "mobiles": [
     {
+      "name": "Redmi A2",
+      "price": 6500,
+      "gaming": 3,
+      "camera": 4,
+      "battery": 6,
+      "display": 5,
+      "performance": 3,
+      "reason": "Best entry-level smartphone for basic calling, WhatsApp and light usage",
+      "amazon": "",
+      "flipkart": ""
+    },
+    {
+      "name": "Tecno Spark Go 2024",
+      "price": 6800,
+      "gaming": 3,
+      "camera": 4,
+      "battery": 6,
+      "display": 5,
+      "performance": 3,
+      "reason": "Affordable smartphone for students and first-time users",
+      "amazon": "",
+      "flipkart": ""
+    },
+    {
+      "name": "Infinix Smart 8",
+      "price": 7200,
+      "gaming": 4,
+      "camera": 4,
+      "battery": 6,
+      "display": 6,
+      "performance": 4,
+      "reason": "Good performance phone for daily tasks with smooth display",
+      "amazon": "",
+      "flipkart": ""
+    },
+    {
+      "name": "Samsung Galaxy F04",
+      "price": 7500,
+      "gaming": 3,
+      "camera": 5,
+      "battery": 6,
+      "display": 5,
+      "performance": 3,
+      "reason": "Reliable Samsung phone with decent camera tuning and clean software",
+      "amazon": "",
+      "flipkart": ""
+    },
+    {
+      "name": "Lava Blaze 2",
+      "price": 7800,
+      "gaming": 4,
+      "camera": 4,
+      "battery": 6,
+      "display": 6,
+      "performance": 4,
+      "reason": "Made-in-India phone with clean Android experience and decent specs",
+      "amazon": "",
+      "flipkart": ""
+    },
+    {
+      "name": "Realme Narzo N53",
+      "price": 8000,
+      "gaming": 4,
+      "camera": 5,
+      "battery": 6,
+      "display": 6,
+      "performance": 4,
+      "reason": "Stylish phone with large display and good battery backup in this range",
+      "amazon": "",
+      "flipkart": ""
+    },
+
+    /* ---------- ₹8,000 – ₹10,000 RANGE ---------- */
+
+    {
       "name": "Samsung F14",
       "price": 10000,
       "gaming": 5,
       "camera": 7,
       "battery": 9,
+      "display": 6,
+      "performance": 5,
       "reason": "Best battery life under ₹10000 with reliable Samsung camera performance",
-      "amazon": "https://www.amazon.in/",
+      "amazon": "https://amzn.to/45ro06T",
       "flipkart": "https://www.flipkart.com/"
     },
     {
@@ -16,8 +93,10 @@
       "gaming": 6,
       "camera": 6,
       "battery": 8,
+      "display": 6,
+      "performance": 6,
       "reason": "Good all-round phone with balanced performance and strong battery backup",
-      "amazon": "https://www.amazon.in/",
+      "amazon": "https://amzn.to/4sWcVod",
       "flipkart": "https://www.flipkart.com/"
     },
     {
@@ -26,8 +105,10 @@
       "gaming": 7,
       "camera": 6,
       "battery": 7,
+      "display": 7,
+      "performance": 7,
       "reason": "Best gaming performance in this price range with smooth UI experience",
-      "amazon": "https://www.amazon.in/",
+      "amazon": "https://amzn.to/4rdK5yf",
       "flipkart": "https://www.flipkart.com/"
     }
   ],
