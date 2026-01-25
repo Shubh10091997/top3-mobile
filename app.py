@@ -1,20 +1,20 @@
 import json
 import os
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, request, redirect, send_file
 
 app = Flask(__name__)
 
-# ================= JSON LOAD / SAVE =================
+# ================= DATA LOAD =================
 def load_data():
-    with open("data/data.json", "r", encoding="utf-8") as f:
+    with open(os.path.join("data", "data.json"), "r", encoding="utf-8") as f:
         return json.load(f)
 
 def load_clicks():
-    with open("data/clicks.json", "r", encoding="utf-8") as f:
+    with open(os.path.join("data", "clicks.json"), "r", encoding="utf-8") as f:
         return json.load(f)
 
 def save_clicks(data):
-    with open("data/clicks.json", "w", encoding="utf-8") as f:
+    with open(os.path.join("data", "clicks.json"), "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
 # ================= HELPER =================
@@ -22,7 +22,7 @@ def overall_score(item):
     nums = [v for v in item.values() if isinstance(v, int)]
     return sum(nums) / len(nums) if nums else 0
 
-# ================= HOME PAGE =================
+# ================= HOME =================
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -50,18 +50,15 @@ def index():
             reverse=True
         )
 
-        top3 = items[:3]
-        others = items[3:]
-
         return render_template(
             "result.html",
-            top3=top3,
-            others=others,
+            top3=items[:3],
+            others=items[3:],
             category=category.capitalize(),
             budget=budget,
             use=use.capitalize(),
-            seo_title=f"Top 3 Best {category.capitalize()} Under ₹{budget} for {use.capitalize()}",
-            seo_desc=f"Compare top 3 best {category}s under ₹{budget} for {use}"
+            seo_title=f"Top 3 Best {category.capitalize()} Under ₹{budget}",
+            seo_desc=f"Compare top 3 best {category}s under ₹{budget}"
         )
 
     return render_template(
@@ -70,7 +67,7 @@ def index():
         seo_desc="Compare mobiles and bikes smartly before buying"
     )
 
-# ================= SEO FRIENDLY URL =================
+# ================= SEO URL =================
 @app.route("/<category>/<int:budget>/<use>")
 def seo_page(category, budget, use):
     db = load_data()
@@ -97,13 +94,10 @@ def seo_page(category, budget, use):
         reverse=True
     )
 
-    top3 = items[:3]
-    others = items[3:]
-
     return render_template(
         "result.html",
-        top3=top3,
-        others=others,
+        top3=items[:3],
+        others=items[3:],
         category=category.capitalize(),
         budget=budget,
         use=use.capitalize(),
@@ -111,7 +105,7 @@ def seo_page(category, budget, use):
         seo_desc=f"Compare top 3 best {category}s under ₹{budget}"
     )
 
-# ================= CLICK TRACKING + AFFILIATE =================
+# ================= CLICK TRACKING =================
 @app.route("/go/<platform>")
 def go(platform):
     clicks = load_clicks()
@@ -121,14 +115,11 @@ def go(platform):
         save_clicks(clicks)
 
     if platform == "amazon":
-        return redirect("https://www.amazon.in/?tag=bestofthree-21")
-
+        return redirect("https://www.amazon.in/")
     elif platform == "flipkart":
         return redirect("https://www.flipkart.com/")
-
     return redirect("/")
 
-# ================= CLICK STATS =================
 @app.route("/click-stats")
 def click_stats():
     return load_clicks()
@@ -136,18 +127,16 @@ def click_stats():
 # ================= SITEMAP =================
 @app.route("/sitemap.xml")
 def sitemap():
-    return send_from_directory(
-        directory=os.getcwd(),
-        path="sitemap.xml",
+    return send_file(
+        os.path.join(app.root_path, "sitemap.xml"),
         mimetype="application/xml"
     )
 
 # ================= ROBOTS =================
 @app.route("/robots.txt")
 def robots():
-    return send_from_directory(
-        directory=os.getcwd(),
-        path="robots.txt",
+    return send_file(
+        os.path.join(app.root_path, "robots.txt"),
         mimetype="text/plain"
     )
 
