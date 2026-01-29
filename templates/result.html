@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>
-    {{ seo_title if seo_title else "Top 3 Best Options" }}
-  </title>
+  <title>{{ seo_title if seo_title else "Top 3 Best Options" }}</title>
 
   <meta name="description"
         content="{{ seo_desc if seo_desc else 'Compare top 3 best products before buying' }}">
@@ -21,73 +19,144 @@
     }
 
     .container {
-      width: 85%;
+      width: 88%;
       margin: auto;
-      padding-bottom: 40px;
+      padding-bottom: 50px;
     }
 
     h1 {
       text-align: center;
-      margin: 30px 0 10px;
+      margin: 35px 0 10px;
     }
 
     h2 {
-      margin-top: 30px;
       text-align: center;
+      margin-top: 40px;
     }
 
     .subtitle {
       text-align: center;
       color: #555;
       margin-bottom: 15px;
+      font-size: 17px;
     }
 
     .intro {
       text-align: center;
-      max-width: 850px;
-      margin: 0 auto 35px;
+      max-width: 900px;
+      margin: 0 auto 40px;
       color: #444;
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 16px;
     }
 
+    /* ===== CARD GRID ===== */
     .cards {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 25px;
-      justify-content: center;
-      flex-wrap: wrap;
     }
 
     .card {
-      background: white;
+      background: #ffffff;
       padding: 22px;
-      border-radius: 12px;
-      width: 30%;
-      min-width: 260px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       position: relative;
+      transition: transform 0.3s ease;
     }
 
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    /* ===== BADGES ===== */
     .badge {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      display: inline-block;
-      margin-bottom: 8px;
-      color: white;
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
       font-weight: bold;
+      color: #fff;
     }
 
-    .top {
-      background: #28a745;
+    .top-choice {
+      background: linear-gradient(135deg,#28a745,#1e7e34);
     }
 
-    .alt {
-      background: #007bff;
+    .best-alternative {
+      background: linear-gradient(135deg,#007bff,#0056b3);
+    }
+
+    .good-option {
+      background: linear-gradient(135deg,#6c757d,#495057);
+    }
+
+    /* ===== IMAGE ===== */
+    .product-img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
+      margin: 14px auto 12px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
     }
 
     .spec {
-      margin: 6px 0;
-      font-size: 15px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .spec-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #222;
+      font-size: 14px;
+    }
+
+    .spec-value {
+      color: #444;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .spec-bar {
+      background: #eee;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .spec-fill {
+      height: 100%;
+      background: linear-gradient(90deg,#4caf50,#8bc34a);
+      width: 0%;
+      transition: width 0.45s ease;
+    }
+
+    .rating {
+      background: #eee;
+      height: 8px;
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 10px 0 5px;
+    }
+
+    .rating-bar {
+      height: 100%;
+      background: linear-gradient(90deg,#4caf50,#8bc34a);
     }
 
     .reason {
@@ -100,67 +169,142 @@
     }
 
     .price {
+      font-size: 18px;
       font-weight: bold;
-      margin-top: 12px;
+      margin-top: 14px;
+      color: #2e7d32;
     }
 
+    /* ===== BUY BUTTONS ===== */
     .buy-buttons {
       display: flex;
-      gap: 10px;
-      margin-top: 15px;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .amazon, .flipkart {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
 
     .amazon {
-      flex: 1;
-      background: #ff9900;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
+      background: linear-gradient(90deg,#ff9f00,#ff6f00);
+      border: 1px solid rgba(0,0,0,0.04);
     }
 
     .flipkart {
-      flex: 1;
-      background: #2874f0;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      border-radius: 6px;
+      background: linear-gradient(90deg,#3b82f6,#1e5bd8);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .amazon:hover, .flipkart:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
       text-decoration: none;
+    }
+
+    /* ===== TRUST SECTION ===== */
+    .trust-section {
+      margin-top: 32px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.04);
+      font-size: 15px;
+    }
+
+    .trust-section h2 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .trust-desc {
+      text-align: center;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .trust-list {
+      list-style: none;
+      padding: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 8px;
+    }
+
+    .trust-item {
+      padding-left: 28px;
+      position: relative;
+      color: #333;
+    }
+
+    .trust-item::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #28a745;
       font-weight: bold;
     }
 
+    /* ===== OTHER OPTIONS ===== */
     .other-list {
-      margin-top: 30px;
-      background: white;
-      border-radius: 10px;
-      padding: 15px;
+      margin-top: 35px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 20px;
     }
 
     .other-item {
-      padding: 10px 0;
+      padding: 12px 0;
       border-bottom: 1px solid #ddd;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 15px;
     }
 
     .other-item:last-child {
       border-bottom: none;
     }
 
-    @media (max-width: 900px) {
-      .card {
-        width: 100%;
-      }
+    /* ===== INTERNAL LINKS ===== */
+    .internal-links {
+      margin-top: 45px;
+      padding: 25px;
+      background: #ffffff;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .internal-links a {
+      margin: 0 8px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .internal-links a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 
 <body>
-
 <div class="container">
 
 {% if top3|length == 0 %}
@@ -171,75 +315,115 @@
 
 {% else %}
 
-  <!-- TOP 3 SECTION -->
-  <h1>Top 3 {{ category }} under ₹{{ budget }}</h1>
+  <h1>Top 3 {{ category }} Under ₹{{ budget }}</h1>
   <div class="subtitle">Best for {{ use }}</div>
 
   <div class="intro">
-    Looking for the best {{ category|lower }} under ₹{{ budget }} in India?
     We compared performance, {{ use|lower }}, battery life and overall value
-    to bring you the <strong>top 3 best options</strong>.
+    to bring you the <strong>best {{ category|lower }} options</strong>
+    available in India right now.
   </div>
 
   <div class="cards">
     {% for item in top3 %}
     <div class="card">
 
-      {% if loop.index == 1 %}
-        <span class="badge top">🏆 Top Choice</span>
-      {% else %}
-        <span class="badge alt">Best Alternative</span>
-      {% endif %}
+        {% if item.image %}
+        <img src="{{ item.image }}" alt="{{ item.name }}" class="product-img">
+        {% endif %}
 
-      <h3>#{{ loop.index }} {{ item.name }}</h3>
+        {% if item.badge %}
+        <div class="badge {{ item.badge|lower|replace(' ', '-') }}">
+          {{ item.badge }}
+        </div>
+        {% endif %}
+
+        <h3>#{{ loop.index }} {{ item.name }}</h3>
 
       {% for key, value in item.items() %}
-        {% if key not in ["name","price","reason","amazon","flipkart"] %}
+        {% if key not in ["name","price","reason","amazon","flipkart","badge","image"] and value is number %}
           <div class="spec">
-            <strong>{{ key.capitalize() }}:</strong> {{ value }}/10
+            <div class="spec-label">
+              <span>{{ key.capitalize() }}</span>
+              <span class="spec-value">{{ value }}/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{ value }}">
+              <div class="spec-fill" style="width: {{ value * 10 }}%"></div>
+            </div>
           </div>
         {% endif %}
       {% endfor %}
 
-      <div class="reason">
-        <strong>Why buy:</strong>
-        {{ item.reason }}
+      {% if item.overall %}
+      <div class="rating">
+        <div class="rating-bar" style="width: {{ item.overall * 10 }}%"></div>
       </div>
+      <small>Overall Score: {{ item.overall }}/10</small>
+      {% endif %}
 
-      <div class="price">
-        Price: ₹{{ item.price }}
+      {% if item.reason %}
+      <div class="reason">
+        <strong>Why buy:</strong> {{ item.reason }}
       </div>
+      {% endif %}
+
+      <div class="price">₹{{ item.price }}</div>
 
       <div class="buy-buttons">
         <a class="amazon" href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">
-          Buy on Amazon
-        </a>
-        <a class="flipkart" href="{{ item.flipkart if item.flipkart else '/go/flipkart' }}" target="_blank">
-          Buy on Flipkart
-        </a>
+            Check Price on Amazon
+          </a>
+          <a class="flipkart" href="{{ item.flipkart if item.flipkart else '/go/flipkart' }}" target="_blank">
+            Check Price on Flipkart
+          </a>
       </div>
 
     </div>
     {% endfor %}
   </div>
 
-  <!-- OTHER PHONES SECTION -->
-  {% if others|length > 0 %}
-  <h2>Other Good {{ category }} Options in this Range</h2>
+  <div class="trust-section" aria-labelledby="trust-heading">
+    <h2 id="trust-heading">Why trust our comparison</h2>
+    <p class="trust-desc">We analyse specs, real-world performance, user feedback and pricing across top retailers to recommend the best options.</p>
+    <ul class="trust-list">
+      <li class="trust-item"><strong>Independent scoring:</strong> Data-driven methodology with clear metrics.</li>
+      <li class="trust-item"><strong>Updated regularly:</strong> Prices and availability are checked frequently.</li>
+      <li class="trust-item"><strong>Transparent sources:</strong> We link to retailer pages and show our scoring criteria.</li>
+    </ul>
+  </div>
 
+  <div class="trust-section">
+    <h2>Why trust our comparison</h2>
+    <p class="trust-desc">We analyse specifications, real-world performance, user feedback and retailer pricing to recommend the best options.</p>
+    <ul class="trust-list">
+      <li class="trust-item"><strong>Independent scoring:</strong> Data-driven methodology with clear, repeatable metrics.</li>
+      <li class="trust-item"><strong>Updated regularly:</strong> Prices and availability are checked frequently to keep recommendations current.</li>
+      <li class="trust-item"><strong>Transparent sources:</strong> Direct links to retailer pages and a visible scoring system are provided.</li>
+    </ul>
+  </div>
+
+  {% if others|length > 0 %}
+  <h2>Other Good Options</h2>
   <div class="other-list">
     {% for item in others %}
-      <div class="other-item">
-        <span>{{ item.name }} – ₹{{ item.price }}</span>
-        <a href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">Amazon</a>
-      </div>
+    <div class="other-item">
+      <span>{{ item.name }} – ₹{{ item.price }}</span>
+      <a href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">Amazon</a>
+    </div>
     {% endfor %}
   </div>
   {% endif %}
 
+  <div class="internal-links">
+    <strong>Popular Searches:</strong><br><br>
+    <a href="/mobile/8000/overall">Mobile under ₹8,000</a> |
+    <a href="/mobile/10000/overall">Mobile under ₹10,000</a> |
+    <a href="/mobile/15000/overall">Mobile under ₹15,000</a> |
+    <a href="/mobile/20000/overall">Mobile under ₹20,000</a>
+  </div>
+
 {% endif %}
 
 </div>
-
 </body>
 </html>

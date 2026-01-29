@@ -1,38 +1,55 @@
 import json
 import os
-from flask import Flask, render_template, request, redirect, send_file
+from flask import Flask, render_template, request, redirect, abort, Response
 
 app = Flask(__name__)
 
-# ================= DATA LOAD =================
+# =========================
+# BASE DIR
+# =========================
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# =========================
+# DATA LOAD FUNCTIONS
+# =========================
 def load_data():
-    with open(os.path.join("data", "data.json"), "r", encoding="utf-8") as f:
+    with open(os.path.join(BASE_DIR, "data", "data.json"), "r", encoding="utf-8") as f:
         return json.load(f)
 
 def load_clicks():
-    with open(os.path.join("data", "clicks.json"), "r", encoding="utf-8") as f:
+    with open(os.path.join(BASE_DIR, "data", "clicks.json"), "r", encoding="utf-8") as f:
         return json.load(f)
 
 def save_clicks(data):
-    with open(os.path.join("data", "clicks.json"), "w", encoding="utf-8") as f:
+    with open(os.path.join(BASE_DIR, "data", "clicks.json"), "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-# ================= HELPER =================
+# =========================
+# HELPERS
+# =========================
 def overall_score(item):
-    nums = [v for v in item.values() if isinstance(v, int)]
-    return sum(nums) / len(nums) if nums else 0
+    values = [v for v in item.values() if isinstance(v, int)]
+    return sum(values) / len(values) if values else 0
 
-# ================= HOME =================
+def add_badges(top3):
+    badges = ["Top Choice", "Best Alternative", "Good Option"]
+    for i, item in enumerate(top3):
+        if i < len(badges):
+            item["badge"] = badges[i]
+
+# =========================
+# HOME PAGE
+# =========================
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        category = request.form["category"]
-        budget = int(request.form["budget"])
-        use = request.form["use"]
+        category = request.form.get("category")
+        budget = int(request.form.get("budget"))
+        use = request.form.get("use")
 
         db = load_data()
         items = db["mobiles"] if category == "mobile" else db["bikes"]
-        items = [i for i in items if i["price"] <= budget]
+        items = [i for i in items if i.get("price", 0) <= budget]
 
         if not items:
             return render_template(
@@ -50,33 +67,37 @@ def index():
             reverse=True
         )
 
+        top3 = items[:3]
+        add_badges(top3)
+
         return render_template(
             "result.html",
-            top3=items[:3],
+            top3=top3,
             others=items[3:],
             category=category.capitalize(),
             budget=budget,
             use=use.capitalize(),
             seo_title=f"Top 3 Best {category.capitalize()} Under ₹{budget}",
-            seo_desc=f"Compare top 3 best {category}s under ₹{budget}"
+            seo_desc=f"Compare top 3 best {category}s under ₹{budget} in India"
         )
 
     return render_template(
         "index.html",
-        seo_title="Top 3 Best Options",
-        seo_desc="Compare mobiles and bikes smartly before buying"
+        seo_title="Top 3 Best Options in India",
+        seo_desc="Compare top 3 mobiles and bikes in India before buying"
     )
 
-# ================= SEO URL =================
+# =========================
+# SEO FRIENDLY URL
+# =========================
 @app.route("/<category>/<int:budget>/<use>")
 def seo_page(category, budget, use):
-    db = load_data()
-
     if category not in ["mobile", "bike"]:
-        return "Invalid category", 404
+        abort(404)
 
+    db = load_data()
     items = db["mobiles"] if category == "mobile" else db["bikes"]
-    items = [i for i in items if i["price"] <= budget]
+    items = [i for i in items if i.get("price", 0) <= budget]
 
     if not items:
         return render_template(
@@ -94,18 +115,23 @@ def seo_page(category, budget, use):
         reverse=True
     )
 
+    top3 = items[:3]
+    add_badges(top3)
+
     return render_template(
         "result.html",
-        top3=items[:3],
+        top3=top3,
         others=items[3:],
         category=category.capitalize(),
         budget=budget,
         use=use.capitalize(),
         seo_title=f"Top 3 Best {category.capitalize()} Under ₹{budget} for {use.capitalize()}",
-        seo_desc=f"Compare top 3 best {category}s under ₹{budget}"
+        seo_desc=f"Best {category}s under ₹{budget} for {use} in India"
     )
 
-# ================= CLICK TRACKING =================
+# =========================
+# CLICK TRACKING
+# =========================
 @app.route("/go/<platform>")
 def go(platform):
     clicks = load_clicks()
@@ -124,22 +150,48 @@ def go(platform):
 def click_stats():
     return load_clicks()
 
-# ================= SITEMAP =================
-@app.route("/sitemap.xml")
-def sitemap():
-    return send_file(
-        os.path.join(app.root_path, "sitemap.xml"),
-        mimetype="application/xml"
-    )
-
-# ================= ROBOTS =================
+# =========================
+# ROBOTS.TXT  ✅ (MOST IMPORTANT FIX)
+# =========================
 @app.route("/robots.txt")
-def robots():
-    return send_file(
-        os.path.join(app.root_path, "robots.txt"),
+def robots_txt():
+    return Response(
+        """User-agent: *
+Allow: /
+
+Sitemap: https://top3-mobile.onrender.com/sitemap.xml
+""",
         mimetype="text/plain"
     )
 
-# ================= RUN =================
+# =========================
+# SITEMAP.XML
+# =========================
+@app.route("/sitemap.xml")
+def sitemap():
+    db = load_data()
+    base_url = "https://top3-mobile.onrender.com"
+
+    urls = set()
+    urls.add(f"{base_url}/")
+
+    uses = ["overall", "gaming", "camera", "battery"]
+
+    for m in db.get("mobiles", []):
+        for use in uses:
+            urls.add(f"{base_url}/mobile/{m['price']}/{use}")
+
+    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+
+    for url in sorted(urls):
+        xml.append(f"<url><loc>{url}</loc></url>")
+
+    xml.append('</urlset>')
+    return Response("\n".join(xml), mimetype="application/xml")
+
+# =========================
+# RUN APP
+# =========================
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
