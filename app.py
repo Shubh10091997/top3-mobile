@@ -87,6 +87,7 @@ def render_results(category, budget, use, db=None):
             category=category,
             budget=budget,
             use=use,
+            BASE_URL=BASE_URL,
             breadcrumb_category=category.capitalize(),
             breadcrumb_use=USE_NAMES.get(use, use.capitalize())
         )
@@ -108,6 +109,7 @@ def render_results(category, budget, use, db=None):
         use=use.capitalize(),
         breadcrumb_category=category.capitalize(),
         breadcrumb_use=USE_NAMES.get(use, use.capitalize()),
+        BASE_URL=BASE_URL,
         seo_title=f"Top 3 Best {category.capitalize()} Under ₹{budget} for {USE_NAMES.get(use, use.capitalize())}",
         seo_desc=f"Compare the best {category}s under ₹{budget} in India for {use}. Expert recommendations."
     )
