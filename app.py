@@ -10,11 +10,25 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # =========================
+# BASE URL
+# =========================
+BASE_URL = "https://top3pick.in"
+
+# =========================
 # DATA LOAD FUNCTIONS
 # =========================
 def load_data():
     with open(os.path.join(BASE_DIR, "data", "data.json"), "r", encoding="utf-8") as f:
-        return json.load(f)
+        data = json.load(f)
+
+    # Ensure every product has an `image` key to avoid template errors.
+    default_image = "/static/no-image.png"
+    for collection in ("mobiles", "bikes"):
+        for item in data.get(collection, []):
+            if "image" not in item or not item.get("image"):
+                item["image"] = default_image
+
+    return data
 
 def load_clicks():
     with open(os.path.join(BASE_DIR, "data", "clicks.json"), "r", encoding="utf-8") as f:
@@ -156,11 +170,7 @@ def click_stats():
 @app.route("/robots.txt")
 def robots_txt():
     return Response(
-        """User-agent: *
-Allow: /
-
-Sitemap: https://top3-mobile.onrender.com/sitemap.xml
-""",
+        f"""User-agent: *\nAllow: /\n\nSitemap: {BASE_URL}/sitemap.xml\n""",
         mimetype="text/plain"
     )
 
@@ -170,16 +180,14 @@ Sitemap: https://top3-mobile.onrender.com/sitemap.xml
 @app.route("/sitemap.xml")
 def sitemap():
     db = load_data()
-    base_url = "https://top3-mobile.onrender.com"
-
     urls = set()
-    urls.add(f"{base_url}/")
+    urls.add(f"{BASE_URL}/")
 
     uses = ["overall", "gaming", "camera", "battery"]
 
     for m in db.get("mobiles", []):
         for use in uses:
-            urls.add(f"{base_url}/mobile/{m['price']}/{use}")
+            urls.add(f"{BASE_URL}/mobile/{m['price']}/{use}")
 
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
     xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')

@@ -1,0 +1,805 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Top 3 Best Mobile Under ₹10000 for Overall</title>
+
+  <meta name="description"
+        content="Best mobiles under ₹10000 for overall in India">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 88%;
+      margin: auto;
+      padding-bottom: 50px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 35px 0 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 15px;
+      font-size: 17px;
+    }
+
+    .intro {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      color: #444;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ===== CARD GRID ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 22px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    /* ===== BADGES ===== */
+    .badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .top-choice {
+      background: linear-gradient(135deg, #28a745, #5dd39e);
+    }
+
+    .best-alternative {
+      background: linear-gradient(135deg,#007bff,#0056b3);
+    }
+
+    .good-option {
+      background: linear-gradient(135deg,#6c757d,#495057);
+    }
+
+    /* ===== IMAGE ===== */
+    .product-img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
+      margin: 14px auto 12px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .spec {
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .spec-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #222;
+      font-size: 14px;
+    }
+
+    .spec-value {
+      color: #444;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .spec-bar {
+      background: #eee;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .spec-fill {
+      height: 100%;
+      background: linear-gradient(90deg,#4caf50,#8bc34a);
+      width: 0%;
+      transition: width 0.45s ease;
+    }
+
+    .rating {
+      background: #eee;
+      height: 8px;
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 10px 0 5px;
+    }
+
+    .rating-bar {
+      height: 100%;
+      background: linear-gradient(90deg,#4caf50,#8bc34a);
+    }
+
+    .reason {
+      background: #f1f7ff;
+      padding: 10px;
+      border-left: 4px solid #007bff;
+      margin-top: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 14px;
+      color: #2e7d32;
+    }
+
+    /* ===== BUY BUTTONS ===== */
+    .buy-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .amazon, .flipkart {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .amazon {
+      background: linear-gradient(90deg,#ff9f00,#ff6f00);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .flipkart {
+      background: linear-gradient(90deg,#3b82f6,#1e5bd8);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .amazon:hover, .flipkart:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      text-decoration: none;
+    }
+
+    /* ===== TRUST SECTION ===== */
+    .trust-section {
+      margin-top: 32px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.04);
+      font-size: 15px;
+    }
+
+    .trust-section h2 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .trust-desc {
+      text-align: center;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .trust-list {
+      list-style: none;
+      padding: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 8px;
+    }
+
+    .trust-item {
+      padding-left: 28px;
+      position: relative;
+      color: #333;
+    }
+
+    .trust-item::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    /* ===== OTHER OPTIONS ===== */
+    .other-list {
+      margin-top: 35px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .other-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+    }
+
+    .other-item:last-child {
+      border-bottom: none;
+    }
+
+    /* ===== INTERNAL LINKS ===== */
+    .internal-links {
+      margin-top: 45px;
+      padding: 25px;
+      background: #ffffff;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .internal-links a {
+      margin: 0 8px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .internal-links a:hover {
+      text-decoration: underline;
+    }
+    /* ===== MOBILE OPTIMIZATION ===== */
+    @media (max-width: 768px) {
+
+      .container {
+        width: 94%;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+
+      .intro {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .card {
+        width: 100%;
+        padding: 18px;
+      }
+
+      .buy-buttons {
+        flex-direction: column;
+      }
+
+      .amazon,
+      .flipkart {
+        width: 100%;
+        font-size: 15px;
+      }
+
+      .price {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div style="background:#111;color:#fff;padding:15px;text-align:center;">
+  UI TEST: Changes Working 🚀
+</div>
+<div class="container">
+
+
+
+  <h1>Top 3 Mobile Under ₹10000</h1>
+  <div class="subtitle">Best for Overall</div>
+
+  <div class="intro">
+    We compared performance, overall, battery life and overall value
+    to bring you the <strong>best mobile options</strong>
+    available in India right now.
+  </div>
+
+  <div class="cards">
+    
+    <div class="card">
+
+          
+    <img 
+      src="https://m.media-amazon.com/images/I/xxxx.jpg" 
+      alt="Realme C55"
+      style="
+        width:100%;
+        max-height:220px;
+        object-fit:contain;
+        margin-bottom:12px;
+      ">
+  
+
+        
+        <div class="badge top-choice">
+          Top Choice
+        </div>
+        
+
+  <img 
+  src="https://m.media-amazon.com/images/I/xxxx.jpg" 
+  alt="Realme C55"
+  loading="lazy"
+>
+
+        <h3>#1 Realme C55</h3>
+
+      
+        
+      
+        
+      
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Gaming</span>
+              <span class="spec-value">7/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="7">
+              <div class="spec-fill" style="width: 70%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Camera</span>
+              <span class="spec-value">6/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6">
+              <div class="spec-fill" style="width: 60%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Battery</span>
+              <span class="spec-value">7/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="7">
+              <div class="spec-fill" style="width: 70%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Performance</span>
+              <span class="spec-value">7/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="7">
+              <div class="spec-fill" style="width: 70%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Display</span>
+              <span class="spec-value">7/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="7">
+              <div class="spec-fill" style="width: 70%"></div>
+            </div>
+          </div>
+        
+      
+        
+      
+        
+      
+
+      
+
+      
+      <div class="reason">
+        <strong>Why buy:</strong> Best gaming performance under ₹10,000
+      </div>
+      
+
+      <div class="price">₹10000</div>
+
+      <div class="buy-buttons">
+        <a class="amazon" href="/go/amazon" target="_blank">
+            Check Price on Amazon
+          </a>
+          <a class="flipkart" href="/go/flipkart" target="_blank">
+            Check Price on Flipkart
+          </a>
+      </div>
+
+    </div>
+    
+    <div class="card">
+
+          
+    <img 
+      src="https://m.media-amazon.com/images/I/xxxx.jpg" 
+      alt="Redmi 13C"
+      style="
+        width:100%;
+        max-height:220px;
+        object-fit:contain;
+        margin-bottom:12px;
+      ">
+  
+
+        
+        <div class="badge best-alternative">
+          Best Alternative
+        </div>
+        
+
+  <img 
+  src="https://m.media-amazon.com/images/I/xxxx.jpg" 
+  alt="Redmi 13C"
+  loading="lazy"
+>
+
+        <h3>#2 Redmi 13C</h3>
+
+      
+        
+      
+        
+      
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Gaming</span>
+              <span class="spec-value">6/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6">
+              <div class="spec-fill" style="width: 60%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Camera</span>
+              <span class="spec-value">6/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6">
+              <div class="spec-fill" style="width: 60%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Battery</span>
+              <span class="spec-value">8/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="8">
+              <div class="spec-fill" style="width: 80%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Performance</span>
+              <span class="spec-value">6/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6">
+              <div class="spec-fill" style="width: 60%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Display</span>
+              <span class="spec-value">6/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6">
+              <div class="spec-fill" style="width: 60%"></div>
+            </div>
+          </div>
+        
+      
+        
+      
+        
+      
+
+      
+
+      
+      <div class="reason">
+        <strong>Why buy:</strong> Balanced phone with good battery and overall performance
+      </div>
+      
+
+      <div class="price">₹10000</div>
+
+      <div class="buy-buttons">
+        <a class="amazon" href="/go/amazon" target="_blank">
+            Check Price on Amazon
+          </a>
+          <a class="flipkart" href="/go/flipkart" target="_blank">
+            Check Price on Flipkart
+          </a>
+      </div>
+
+    </div>
+    
+    <div class="card">
+
+          
+    <img 
+      src="https://m.media-amazon.com/images/I/71V--WZVUIL._SX679_.jpg" 
+      alt="Samsung F14"
+      style="
+        width:100%;
+        max-height:220px;
+        object-fit:contain;
+        margin-bottom:12px;
+      ">
+  
+
+        
+        <div class="badge good-option">
+          Good Option
+        </div>
+        
+
+  <img 
+  src="https://m.media-amazon.com/images/I/71V--WZVUIL._SX679_.jpg" 
+  alt="Samsung F14"
+  loading="lazy"
+>
+
+        <h3>#3 Samsung F14</h3>
+
+      
+        
+      
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Gaming</span>
+              <span class="spec-value">5/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="5">
+              <div class="spec-fill" style="width: 50%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Camera</span>
+              <span class="spec-value">7/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="7">
+              <div class="spec-fill" style="width: 70%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Battery</span>
+              <span class="spec-value">9/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="9">
+              <div class="spec-fill" style="width: 90%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Performance</span>
+              <span class="spec-value">5/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="5">
+              <div class="spec-fill" style="width: 50%"></div>
+            </div>
+          </div>
+        
+      
+        
+          <div class="spec">
+            <div class="spec-label">
+              <span>Display</span>
+              <span class="spec-value">6/10</span>
+            </div>
+            <div class="spec-bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="6">
+              <div class="spec-fill" style="width: 60%"></div>
+            </div>
+          </div>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+
+      
+
+      
+      <div class="reason">
+        <strong>Why buy:</strong> Best battery life under ₹10000 with reliable Samsung camera performance
+      </div>
+      
+
+      <div class="price">₹10000</div>
+
+      <div class="buy-buttons">
+        <a class="amazon" href="/go/amazon" target="_blank">
+            Check Price on Amazon
+          </a>
+          <a class="flipkart" href="/go/flipkart" target="_blank">
+            Check Price on Flipkart
+          </a>
+      </div>
+
+    </div>
+    
+  </div>
+
+  <div class="trust-section" aria-labelledby="trust-heading">
+    <h2 id="trust-heading">Why trust our comparison</h2>
+    <p class="trust-desc">We analyse specs, real-world performance, user feedback and pricing across top retailers to recommend the best options.</p>
+    <ul class="trust-list">
+      <li class="trust-item"><strong>Independent scoring:</strong> Data-driven methodology with clear metrics.</li>
+      <li class="trust-item"><strong>Updated regularly:</strong> Prices and availability are checked frequently.</li>
+      <li class="trust-item"><strong>Transparent sources:</strong> We link to retailer pages and show our scoring criteria.</li>
+    </ul>
+  </div>
+
+  <div class="trust-section">
+    <h2>Why trust our comparison</h2>
+    <p class="trust-desc">We analyse specifications, real-world performance, user feedback and retailer pricing to recommend the best options.</p>
+    <ul class="trust-list">
+      <li class="trust-item"><strong>Independent scoring:</strong> Data-driven methodology with clear, repeatable metrics.</li>
+      <li class="trust-item"><strong>Updated regularly:</strong> Prices and availability are checked frequently to keep recommendations current.</li>
+      <li class="trust-item"><strong>Transparent sources:</strong> Direct links to retailer pages and a visible scoring system are provided.</li>
+    </ul>
+  </div>
+
+  
+  <h2>Other Good Options</h2>
+  <div class="other-list">
+    
+    <div class="other-item">
+      <span>Lava Blaze 2 – ₹7800</span>
+      <a href="/go/amazon" target="_blank">Amazon</a>
+    </div>
+    
+    <div class="other-item">
+      <span>Samsung Galaxy F04 – ₹7500</span>
+      <a href="/go/amazon" target="_blank">Amazon</a>
+    </div>
+    
+    <div class="other-item">
+      <span>Infinix Smart 8 – ₹7200</span>
+      <a href="/go/amazon" target="_blank">Amazon</a>
+    </div>
+    
+    <div class="other-item">
+      <span>Tecno Spark Go 2024 – ₹6800</span>
+      <a href="/go/amazon" target="_blank">Amazon</a>
+    </div>
+    
+    <div class="other-item">
+      <span>Redmi A2 – ₹6500</span>
+      <a href="/go/amazon" target="_blank">Amazon</a>
+    </div>
+    
+  </div>
+  
+
+  <div class="internal-links">
+    <strong>Popular Searches:</strong><br><br>
+    <a href="/mobile/8000/overall">Mobile under ₹8,000</a> |
+    <a href="/mobile/10000/overall">Mobile under ₹10,000</a> |
+    <a href="/mobile/15000/overall">Mobile under ₹15,000</a> |
+    <a href="/mobile/20000/overall">Mobile under ₹20,000</a>
+  </div>
+
+
+
+</div>
+</body>
+</html>

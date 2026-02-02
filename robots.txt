@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://top3-mobile.onrender.com/sitemap.xml
+Sitemap: https://top3pick.in/sitemap.xml
