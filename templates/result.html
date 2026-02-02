@@ -10,12 +10,100 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- JSON-LD Structured Data (BreadcrumbList) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ BASE_URL }}/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ breadcrumb_category or category }}",
+        "item": "{{ BASE_URL }}/best-{{ category|lower }}s"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ breadcrumb_use or use }}",
+        "item": "{{ request.url }}"
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD Product Collection Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {% for item in top3 %}
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index }},
+        "item": {
+          "@type": "Product",
+          "name": "{{ item.name }}",
+          "description": "{{ item.reason }}",
+          "price": "{{ item.price }}",
+          "priceCurrency": "INR",
+          "image": "{{ item.image }}",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "{{ (item.gaming + item.camera + item.battery + item.performance + item.display) / 5 }}",
+            "bestRating": "10",
+            "worstRating": "1"
+          }
+        }
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f4f6f8;
       margin: 0;
       padding: 0;
+    }
+
+    /* ===== BREADCRUMBS ===== */
+    .breadcrumbs {
+      background: #f9f9f9;
+      padding: 12px 0;
+      margin: 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    .breadcrumbs-container {
+      width: 88%;
+      margin: 0 auto;
+      padding: 8px 0;
+    }
+
+    .breadcrumbs a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 4px;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumbs span {
+      color: #666;
+      margin: 0 4px;
     }
 
     .container {
@@ -368,6 +456,18 @@
 <div style="background:#111;color:#fff;padding:15px;text-align:center;">
   UI TEST: Changes Working 🚀
 </div>
+
+<!-- Breadcrumb Navigation -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <div class="breadcrumbs-container">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/best-{{ category|lower }}s">{{ breadcrumb_category or category }}</a>
+    <span>/</span>
+    <span>{{ breadcrumb_use or use }}</span>
+  </div>
+</nav>
+
 <div class="container">
 
 {% if top3|length == 0 %}

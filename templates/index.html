@@ -84,10 +84,10 @@
 <div class="card">
   <h2>Top 3 Best Options</h2>
 
-  <form method="POST">
+  <form method="GET" action="/compare/mobile">
 
     <!-- CATEGORY -->
-    <select name="category" id="category" required>
+    <select name="category" id="category" required onchange="updateForm()">
       <option value="">Select Category</option>
       <option value="mobile">Mobile</option>
       <option value="bike">Bike</option>
@@ -107,22 +107,24 @@
   </form>
 </div>
 
-<!-- ✅ STEP 2: HOME PAGE INTERNAL SEO LINKS -->
+<!-- ✅ HOME PAGE INTERNAL SEO LINKS -->
 <div class="home-seo">
   <strong>Popular Mobile Searches:</strong><br><br>
 
-  <a href="/mobile/8000/overall">Best Mobile Under ₹8,000</a> |
-  <a href="/mobile/10000/overall">Best Mobile Under ₹10,000</a> |
-  <a href="/mobile/15000/overall">Best Mobile Under ₹15,000</a> |
-  <a href="/mobile/20000/overall">Best Mobile Under ₹20,000</a>
+  <a href="/best-mobiles/under-8k">Best Mobile Under ₹8,000</a> |
+  <a href="/best-mobiles/under-10k">Best Mobile Under ₹10,000</a> |
+  <a href="/best-mobiles/under-15k">Best Mobile Under ₹15,000</a> |
+  <a href="/best-mobiles/under-20k">Best Mobile Under ₹20,000</a>
 </div>
 
 <script>
   const categorySelect = document.getElementById("category");
   const budgetSelect = document.getElementById("budget");
   const useSelect = document.getElementById("use");
+  const formElement = document.querySelector("form");
 
   const mobileBudgets = [
+    { value: 8000, label: "₹8,000" },
     { value: 10000, label: "₹10,000" },
     { value: 15000, label: "₹15,000" },
     { value: 20000, label: "₹20,000" }
@@ -135,50 +137,54 @@
   ];
 
   const mobileUses = [
+    { value: "overall", label: "Overall" },
     { value: "gaming", label: "Gaming" },
     { value: "camera", label: "Camera" },
-    { value: "battery", label: "Battery" },
-    { value: "overall", label: "Overall" }
+    { value: "battery", label: "Battery" }
   ];
 
   const bikeUses = [
+    { value: "overall", label: "Overall" },
     { value: "mileage", label: "Mileage" },
     { value: "performance", label: "Performance" },
-    { value: "comfort", label: "Comfort" },
-    { value: "overall", label: "Overall" }
+    { value: "comfort", label: "Comfort" }
   ];
 
-  function updateDropdowns() {
+  function updateForm() {
+    const category = categorySelect.value;
     budgetSelect.innerHTML = '<option value="">Select Budget</option>';
     useSelect.innerHTML = '<option value="">Select Use</option>';
 
-    let budgets = [];
-    let uses = [];
-
-    if (categorySelect.value === "mobile") {
-      budgets = mobileBudgets;
-      uses = mobileUses;
-    } else if (categorySelect.value === "bike") {
-      budgets = bikeBudgets;
-      uses = bikeUses;
+    if (category === "mobile") {
+      formElement.action = "/compare/mobile";
+      mobileBudgets.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.value;
+        opt.textContent = b.label;
+        budgetSelect.appendChild(opt);
+      });
+      mobileUses.forEach(u => {
+        const opt = document.createElement("option");
+        opt.value = u.value;
+        opt.textContent = u.label;
+        useSelect.appendChild(opt);
+      });
+    } else if (category === "bike") {
+      formElement.action = "/compare/bike";
+      bikeBudgets.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.value;
+        opt.textContent = b.label;
+        budgetSelect.appendChild(opt);
+      });
+      bikeUses.forEach(u => {
+        const opt = document.createElement("option");
+        opt.value = u.value;
+        opt.textContent = u.label;
+        useSelect.appendChild(opt);
+      });
     }
-
-    budgets.forEach(b => {
-      const opt = document.createElement("option");
-      opt.value = b.value;
-      opt.textContent = b.label;
-      budgetSelect.appendChild(opt);
-    });
-
-    uses.forEach(u => {
-      const opt = document.createElement("option");
-      opt.value = u.value;
-      opt.textContent = u.label;
-      useSelect.appendChild(opt);
-    });
   }
-
-  categorySelect.addEventListener("change", updateDropdowns);
 </script>
 
 </body>
