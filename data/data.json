@@ -10,8 +10,8 @@
       "performance": 3,
       "display": 5,
       "reason": "Best entry-level phone for calling, WhatsApp and basic usage",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Redmi+A2",
+      "flipkart": "https://www.flipkart.com/search?q=Redmi+A2"
     },
     {
       "name": "Tecno Spark Go 2024",
@@ -23,8 +23,8 @@
       "performance": 3,
       "display": 5,
       "reason": "Affordable smartphone for students and first-time users",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Tecno+Spark+Go+2024",
+      "flipkart": "https://www.flipkart.com/search?q=Tecno+Spark+Go+2024"
     },
     {
       "name": "Infinix Smart 8",
@@ -36,8 +36,8 @@
       "performance": 4,
       "display": 6,
       "reason": "Smooth display and good daily performance in low budget",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Infinix+Smart+8",
+      "flipkart": "https://www.flipkart.com/search?q=Infinix+Smart+8"
     },
     {
       "name": "Samsung Galaxy F04",
@@ -49,8 +49,8 @@
       "performance": 3,
       "display": 5,
       "reason": "Reliable Samsung phone with stable software experience",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Samsung+Galaxy+F04",
+      "flipkart": "https://www.flipkart.com/search?q=Samsung+Galaxy+F04"
     },
     {
       "name": "Lava Blaze 2",
@@ -62,8 +62,8 @@
       "performance": 4,
       "display": 6,
       "reason": "Clean Android and smooth everyday performance",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Lava+Blaze+2",
+      "flipkart": "https://www.flipkart.com/search?q=Lava+Blaze+2"
     },
 
     {
@@ -76,8 +76,8 @@
       "performance": 6,
       "display": 6,
       "reason": "Balanced phone with good battery and overall performance",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Redmi+13C",
+      "flipkart": "https://www.flipkart.com/search?q=Redmi+13C"
     },
     {
       "name": "Samsung F14",
@@ -89,8 +89,8 @@
       "display": 6,
       "reason": "Best battery life under ₹10000 with reliable Samsung camera performance",
       "image": "https://m.media-amazon.com/images/I/71V--WZVUIL._SX679_.jpg",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Samsung+Galaxy+F14",
+      "flipkart": "https://www.flipkart.com/search?q=Samsung+Galaxy+F14"
     },
     {
       "name": "Realme C55",
@@ -102,8 +102,8 @@
       "performance": 7,
       "display": 7,
       "reason": "Best gaming performance under ₹10,000",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Realme+C55",
+      "flipkart": "https://www.flipkart.com/search?q=Realme+C55"
     },
 
     {
@@ -116,8 +116,8 @@
       "performance": 7,
       "display": 7,
       "reason": "Best 5G phone with strong overall performance",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Redmi+12+5G",
+      "flipkart": "https://www.flipkart.com/search?q=Redmi+12+5G"
     },
     {
       "name": "Samsung Galaxy M14 5G",
@@ -129,8 +129,8 @@
       "performance": 6,
       "display": 6,
       "reason": "Massive battery backup with 5G support",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Samsung+Galaxy+M14+5G",
+      "flipkart": "https://www.flipkart.com/search?q=Samsung+Galaxy+M14+5G"
     },
     {
       "name": "Realme Narzo 60x",
@@ -142,8 +142,8 @@
       "performance": 6,
       "display": 6,
       "reason": "Stylish 5G phone with balanced features",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Realme+Narzo+60x",
+      "flipkart": "https://www.flipkart.com/search?q=Realme+Narzo+60x"
     },
 
     {
@@ -156,8 +156,8 @@
       "performance": 7,
       "display": 7,
       "reason": "Smooth performance and clean UI experience",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=iQOO+Z6+Lite",
+      "flipkart": "https://www.flipkart.com/search?q=iQOO+Z6+Lite"
     },
     {
       "name": "Samsung Galaxy F23",
@@ -169,8 +169,8 @@
       "performance": 7,
       "display": 7,
       "reason": "Strong all-rounder with good camera and battery",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Samsung+Galaxy+F23",
+      "flipkart": "https://www.flipkart.com/search?q=Samsung+Galaxy+F23"
     },
     {
       "name": "Redmi Note 12",
@@ -182,8 +182,8 @@
       "performance": 7,
       "display": 8,
       "reason": "AMOLED display with balanced performance",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Redmi+Note+12",
+      "flipkart": "https://www.flipkart.com/search?q=Redmi+Note+12"
     },
 
     {
@@ -196,8 +196,8 @@
       "performance": 8,
       "display": 7,
       "reason": "Excellent performance-focused phone under ₹20k",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=iQOO+Z7",
+      "flipkart": "https://www.flipkart.com/search?q=iQOO+Z7"
     },
     {
       "name": "Redmi Note 12 Pro",
@@ -209,8 +209,8 @@
       "performance": 8,
       "display": 8,
       "reason": "Best camera and display experience in this range",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Redmi+Note+12+Pro",
+      "flipkart": "https://www.flipkart.com/search?q=Redmi+Note+12+Pro"
     },
     {
       "name": "Samsung Galaxy M34",
@@ -222,8 +222,8 @@
       "performance": 7,
       "display": 7,
       "reason": "Outstanding battery life with reliable performance",
-      "amazon": "/go/amazon",
-      "flipkart": "/go/flipkart"
+      "amazon": "https://www.amazon.in/s?k=Samsung+Galaxy+M34",
+      "flipkart": "https://www.flipkart.com/search?q=Samsung+Galaxy+M34"
     }
   ],
   "bikes": []
