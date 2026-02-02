@@ -197,5 +197,304 @@
   }
 </script>
 
+<!-- Knowledge Base Section -->
+<div class="knowledge-section">
+  <h3>📚 Phone Knowledge Base</h3>
+  <p>Search and learn about different mobile phones</p>
+  
+  <div class="search-container">
+    <input type="text" id="phoneSearch" placeholder="Search phone by name, price, or specs..." class="search-bar">
+    <button onclick="searchPhones()" class="search-btn">Search</button>
+  </div>
+
+  <div id="searchResults" class="search-results"></div>
+
+  <!-- Quick Info Cards -->
+  <div class="info-cards">
+    <div class="info-card">
+      <span class="emoji">🎮</span>
+      <h4>Gaming</h4>
+      <p>Find phones optimized for gaming with high refresh rate displays and powerful processors</p>
+    </div>
+    <div class="info-card">
+      <span class="emoji">📷</span>
+      <h4>Camera</h4>
+      <p>Explore phones with great camera performance for photography and video recording</p>
+    </div>
+    <div class="info-card">
+      <span class="emoji">🔋</span>
+      <h4>Battery</h4>
+      <p>Discover phones with long battery life for all-day usage without frequent charging</p>
+    </div>
+    <div class="info-card">
+      <span class="emoji">⚡</span>
+      <h4>Performance</h4>
+      <p>Check phones with powerful processors for smooth multitasking and app performance</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Phone database from server
+  let allPhones = [];
+
+  // Load phones on page load
+  async function loadPhones() {
+    try {
+      const response = await fetch('/api/phones');
+      const data = await response.json();
+      allPhones = data.mobiles || [];
+    } catch (error) {
+      console.error('Error loading phones:', error);
+    }
+  }
+
+  function searchPhones() {
+    const searchTerm = document.getElementById('phoneSearch').value.toLowerCase();
+    const resultsDiv = document.getElementById('searchResults');
+    resultsDiv.innerHTML = '';
+
+    if (!searchTerm) {
+      resultsDiv.innerHTML = '<p class="no-results">Enter a search term to find phones</p>';
+      return;
+    }
+
+    const filtered = allPhones.filter(phone => {
+      const name = phone.name.toLowerCase();
+      const price = phone.price.toString();
+      const reason = phone.reason.toLowerCase();
+      return name.includes(searchTerm) || price.includes(searchTerm) || reason.includes(searchTerm);
+    });
+
+    if (filtered.length === 0) {
+      resultsDiv.innerHTML = '<p class="no-results">No phones found. Try another search.</p>';
+      return;
+    }
+
+    let html = '<div class="phone-grid">';
+    filtered.forEach(phone => {
+      html += `
+        <div class="phone-result-card">
+          <img src="${phone.image}" alt="${phone.name}" class="phone-thumb">
+          <h5>${phone.name}</h5>
+          <p class="price">₹${phone.price.toLocaleString()}</p>
+          <p class="reason">${phone.reason}</p>
+          <div class="specs-mini">
+            <span>🎮 ${phone.gaming}</span>
+            <span>📷 ${phone.camera}</span>
+            <span>🔋 ${phone.battery}</span>
+            <span>⚡ ${phone.performance}</span>
+          </div>
+        </div>
+      `;
+    });
+    html += '</div>';
+    resultsDiv.innerHTML = html;
+  }
+
+  // Allow search on Enter key
+  document.addEventListener('DOMContentLoaded', function() {
+    loadPhones();
+    const searchInput = document.getElementById('phoneSearch');
+    if (searchInput) {
+      searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          searchPhones();
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .knowledge-section {
+    max-width: 1000px;
+    margin: 60px auto 40px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  .knowledge-section h3 {
+    text-align: center;
+    font-size: 28px;
+    margin: 0 0 10px 0;
+  }
+
+  .knowledge-section > p {
+    text-align: center;
+    font-size: 16px;
+    margin: 0 0 30px 0;
+    opacity: 0.9;
+  }
+
+  .search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .search-bar {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    color: #333;
+  }
+
+  .search-btn {
+    padding: 12px 25px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+
+  .search-btn:hover {
+    background: #ff5252;
+  }
+
+  .search-results {
+    margin-top: 30px;
+  }
+
+  .phone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .phone-result-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .phone-result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .phone-thumb {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .phone-result-card h5 {
+    margin: 10px 0 5px 0;
+    color: #333;
+    font-size: 16px;
+  }
+
+  .price {
+    color: #667eea;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 5px 0;
+  }
+
+  .reason {
+    font-size: 12px;
+    color: #666;
+    margin: 8px 0;
+    line-height: 1.4;
+  }
+
+  .specs-mini {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .no-results {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+  }
+
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .info-card {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .info-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .emoji {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .info-card h4 {
+    margin: 10px 0 10px 0;
+    font-size: 18px;
+  }
+
+  .info-card p {
+    font-size: 14px;
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .knowledge-section {
+      margin: 30px 10px;
+      padding: 25px 15px;
+    }
+
+    .search-container {
+      flex-direction: column;
+    }
+
+    .search-bar, .search-btn {
+      width: 100%;
+    }
+
+    .phone-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .info-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </body>
 </html>

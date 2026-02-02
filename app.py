@@ -231,6 +231,19 @@ def click_stats():
     return load_clicks()
 
 # =========================
+# ADMIN STATS DASHBOARD
+# =========================
+@app.route("/admin/stats")
+def admin_stats():
+    clicks = load_clicks()
+    total_clicks = sum(clicks.values()) if clicks else 0
+    return render_template(
+        "admin_stats.html",
+        clicks=clicks,
+        total_clicks=total_clicks
+    )
+
+# =========================
 # ROBOTS.TXT  ✅ (MOST IMPORTANT FIX)
 # =========================
 @app.route("/robots.txt")
@@ -283,6 +296,16 @@ def sitemap():
 
     xml.append('</urlset>')
     return Response("\n".join(xml), mimetype="application/xml")
+
+# =========================
+# API ENDPOINTS
+# =========================
+@app.route("/api/phones", methods=["GET"])
+def api_phones():
+    """API endpoint to fetch all phones for frontend knowledge base"""
+    from flask import jsonify
+    db = load_data()
+    return jsonify(db)
 
 # =========================
 # RUN APP
