@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Add Phones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .rating-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .rating-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-input input[type="range"] {
+            flex: 1;
+            padding: 0;
+            margin: 0;
+        }
+
+        .rating-value {
+            width: 50px;
+            padding: 8px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            display: none;
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .rating-group {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📱 Add New Phone</h1>
+
+    <div class="success-message" id="successMsg">✓ Phone added successfully!</div>
+    <div class="error-message" id="errorMsg"></div>
+
+    <form id="phoneForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Phone Name *</label>
+                <input type="text" id="name" placeholder="e.g., Realme C55" required>
+            </div>
+            <div class="form-group">
+                <label>Price (₹) *</label>
+                <input type="number" id="price" placeholder="e.g., 10000" required min="1000">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Image URL</label>
+            <input type="url" id="image" placeholder="https://..." 
+                   value="https://m.media-amazon.com/images/I/81t6Av5DvXL._SL1500_.jpg">
+        </div>
+
+        <div class="form-group">
+            <label>Why This Phone? *</label>
+            <textarea id="reason" placeholder="e.g., Best gaming performance under ₹10k" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Ratings (Scale: 0-10)</label>
+        </div>
+
+        <div class="rating-group">
+            <div class="rating-input">
+                <label>🎮 Gaming</label>
+                <input type="range" id="gaming" min="0" max="10" value="5" oninput="updateRating('gaming')">
+                <div class="rating-value" id="gamingValue">5</div>
+            </div>
+            <div class="rating-input">
+                <label>📷 Camera</label>
+                <input type="range" id="camera" min="0" max="10" value="5" oninput="updateRating('camera')">
+                <div class="rating-value" id="cameraValue">5</div>
+            </div>
+            <div class="rating-input">
+                <label>🔋 Battery</label>
+                <input type="range" id="battery" min="0" max="10" value="5" oninput="updateRating('battery')">
+                <div class="rating-value" id="batteryValue">5</div>
+            </div>
+            <div class="rating-input">
+                <label>⚡ Performance</label>
+                <input type="range" id="performance" min="0" max="10" value="5" oninput="updateRating('performance')">
+                <div class="rating-value" id="performanceValue">5</div>
+            </div>
+            <div class="rating-input">
+                <label>📺 Display</label>
+                <input type="range" id="display" min="0" max="10" value="5" oninput="updateRating('display')">
+                <div class="rating-value" id="displayValue">5</div>
+            </div>
+        </div>
+
+        <button type="submit">Add Phone to Database</button>
+    </form>
+</div>
+
+<script>
+    function updateRating(field) {
+        const value = document.getElementById(field).value;
+        document.getElementById(field + 'Value').textContent = value;
+    }
+
+    document.getElementById('phoneForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const phone = {
+            name: document.getElementById('name').value,
+            price: parseInt(document.getElementById('price').value),
+            image: document.getElementById('image').value,
+            reason: document.getElementById('reason').value,
+            gaming: parseInt(document.getElementById('gaming').value),
+            camera: parseInt(document.getElementById('camera').value),
+            battery: parseInt(document.getElementById('battery').value),
+            performance: parseInt(document.getElementById('performance').value),
+            display: parseInt(document.getElementById('display').value),
+            amazon: `https://www.amazon.in/s?k=${encodeURIComponent(document.getElementById('name').value)}`,
+            flipkart: `https://www.flipkart.com/search?q=${encodeURIComponent(document.getElementById('name').value)}`
+        };
+
+        try {
+            const response = await fetch('/api/add-phone', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(phone)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('successMsg').style.display = 'block';
+                document.getElementById('phoneForm').reset();
+                Array.from(document.querySelectorAll('input[type="range"]')).forEach(el => {
+                    updateRating(el.id);
+                });
+                setTimeout(() => {
+                    document.getElementById('successMsg').style.display = 'none';
+                }, 3000);
+            } else {
+                throw new Error(data.error || 'Failed to add phone');
+            }
+        } catch (error) {
+            document.getElementById('errorMsg').textContent = `❌ ${error.message}`;
+            document.getElementById('errorMsg').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('errorMsg').style.display = 'none';
+            }, 3000);
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -307,6 +307,136 @@ def api_phones():
     db = load_data()
     return jsonify(db)
 
+@app.route("/api/search", methods=["GET"])
+def api_search():
+    """
+    Advanced phone search API
+    Query parameters:
+    - q: search query (name, price, specs)
+    - category: 'mobile' or 'bike'
+    - min_price: minimum price
+    - max_price: maximum price
+    - sort_by: 'price', 'rating', 'gaming', 'camera', 'battery', 'performance'
+    - limit: number of results (default: 50)
+    """
+    from flask import jsonify
+    
+    db = load_data()
+    query = request.args.get("q", "").lower()
+    category = request.args.get("category", "mobile").lower()
+    min_price = request.args.get("min_price", 0, type=int)
+    max_price = request.args.get("max_price", 500000, type=int)
+    sort_by = request.args.get("sort_by", "price")
+    limit = request.args.get("limit", 50, type=int)
+    
+    # Get the right category
+    items = db.get("mobiles" if category == "mobile" else "bikes", [])
+    
+    # Filter by price range
+    items = [item for item in items if min_price <= item.get("price", 0) <= max_price]
+    
+    # Filter by search query
+    if query:
+        filtered = []
+        for item in items:
+            item_text = f"{item.get('name', '')} {item.get('reason', '')}".lower()
+            if query in item_text or str(item.get('price', '')).startswith(query):
+                filtered.append(item)
+        items = filtered
+    
+    # Sort by criteria
+    if sort_by == "price":
+        items.sort(key=lambda x: x.get("price", 0))
+    elif sort_by == "rating":
+        items.sort(key=lambda x: overall_score(x), reverse=True)
+    elif sort_by in ["gaming", "camera", "battery", "performance", "mileage"]:
+        items.sort(key=lambda x: x.get(sort_by, 0), reverse=True)
+    
+    # Limit results
+    items = items[:limit]
+    
+    return jsonify({
+        "success": True,
+        "query": query,
+        "category": category,
+        "count": len(items),
+        "results": items
+    })
+
+@app.route("/api/phone/<name>", methods=["GET"])
+def api_phone_detail(name):
+    """Get detailed information about a specific phone"""
+    from flask import jsonify
+    
+    db = load_data()
+    
+    # Search in mobiles first, then bikes
+    for item in db.get("mobiles", []) + db.get("bikes", []):
+        if item.get("name", "").lower().replace(" ", "-") == name.lower().replace(" ", "-"):
+            return jsonify({"success": True, "phone": item})
+    
+    return jsonify({"success": False, "error": "Phone not found"}), 404
+
+@app.route("/api/add-phone", methods=["POST"])
+def api_add_phone():
+    """Add a new phone to the database via API"""
+    from flask import jsonify
+    
+    try:
+        phone = request.get_json()
+        
+        # Validate required fields
+        required_fields = ["name", "price", "reason"]
+        for field in required_fields:
+            if not phone.get(field):
+                return jsonify({"success": False, "error": f"Missing required field: {field}"}), 400
+        
+        # Set defaults for optional fields
+        if "gaming" not in phone:
+            phone["gaming"] = 5
+        if "camera" not in phone:
+            phone["camera"] = 5
+        if "battery" not in phone:
+            phone["battery"] = 5
+        if "performance" not in phone:
+            phone["performance"] = 5
+        if "display" not in phone:
+            phone["display"] = 5
+        if "image" not in phone or not phone["image"]:
+            phone["image"] = "/static/no-image.png"
+        if "amazon" not in phone:
+            phone["amazon"] = f"https://www.amazon.in/s?k={phone['name'].replace(' ', '+')}"
+        if "flipkart" not in phone:
+            phone["flipkart"] = f"https://www.flipkart.com/search?q={phone['name']}"
+        
+        # Load existing data
+        db = load_data()
+        
+        # Check if phone already exists
+        for item in db.get("mobiles", []):
+            if item.get("name", "").lower() == phone["name"].lower():
+                return jsonify({"success": False, "error": "Phone already exists in database"}), 400
+        
+        # Add phone to database
+        db["mobiles"].append(phone)
+        save_clicks(db)  # Save updated data
+        
+        # Re-read from file to ensure consistency
+        save_data = lambda data: open(os.path.join(BASE_DIR, "data", "data.json"), "w", encoding="utf-8").write(
+            json.dumps(data, indent=2, ensure_ascii=False)
+        )
+        save_data(db)
+        
+        return jsonify({"success": True, "message": f"Phone '{phone['name']}' added successfully!"})
+    
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route("/admin/add-phone")
+def admin_add_phone():
+    """Admin page to add phones via web interface"""
+    return render_template("admin_add_phone.html")
+
 # =========================
 # RUN APP
 # =========================

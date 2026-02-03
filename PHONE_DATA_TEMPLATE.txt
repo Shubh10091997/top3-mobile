@@ -1,0 +1,52 @@
+====== POPULAR INDIAN PHONES (Copy & Paste into add_phones.py) ======
+
+UNDER ₹8,000:
+Redmi A2,6500,3,4,6,3,5,Best entry-level phone for basic usage
+Tecno Spark Go 2024,6800,3,4,6,3,5,Affordable smartphone for students
+Infinix Smart 8,7200,4,4,6,4,6,Smooth display and good daily performance
+Samsung Galaxy F04,7500,3,5,6,3,5,Reliable Samsung phone with stable software
+Lava Blaze 2,7800,4,4,6,4,6,Clean Android and smooth performance
+
+UNDER ₹10,000:
+Redmi 13C,10000,6,6,8,6,6,Balanced phone with good battery and overall performance
+Realme C55,10000,7,6,7,6,6,Best gaming performance under ₹10k
+Samsung Galaxy M14,9999,5,5,7,5,5,Samsung's budget gaming phone
+Poco M5,9999,6,5,6,6,6,Great value for money with good processor
+Redmi Note 12,9999,7,6,7,7,7,Excellent mid-range option with AMOLED display
+
+UNDER ₹15,000:
+Realme Narzo 60x,12000,6,6,8,6,6,Stylish 5G phone with balanced features
+Samsung Galaxy A14,12999,5,6,7,5,6,Reliable Samsung with good camera
+Poco X4,13999,7,7,7,7,7,Fast processor with great display
+Redmi Note 11 Pro,14999,7,8,8,7,8,Professional camera phone under ₹15k
+Realme 10 Pro,14999,7,7,7,7,8,Flagship killer with great performance
+
+UNDER ₹20,000:
+OnePlus Nord CE 3,16999,8,8,8,8,8,Fast and clean OxygenOS experience
+Samsung Galaxy A24,17999,6,7,8,6,7,Great all-rounder from Samsung
+Realme 11 Pro,18999,8,8,8,8,9,Beautiful design with powerful processor
+Poco F5,19999,9,8,8,9,8,Gaming beast under ₹20k
+Redmi Note 13 Pro,19999,8,8,9,8,9,Premium features at budget price
+
+PREMIUM PHONES:
+iPhone 12,65000,9,9,8,9,9,Premium Apple phone with great ecosystem
+iPhone 13,79000,9,9,8,9,9,Latest iPhone with powerful processor
+Samsung Galaxy S23,79999,9,9,7,10,10,Flagship Samsung with best processor
+OnePlus 11,65999,10,9,8,10,9,Fastest Android phone available
+Realme GT 5 Pro,79999,10,9,8,10,10,Snapdragon flagship killer
+
+====== FORMAT ======
+name,price,gaming,camera,battery,performance,display,reason
+
+====== STEPS ======
+1. Run: python add_phones.py
+2. Select option 2 (Bulk add)
+3. Paste the data above
+4. Press Enter twice when done
+
+====== RATINGS GUIDE ======
+1-2: Poor
+3-4: Below Average
+5-6: Average
+7-8: Good
+9-10: Excellent

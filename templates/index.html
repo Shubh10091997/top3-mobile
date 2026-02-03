@@ -30,13 +30,132 @@
       padding: 0;
     }
 
-    .card {
-      width: 420px;
-      margin: 80px auto 30px;
+    .page-wrap {
+      max-width: 1400px;
+      margin: 40px auto 0;
+      padding: 0 20px 40px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-card {
       background: white;
-      padding: 25px;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .hero-title {
+      font-size: 24px;
+      margin: 0 0 6px 0;
+      color: #1f2a44;
+    }
+
+    .hero-subtitle {
+      color: #6a7280;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .quick-item {
+      padding: 10px 12px;
+      border: 1px solid #eef0f4;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      font-size: 13px;
+      color: #475467;
+      background: #fafbff;
+    }
+
+    .cta-button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      background: #ff8a3d;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .cta-button:hover {
+      background: #f37322;
+    }
+
+    .right-panel {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .right-panel h3 {
+      margin: 0 0 12px 0;
+      color: #1f2a44;
+    }
+
+    .buy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .buy-card {
+      border: 1px solid #eef0f4;
+      border-radius: 12px;
+      padding: 14px;
+      background: #f9fafb;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #344054;
+    }
+
+    .buy-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-weight: 700;
+    }
+
+    .section-title {
+      margin: 30px 0 12px;
+      font-size: 18px;
+      color: #1f2a44;
+    }
+
+    .brand-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .brand-pill {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: center;
+      border: 1px solid #eef0f4;
+      font-weight: 600;
+      color: #344054;
     }
 
     h2 {
@@ -66,14 +185,15 @@
 
     /* ===== HOME SEO LINKS ===== */
     .home-seo {
-      max-width: 700px;
-      margin: 0 auto 40px;
+      max-width: 100%;
+      margin: 30px auto 0;
       background: white;
       padding: 20px;
       border-radius: 10px;
       text-align: center;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
       font-size: 15px;
+      clear: both;
     }
 
     .home-seo a {
@@ -91,10 +211,14 @@
 
 <body>
 
-<div class="card">
-  <h2>Top 3 Best Options</h2>
+<div class="container-wrapper">
+<div class="page-wrap">
+  <div class="hero">
+    <div class="hero-card">
+      <div class="hero-title">Let's Find the Best Option</div>
+      <div class="hero-subtitle">Choose category, budget, and use. We'll show top 3 picks.</div>
 
-  <form method="GET" action="/compare/mobile">
+      <form method="GET" action="/compare/mobile">
 
     <!-- CATEGORY -->
     <select name="category" id="category" required onchange="updateForm()">
@@ -113,18 +237,74 @@
       <option value="">Select Use</option>
     </select>
 
-    <button type="submit">Show Top 3</button>
-  </form>
-</div>
+        <button type="submit" class="cta-button">Show Top 3</button>
+      </form>
+      <div class="quick-grid">
+        <div class="quick-item">5G Phones</div>
+        <div class="quick-item">Best Camera</div>
+        <div class="quick-item">Gaming Ready</div>
+        <div class="quick-item">All‑day Battery</div>
+      </div>
+    </div>
+    <div class="right-panel">
+      <h3>Quick Phone Search</h3>
+      <div class="search-container">
+        <input type="text" id="phoneSearch" placeholder="Search by name, price, or specs..." class="search-bar">
+        <button onclick="searchPhones()" class="search-btn">Search</button>
+      </div>
+      <div id="searchResults" class="search-results"></div>
 
-<!-- ✅ HOME PAGE INTERNAL SEO LINKS -->
-<div class="home-seo">
-  <strong>Popular Mobile Searches:</strong><br><br>
+      <div class="section-title">What are you looking to buy?</div>
+      <div class="buy-grid">
+        <div class="buy-card"><span class="buy-icon">📱</span>Mobiles</div>
+        <div class="buy-card"><span class="buy-icon">💻</span>Laptops</div>
+        <div class="buy-card"><span class="buy-icon">📺</span>TVs</div>
+        <div class="buy-card"><span class="buy-icon">🎧</span>Audio</div>
+      </div>
+    </div>
+  </div>
 
-  <a href="/best-mobiles/under-8k">Best Mobile Under ₹8,000</a> |
-  <a href="/best-mobiles/under-10k">Best Mobile Under ₹10,000</a> |
-  <a href="/best-mobiles/under-15k">Best Mobile Under ₹15,000</a> |
-  <a href="/best-mobiles/under-20k">Best Mobile Under ₹20,000</a>
+  <div class="section-title">Popular Brands</div>
+  <div class="brand-row">
+    <div class="brand-pill">Samsung</div>
+    <div class="brand-pill">Realme</div>
+    <div class="brand-pill">Xiaomi</div>
+    <div class="brand-pill">Vivo</div>
+    <div class="brand-pill">OnePlus</div>
+    <div class="brand-pill">Apple</div>
+    <div class="brand-pill">Poco</div>
+    <div class="brand-pill">Motorola</div>
+  </div>
+
+  <!-- Knowledge Base Section -->
+  <div class="knowledge-section">
+    <h3>📚 Phone Knowledge Base</h3>
+    <p>Search and learn about different mobile phones</p>
+
+    <!-- Quick Info Cards -->
+    <div class="info-cards">
+      <div class="info-card">
+        <span class="emoji">🎮</span>
+        <h4>Gaming</h4>
+        <p>Find phones optimized for gaming with high refresh rate displays and powerful processors</p>
+      </div>
+      <div class="info-card">
+        <span class="emoji">📷</span>
+        <h4>Camera</h4>
+        <p>Explore phones with great camera performance for photography and video recording</p>
+      </div>
+      <div class="info-card">
+        <span class="emoji">🔋</span>
+        <h4>Battery</h4>
+        <p>Discover phones with long battery life for all-day usage without frequent charging</p>
+      </div>
+      <div class="info-card">
+        <span class="emoji">⚡</span>
+        <h4>Performance</h4>
+        <p>Check phones with powerful processors for smooth multitasking and app performance</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -196,43 +376,6 @@
     }
   }
 </script>
-
-<!-- Knowledge Base Section -->
-<div class="knowledge-section">
-  <h3>📚 Phone Knowledge Base</h3>
-  <p>Search and learn about different mobile phones</p>
-  
-  <div class="search-container">
-    <input type="text" id="phoneSearch" placeholder="Search phone by name, price, or specs..." class="search-bar">
-    <button onclick="searchPhones()" class="search-btn">Search</button>
-  </div>
-
-  <div id="searchResults" class="search-results"></div>
-
-  <!-- Quick Info Cards -->
-  <div class="info-cards">
-    <div class="info-card">
-      <span class="emoji">🎮</span>
-      <h4>Gaming</h4>
-      <p>Find phones optimized for gaming with high refresh rate displays and powerful processors</p>
-    </div>
-    <div class="info-card">
-      <span class="emoji">📷</span>
-      <h4>Camera</h4>
-      <p>Explore phones with great camera performance for photography and video recording</p>
-    </div>
-    <div class="info-card">
-      <span class="emoji">🔋</span>
-      <h4>Battery</h4>
-      <p>Discover phones with long battery life for all-day usage without frequent charging</p>
-    </div>
-    <div class="info-card">
-      <span class="emoji">⚡</span>
-      <h4>Performance</h4>
-      <p>Check phones with powerful processors for smooth multitasking and app performance</p>
-    </div>
-  </div>
-</div>
 
 <script>
   // Phone database from server
@@ -306,10 +449,19 @@
   });
 </script>
 
+<!-- ✅ HOME PAGE INTERNAL SEO LINKS -->
+<div class="home-seo">
+  <strong>Popular Mobile Searches:</strong><br><br>
+
+  <a href="/best-mobiles/under-8k">Best Mobile Under ₹8,000</a> |
+  <a href="/best-mobiles/under-10k">Best Mobile Under ₹10,000</a> |
+  <a href="/best-mobiles/under-15k">Best Mobile Under ₹15,000</a> |
+  <a href="/best-mobiles/under-20k">Best Mobile Under ₹20,000</a>
+</div>
+
 <style>
   .knowledge-section {
-    max-width: 1000px;
-    margin: 60px auto 40px;
+    flex: 1;
     padding: 40px 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 15px;
@@ -472,9 +624,19 @@
     line-height: 1.5;
   }
 
+  @media (max-width: 992px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
   @media (max-width: 768px) {
+    .page-wrap {
+      margin-top: 20px;
+    }
+
     .knowledge-section {
-      margin: 30px 10px;
+      margin: 0;
       padding: 25px 15px;
     }
 
