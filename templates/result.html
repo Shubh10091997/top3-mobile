@@ -402,12 +402,84 @@
       border-bottom: 1px solid #ddd;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       font-size: 15px;
+      gap: 15px;
     }
 
     .other-item:last-child {
       border-bottom: none;
+    }
+
+    .other-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+    }
+
+    .other-item-header span {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .other-item-header a {
+      background: #ff9900;
+      color: white;
+      padding: 6px 12px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.3s;
+    }
+
+    .other-item-header a:hover {
+      background: #ff7a00;
+    }
+
+    .other-item-rating {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 300px;
+      text-align: right;
+    }
+
+    .rating-value {
+      font-weight: 700;
+      color: #ff6b35;
+      font-size: 14px;
+    }
+
+    .rating-specs {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .rating-specs strong {
+      color: #333;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .other-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .other-item-header {
+        width: 100%;
+      }
+
+      .other-item-rating {
+        width: 100%;
+        min-width: unset;
+        text-align: left;
+      }
     }
 
     /* ===== INTERNAL LINKS ===== */
@@ -607,8 +679,18 @@
   <div class="other-list">
     {% for item in others %}
     <div class="other-item">
-      <span>{{ item.name }} – ₹{{ item.price }}</span>
-      <a href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">Amazon</a>
+      <div class="other-item-header">
+        <span>{{ item.name }} – ₹{{ item.price }}</span>
+        <a href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">Amazon</a>
+      </div>
+      <div class="other-item-rating">
+        <span class="rating-value">⭐ {{ ((item.gaming|float(0) + item.camera|float(0) + item.battery|float(0) + item.performance|float(0) + item.display|float(0)) / 5)|round(1) }}/10</span>
+        <span class="rating-specs">
+          Gaming: <strong>{{ item.gaming|default('N/A') }}</strong> | 
+          Camera: <strong>{{ item.camera|default('N/A') }}</strong> | 
+          Battery: <strong>{{ item.battery|default('N/A') }}</strong>
+        </span>
+      </div>
     </div>
     {% endfor %}
   </div>
