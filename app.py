@@ -469,6 +469,24 @@ def search_results():
     return render_template("search_results.html")
 
 # =========================
+# STATIC PAGES
+# =========================
+@app.route("/about")
+def about():
+    """About page"""
+    return render_template("about.html")
+
+@app.route("/contact")
+def contact():
+    """Contact page"""
+    return render_template("contact.html")
+
+@app.route("/privacy-policy")
+def privacy_policy():
+    """Privacy policy page"""
+    return render_template("privacy_policy.html")
+
+# =========================
 # RUN APP
 # =========================
 if __name__ == "__main__":
