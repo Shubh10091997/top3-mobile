@@ -347,6 +347,40 @@
         <div class="education-points" id="educationPoints"></div>
       </div>
 
+      <!-- Knowledge Type Cards -->
+      <div class="knowledge-cards">
+        <div class="knowledge-card">
+          <div class="knowledge-icon">💾</div>
+          <h4>RAM</h4>
+          <p>4GB for basic use, 6-8GB for multitasking, 12GB+ for heavy gaming.</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon">🧠</div>
+          <h4>Processor</h4>
+          <p>Prefer Snapdragon 6/7/8 or Dimensity 7/8 series for smooth performance.</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon">📷</div>
+          <h4>Camera</h4>
+          <p>Look for OIS, larger sensor size, and 4K video instead of just MP.</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon">🔋</div>
+          <h4>Battery</h4>
+          <p>5000mAh+ is ideal, check fast charging wattage for daily convenience.</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon">🖥️</div>
+          <h4>Display</h4>
+          <p>AMOLED + 90/120Hz refresh rate gives better clarity and smoothness.</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon">📦</div>
+          <h4>Storage</h4>
+          <p>128GB minimum recommended; UFS storage is faster than eMMC.</p>
+        </div>
+      </div>
+
       <!-- Quick Filter Cards -->
       <div class="info-cards">
         <div class="info-card" onclick="filterBySpec('gaming')">
@@ -384,16 +418,16 @@
     <div class="specs-sidebar">
       <div class="section-title-side">Popular Specifications</div>
       <div class="spec-links">
-        <button onclick="filterBySpec('gaming'); event.preventDefault();" class="spec-link spec-gaming">
+        <button onclick="filterBySpec('gaming'); return false;" class="spec-link spec-gaming">
           🎮 Best for Gaming
         </button>
-        <button onclick="filterBySpec('camera'); event.preventDefault();" class="spec-link spec-camera">
+        <button onclick="filterBySpec('camera'); return false;" class="spec-link spec-camera">
           📷 Best Camera
         </button>
-        <button onclick="filterBySpec('battery'); event.preventDefault();" class="spec-link spec-battery">
+        <button onclick="filterBySpec('battery'); return false;" class="spec-link spec-battery">
           🔋 Best Battery
         </button>
-        <button onclick="filterBySpec('performance'); event.preventDefault();" class="spec-link spec-performance">
+        <button onclick="filterBySpec('performance'); return false;" class="spec-link spec-performance">
           ⚡ Best Performance
         </button>
       </div>
@@ -1163,6 +1197,40 @@
     color: #ffd700;
   }
 
+  /* ===== KNOWLEDGE TYPE CARDS ===== */
+  .knowledge-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .knowledge-card {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+  }
+
+  .knowledge-card h4 {
+    margin: 8px 0 8px 0;
+    font-size: 16px;
+    color: #ffd700;
+  }
+
+  .knowledge-card p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .knowledge-icon {
+    font-size: 24px;
+  }
+
   .emoji {
     font-size: 32px;
     display: block;
@@ -1189,6 +1257,10 @@
     .spec-layout {
       grid-template-columns: 1fr;
     }
+
+    .knowledge-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 768px) {
@@ -1214,6 +1286,10 @@
     }
 
     .info-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .knowledge-cards {
       grid-template-columns: 1fr;
     }
   }
