@@ -119,7 +119,7 @@
       padding: 14px;
       background: #f9fafb;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 10px;
       font-size: 14px;
       color: #344054;
@@ -134,6 +134,31 @@
       background: #eef2ff;
       color: #4f46e5;
       font-weight: 700;
+    }
+
+    .buy-content {
+      flex: 1;
+    }
+
+    .buy-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .buy-subtitle {
+      font-size: 12px;
+      color: #667085;
+      margin-bottom: 6px;
+    }
+
+    .buy-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 4px;
+      font-size: 12px;
+      color: #475467;
     }
 
     .section-title {
@@ -224,7 +249,9 @@
     <select name="category" id="category" required onchange="updateForm()">
       <option value="">Select Category</option>
       <option value="mobile">Mobile</option>
-      <option value="bike">Bike</option>
+      <option value="laptop">Laptop</option>
+      <option value="tv">TV</option>
+      <option value="audio">Audio</option>
     </select>
 
     <!-- BUDGET -->
@@ -256,52 +283,132 @@
 
       <div class="section-title">What are you looking to buy?</div>
       <div class="buy-grid">
-        <div class="buy-card"><span class="buy-icon">📱</span>Mobiles</div>
-        <div class="buy-card"><span class="buy-icon">💻</span>Laptops</div>
-        <div class="buy-card"><span class="buy-icon">📺</span>TVs</div>
-        <div class="buy-card"><span class="buy-icon">🎧</span>Audio</div>
+        <a href="/all-brands" style="text-decoration: none; color: inherit;">
+        <div class="buy-card" style="cursor: pointer;">
+          <span class="buy-icon">📱</span>
+          <div class="buy-content">
+            <div class="buy-title">Mobiles</div>
+            <div class="buy-subtitle">{{ mobiles_count }} options available</div>
+            <ul class="buy-list">
+              {% for phone in mobiles_preview %}
+                <li>{{ phone.name }} • ₹{{ "{:,.0f}".format(phone.price) }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        </a>
+        <div class="buy-card">
+          <span class="buy-icon">💻</span>
+          <div class="buy-content">
+            <div class="buy-title">Laptops</div>
+            <div class="buy-subtitle">Top picks coming soon</div>
+          </div>
+        </div>
+        <div class="buy-card">
+          <span class="buy-icon">📺</span>
+          <div class="buy-content">
+            <div class="buy-title">TVs</div>
+            <div class="buy-subtitle">Top picks coming soon</div>
+          </div>
+        </div>
+        <div class="buy-card">
+          <span class="buy-icon">🎧</span>
+          <div class="buy-content">
+            <div class="buy-title">Audio</div>
+            <div class="buy-subtitle">Top picks coming soon</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="section-title">Popular Brands</div>
-  <div class="brand-row">
-    <div class="brand-pill">Samsung</div>
-    <div class="brand-pill">Realme</div>
-    <div class="brand-pill">Xiaomi</div>
-    <div class="brand-pill">Vivo</div>
-    <div class="brand-pill">OnePlus</div>
-    <div class="brand-pill">Apple</div>
-    <div class="brand-pill">Poco</div>
-    <div class="brand-pill">Motorola</div>
-  </div>
+  <div class="spec-layout">
+    <!-- Left Side: Phone Knowledge Base -->
+    <div class="knowledge-section">
+      <h3>📚 Phone Knowledge Base</h3>
+      <p id="kbSubtitle">Search phones by specifications and budget</p>
 
-  <!-- Knowledge Base Section -->
-  <div class="knowledge-section">
-    <h3>📚 Phone Knowledge Base</h3>
-    <p>Search and learn about different mobile phones</p>
+      <!-- Search Bar -->
+      <div class="kb-search-container">
+        <input type="text" id="kbSearch" placeholder="Search by name, brand, price..." class="kb-search-input">
+        <select id="kbSpecFilter" class="kb-filter-select">
+          <option value="">All Specifications</option>
+          <option value="gaming">🎮 Best for Gaming</option>
+          <option value="camera">📷 Best Camera</option>
+          <option value="battery">🔋 Best Battery</option>
+          <option value="performance">⚡ Best Performance</option>
+        </select>
+      </div>
 
-    <!-- Quick Info Cards -->
-    <div class="info-cards">
-      <div class="info-card">
-        <span class="emoji">🎮</span>
-        <h4>Gaming</h4>
-        <p>Find phones optimized for gaming with high refresh rate displays and powerful processors</p>
+      <!-- Educational Info Card -->
+      <div class="education-card" id="educationCard" style="display:none;">
+        <h4 id="educationTitle"></h4>
+        <p id="educationText"></p>
+        <div class="education-points" id="educationPoints"></div>
       </div>
-      <div class="info-card">
-        <span class="emoji">📷</span>
-        <h4>Camera</h4>
-        <p>Explore phones with great camera performance for photography and video recording</p>
+
+      <!-- Quick Filter Cards -->
+      <div class="info-cards">
+        <div class="info-card" onclick="filterBySpec('gaming')">
+          <span class="emoji">🎮</span>
+          <h4>Gaming</h4>
+          <p>High refresh & powerful processors</p>
+        </div>
+        <div class="info-card" onclick="filterBySpec('camera')">
+          <span class="emoji">📷</span>
+          <h4>Camera</h4>
+          <p>Great photo & video quality</p>
+        </div>
+        <div class="info-card" onclick="filterBySpec('battery')">
+          <span class="emoji">🔋</span>
+          <h4>Battery</h4>
+          <p>All-day usage</p>
+        </div>
+        <div class="info-card" onclick="filterBySpec('performance')">
+          <span class="emoji">⚡</span>
+          <h4>Performance</h4>
+          <p>Smooth multitasking</p>
+        </div>
       </div>
-      <div class="info-card">
-        <span class="emoji">🔋</span>
-        <h4>Battery</h4>
-        <p>Discover phones with long battery life for all-day usage without frequent charging</p>
+
+      <!-- Results Container -->
+      <div class="kb-results" id="kbResults" style="display:none;">
+        <h4 id="kbResultsTitle">Top Recommended Phones</h4>
+        <div class="kb-phones-grid" id="kbPhonesGrid">
+          <!-- Populated by JavaScript -->
+        </div>
       </div>
-      <div class="info-card">
-        <span class="emoji">⚡</span>
-        <h4>Performance</h4>
-        <p>Check phones with powerful processors for smooth multitasking and app performance</p>
+    </div>
+
+    <!-- Right Side: Popular Specifications -->
+    <div class="specs-sidebar">
+      <div class="section-title-side">Popular Specifications</div>
+      <div class="spec-links">
+        <button onclick="filterBySpec('gaming'); event.preventDefault();" class="spec-link spec-gaming">
+          🎮 Best for Gaming
+        </button>
+        <button onclick="filterBySpec('camera'); event.preventDefault();" class="spec-link spec-camera">
+          📷 Best Camera
+        </button>
+        <button onclick="filterBySpec('battery'); event.preventDefault();" class="spec-link spec-battery">
+          🔋 Best Battery
+        </button>
+        <button onclick="filterBySpec('performance'); event.preventDefault();" class="spec-link spec-performance">
+          ⚡ Best Performance
+        </button>
+      </div>
+
+      <!-- Popular Brands Alternative -->
+      <div style="margin-top: 30px;">
+        <div class="section-title-side">Popular Brands</div>
+        <div class="brand-row">
+          <div class="brand-pill" onclick="document.getElementById('kbSearch').value='Samsung'; performKBSearch();">Samsung</div>
+          <div class="brand-pill" onclick="document.getElementById('kbSearch').value='Realme'; performKBSearch();">Realme</div>
+          <div class="brand-pill" onclick="document.getElementById('kbSearch').value='Xiaomi'; performKBSearch();">Xiaomi</div>
+          <div class="brand-pill" onclick="document.getElementById('kbSearch').value='Vivo'; performKBSearch();">Vivo</div>
+          <div class="brand-pill" onclick="document.getElementById('kbSearch').value='OnePlus'; performKBSearch();">OnePlus</div>
+          <div class="brand-pill" onclick="document.getElementById('kbSearch').value='Apple'; performKBSearch();">Apple</div>
+        </div>
       </div>
     </div>
   </div>
@@ -314,16 +421,57 @@
   const formElement = document.querySelector("form");
 
   const mobileBudgets = [
+    { value: 5000, label: "₹5,000" },
     { value: 8000, label: "₹8,000" },
     { value: 10000, label: "₹10,000" },
+    { value: 12000, label: "₹12,000" },
     { value: 15000, label: "₹15,000" },
-    { value: 20000, label: "₹20,000" }
+    { value: 20000, label: "₹20,000" },
+    { value: 25000, label: "₹25,000" },
+    { value: 30000, label: "₹30,000" },
+    { value: 40000, label: "₹40,000" },
+    { value: 50000, label: "₹50,000" },
+    { value: 75000, label: "₹75,000" },
+    { value: 100000, label: "₹1,00,000" }
   ];
 
-  const bikeBudgets = [
+  const laptopBudgets = [
+    { value: 20000, label: "₹20,000" },
+    { value: 30000, label: "₹30,000" },
+    { value: 40000, label: "₹40,000" },
+    { value: 50000, label: "₹50,000" },
+    { value: 70000, label: "₹70,000" },
+    { value: 80000, label: "₹80,000" },
+    { value: 100000, label: "₹1,00,000" },
+    { value: 120000, label: "₹1,20,000" },
+    { value: 150000, label: "₹1,50,000" },
+    { value: 200000, label: "₹2,00,000" }
+  ];
+
+  const tvBudgets = [
+    { value: 10000, label: "₹10,000" },
+    { value: 15000, label: "₹15,000" },
+    { value: 25000, label: "₹25,000" },
+    { value: 30000, label: "₹30,000" },
+    { value: 40000, label: "₹40,000" },
+    { value: 50000, label: "₹50,000" },
+    { value: 75000, label: "₹75,000" },
     { value: 100000, label: "₹1,00,000" },
     { value: 150000, label: "₹1,50,000" },
     { value: 200000, label: "₹2,00,000" }
+  ];
+
+  const audioBudgets = [
+    { value: 1000, label: "₹1,000" },
+    { value: 2000, label: "₹2,000" },
+    { value: 3000, label: "₹3,000" },
+    { value: 5000, label: "₹5,000" },
+    { value: 10000, label: "₹10,000" },
+    { value: 15000, label: "₹15,000" },
+    { value: 20000, label: "₹20,000" },
+    { value: 30000, label: "₹30,000" },
+    { value: 50000, label: "₹50,000" },
+    { value: 100000, label: "₹1,00,000" }
   ];
 
   const mobileUses = [
@@ -333,10 +481,24 @@
     { value: "battery", label: "Battery" }
   ];
 
-  const bikeUses = [
+  const laptopUses = [
     { value: "overall", label: "Overall" },
-    { value: "mileage", label: "Mileage" },
     { value: "performance", label: "Performance" },
+    { value: "battery", label: "Battery" },
+    { value: "display", label: "Display" }
+  ];
+
+  const tvUses = [
+    { value: "overall", label: "Overall" },
+    { value: "display", label: "Display" },
+    { value: "performance", label: "Performance" },
+    { value: "sound", label: "Sound" }
+  ];
+
+  const audioUses = [
+    { value: "overall", label: "Overall" },
+    { value: "sound", label: "Sound" },
+    { value: "battery", label: "Battery" },
     { value: "comfort", label: "Comfort" }
   ];
 
@@ -359,15 +521,43 @@
         opt.textContent = u.label;
         useSelect.appendChild(opt);
       });
-    } else if (category === "bike") {
-      formElement.action = "/compare/bike";
-      bikeBudgets.forEach(b => {
+    } else if (category === "laptop") {
+      formElement.action = "/compare/laptop";
+      laptopBudgets.forEach(b => {
         const opt = document.createElement("option");
         opt.value = b.value;
         opt.textContent = b.label;
         budgetSelect.appendChild(opt);
       });
-      bikeUses.forEach(u => {
+      laptopUses.forEach(u => {
+        const opt = document.createElement("option");
+        opt.value = u.value;
+        opt.textContent = u.label;
+        useSelect.appendChild(opt);
+      });
+    } else if (category === "tv") {
+      formElement.action = "/compare/tv";
+      tvBudgets.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.value;
+        opt.textContent = b.label;
+        budgetSelect.appendChild(opt);
+      });
+      tvUses.forEach(u => {
+        const opt = document.createElement("option");
+        opt.value = u.value;
+        opt.textContent = u.label;
+        useSelect.appendChild(opt);
+      });
+    } else if (category === "audio") {
+      formElement.action = "/compare/audio";
+      audioBudgets.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.value;
+        opt.textContent = b.label;
+        budgetSelect.appendChild(opt);
+      });
+      audioUses.forEach(u => {
         const opt = document.createElement("option");
         opt.value = u.value;
         opt.textContent = u.label;
@@ -438,6 +628,153 @@
   // Allow search on Enter key
   document.addEventListener('DOMContentLoaded', function() {
     loadPhones();
+    
+    // Knowledge Base search
+    const kbSearchInput = document.getElementById('kbSearch');
+    const kbFilterSelect = document.getElementById('kbSpecFilter');
+    
+    if (kbSearchInput) {
+      kbSearchInput.addEventListener('keyup', performKBSearch);
+      kbFilterSelect.addEventListener('change', performKBSearch);
+    }
+  });
+
+  function performKBSearch() {
+    const searchTerm = document.getElementById('kbSearch').value.toLowerCase();
+    const specFilter = document.getElementById('kbSpecFilter').value;
+    const resultsDiv = document.getElementById('kbResults');
+    const grid = document.getElementById('kbPhonesGrid');
+    
+    if (!searchTerm && !specFilter) {
+      resultsDiv.style.display = 'none';
+      return;
+    }
+
+    let filtered = allPhones.filter(phone => {
+      const matchesSearch = !searchTerm || 
+        phone.name.toLowerCase().includes(searchTerm) ||
+        (phone.company && phone.company.toLowerCase().includes(searchTerm)) ||
+        phone.price.toString().includes(searchTerm);
+      
+      const matchesSpec = !specFilter || (phone[specFilter] && phone[specFilter] >= 7);
+      
+      return matchesSearch && matchesSpec;
+    });
+
+    // Sort by spec if filter is applied
+    if (specFilter) {
+      filtered.sort((a, b) => (b[specFilter] || 0) - (a[specFilter] || 0));
+    }
+
+    // Limit to 8 results
+    filtered = filtered.slice(0, 8);
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.7);">No phones found matching your criteria</p>';
+      resultsDiv.style.display = 'block';
+      return;
+    }
+
+    let html = '';
+    filtered.forEach(phone => {
+      html += `
+        <div class="kb-phone-card">
+          <div class="kb-phone-name">${phone.name}</div>
+          <div class="kb-phone-price">₹${phone.price.toLocaleString()}</div>
+          <div class="kb-phone-score">🎮 Gaming: ${phone.gaming || 5}/10</div>
+          <div class="kb-phone-score">📷 Camera: ${phone.camera || 5}/10</div>
+          <div class="kb-phone-score">🔋 Battery: ${phone.battery || 5}/10</div>
+          <div class="kb-phone-score">⚡ Performance: ${phone.performance || 5}/10</div>
+        </div>
+      `;
+    });
+    
+    grid.innerHTML = html;
+    resultsDiv.style.display = 'block';
+    document.getElementById('kbResultsTitle').textContent = 
+      `Found ${filtered.length} phones${specFilter ? ' for ' + specFilter : ''}`;
+  }
+
+  const educationContent = {
+    gaming: {
+      title: '🎮 Gaming Phones Explained',
+      desc: 'Gaming phones have high refresh rate displays, powerful processors, and fast RAM for smooth gameplay.',
+      points: [
+        '<strong>Processor:</strong> Snapdragon 8 Gen 3, Dimensity 9300',
+        '<strong>Display:</strong> 120Hz+ refresh rate for smooth graphics',
+        '<strong>RAM:</strong> 12GB-16GB for multitasking',
+        '<strong>Cooling:</strong> Vapor chamber cooling',
+        '<strong>Battery:</strong> 5000+ mAh for long gaming',
+        '<strong>GPU:</strong> Adreno/Mali for graphics'
+      ]
+    },
+    camera: {
+      title: '📷 Camera Phones Explained',
+      desc: 'Great camera phones have high megapixels, large sensors, and advanced image processing.',
+      points: [
+        '<strong>Megapixels:</strong> 48MP-200MP for detail',
+        '<strong>Sensor Size:</strong> Larger sensors capture more light',
+        '<strong>Aperture:</strong> f/1.4-f/1.8 for low light',
+        '<strong>OIS:</strong> Optical stabilization for sharp photos',
+        '<strong>Video:</strong> 4K/8K recording capability',
+        '<strong>AI:</strong> Smart processing for perfect shots'
+      ]
+    },
+    battery: {
+      title: '🔋 Battery Life Explained',
+      desc: 'Long battery phones use large capacity cells and efficient processors to last all day.',
+      points: [
+        '<strong>Capacity:</strong> 5000-6000+ mAh battery',
+        '<strong>Fast Charging:</strong> 65W-120W charging',
+        '<strong>Efficiency:</strong> Lower power processor usage',
+        '<strong>Optimization:</strong> Smart battery management',
+        '<strong>Standby:</strong> Minimal drain when idle',
+        '<strong>Usage:</strong> 7000-10000 mAh expected'
+      ]
+    },
+    performance: {
+      title: '⚡ Performance Phones Explained',
+      desc: 'High performance phones have top processors, RAM, and storage for smooth everyday use.',
+      points: [
+        '<strong>Processor:</strong> Latest flagship chips',
+        '<strong>RAM:</strong> 8GB-16GB for seamless multitasking',
+        '<strong>Storage:</strong> 128GB-1TB options available',
+        '<strong>Speed:</strong> UFS 4.0 storage for fast loading',
+        '<strong>Cooling:</strong> Advanced heat dissipation',
+        '<strong>Optimization:</strong> Smooth software experience'
+      ]
+    }
+  };
+
+  function filterBySpec(spec) {
+    console.log('Filter called with spec:', spec);
+    document.getElementById('kbSpecFilter').value = spec;
+    document.getElementById('kbSearch').value = '';
+    
+    // Show education card
+    if (educationContent[spec]) {
+      console.log('Showing education for:', spec);
+      const edu = educationContent[spec];
+      const eduCard = document.getElementById('educationCard');
+      document.getElementById('educationTitle').textContent = edu.title;
+      document.getElementById('educationText').textContent = edu.desc;
+      
+      const pointsDiv = document.getElementById('educationPoints');
+      pointsDiv.innerHTML = '';
+      edu.points.forEach(point => {
+        const pointEl = document.createElement('div');
+        pointEl.className = 'education-point';
+        pointEl.innerHTML = point;
+        pointsDiv.appendChild(pointEl);
+      });
+      eduCard.style.display = 'block';
+      console.log('Education card displayed');
+    }
+    
+    // Show phones
+    performKBSearch();
+  }
+    loadPhones();
     const searchInput = document.getElementById('phoneSearch');
     if (searchInput) {
       searchInput.addEventListener('keypress', function(e) {
@@ -460,8 +797,99 @@
 </div>
 
 <style>
+  /* ===== TWO COLUMN LAYOUT ===== */
+  .spec-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin: 40px 0;
+  }
+
+  .specs-sidebar {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  }
+
+  .section-title-side {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1f2a44;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #ff8a3d;
+  }
+
+  .spec-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .spec-links {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .spec-link {
+    display: block !important;
+    padding: 14px 16px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+    transition: all 0.3s !important;
+    cursor: pointer !important;
+    border: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    background-clip: padding-box !important;
+    box-sizing: border-box !important;
+    font-size: 15px !important;
+    min-height: 52px !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    line-height: 1.5 !important;
+  }
+
+  .spec-gaming {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  }
+
+  .spec-camera {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+  }
+
+  .spec-battery {
+    background: linear-gradient(135deg, #4facfe, #00f2fe) !important;
+  }
+
+  .spec-performance {
+    background: linear-gradient(135deg, #fa709a, #fee140) !important;
+  }
+
+  .spec-link:hover {
+    transform: translateX(8px) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important;
+  }
+
+  .spec-icon {
+    font-size: 24px !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+    color: white !important;
+  }
+
+  .spec-text {
+    flex: 1 !important;
+    font-size: 14px !important;
+    display: block !important;
+    color: white !important;
+    white-space: nowrap !important;
+  }
+
   .knowledge-section {
-    flex: 1;
     padding: 40px 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 15px;
@@ -599,11 +1027,140 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     transition: transform 0.3s, background 0.3s;
+    cursor: pointer;
   }
 
   .info-card:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* ===== KNOWLEDGE BASE SEARCH ===== */
+  .kb-search-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .kb-search-input,
+  .kb-filter-select {
+    padding: 12px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+  }
+
+  .kb-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .kb-search-input:focus,
+  .kb-filter-select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .kb-filter-select option {
+    background: #2c3e50;
+    color: white;
+  }
+
+  .kb-results {
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+  }
+
+  .kb-results h4 {
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
+  .kb-phones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .kb-phone-card {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+  }
+
+  .kb-phone-card:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .kb-phone-name {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .kb-phone-price {
+    color: #ffd700;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .kb-phone-score {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 4px 0;
+  }
+
+  /* ===== EDUCATION CARD ===== */
+  .education-card {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .education-card h4 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    color: #ffd700;
+  }
+
+  .education-card p {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .education-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .education-point {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .education-point strong {
+    color: #ffd700;
   }
 
   .emoji {
@@ -626,6 +1183,10 @@
 
   @media (max-width: 992px) {
     .hero {
+      grid-template-columns: 1fr;
+    }
+    
+    .spec-layout {
       grid-template-columns: 1fr;
     }
   }

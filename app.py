@@ -75,7 +75,14 @@ def render_results(category, budget, use, db=None):
     if db is None:
         db = load_data()
     
-    items = db["mobiles"] if category == "mobile" else db["bikes"]
+    category_map = {
+        "mobile": "mobiles",
+        "bike": "bikes",
+        "laptop": "laptops",
+        "tv": "tvs",
+        "audio": "audio"
+    }
+    items = db.get(category_map.get(category, "mobiles"), [])
     items = [i for i in items if i.get("price", 0) <= budget]
 
     if not items:
@@ -127,8 +134,13 @@ def index():
         # Redirect to clean GET URL
         return redirect(f"/{category}/{budget}/{use}")
 
+    db = load_data()
+    mobiles_preview = db.get("mobiles", [])[:4]
+
     return render_template(
         "index.html",
+        mobiles_preview=mobiles_preview,
+        mobiles_count=len(db.get("mobiles", [])),
         seo_title="Top 3 Best Options in India",
         seo_desc="Compare top 3 mobiles and bikes in India before buying"
     )
@@ -199,12 +211,15 @@ def seo_page(category, budget, use):
 @app.route("/compare/<category>")
 def compare(category):
     """Support /compare/mobile?budget=10000&use=overall format"""
+    requested_category = request.args.get("category", "", type=str).lower()
+    if requested_category:
+        category = requested_category
     budget = request.args.get("budget", "10000", type=int)
     use = request.args.get("use", "overall", type=str)
     
-    if category not in ["mobile", "bike"]:
+    if category not in ["mobile", "bike", "laptop", "tv", "audio"]:
         abort(404)
-    if use not in ["overall", "gaming", "camera", "battery"]:
+    if use not in ["overall", "gaming", "camera", "battery", "performance", "display", "sound", "comfort"]:
         abort(404)
     
     return render_results(category, budget, use)
@@ -436,6 +451,22 @@ def api_add_phone():
 def admin_add_phone():
     """Admin page to add phones via web interface"""
     return render_template("admin_add_phone.html")
+
+# =========================
+# ALL BRANDS PAGE
+# =========================
+@app.route("/all-brands")
+def all_brands():
+    """Show all mobile brands category-wise"""
+    return render_template("all_brands.html")
+
+# =========================
+# SEARCH RESULTS PAGE
+# =========================
+@app.route("/search")
+def search_results():
+    """Display formatted search results for a brand/query"""
+    return render_template("search_results.html")
 
 # =========================
 # RUN APP

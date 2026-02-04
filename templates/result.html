@@ -86,6 +86,22 @@
       padding: 0;
     }
 
+    /* ===== PRICE DISCLAIMER ===== */
+    .price-disclaimer {
+      background: #fffbea;
+      border-left: 4px solid #ffc107;
+      padding: 12px 16px;
+      margin: 0 0 20px 0;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #856404;
+      text-align: center;
+    }
+
+    .price-disclaimer strong {
+      font-weight: 600;
+    }
+
     /* ===== BREADCRUMBS ===== */
     .breadcrumbs {
       background: #f9f9f9;
@@ -490,6 +506,10 @@
 
   <h1>Top 3 {{ category }} Under ₹{{ budget }}</h1>
   <div class="subtitle">Best for {{ use }}</div>
+
+  <div class="price-disclaimer">
+    <strong>⚠️ Note:</strong> Prices are indicative and sourced from available data. Please check <strong>Amazon/Flipkart</strong> links below for the latest prices and availability before purchasing.
+  </div>
 
   <div class="intro">
     We compared performance, {{ use|lower }}, battery life and overall value
