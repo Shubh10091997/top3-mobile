@@ -235,6 +235,14 @@
 </head>
 
 <body>
+  <!-- Header with Wishlist Button -->
+  <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="margin: 0; color: white; font-size: 22px;">🏆 Top3Pick</h1>
+    <button onclick="viewWishlist()" class="wishlist-header-btn" style="background: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; color: #667eea; transition: all 0.3s;">
+      ❤️ Wishlist (<span id="wishlistCount" style="font-weight: 700;">0</span>)
+    </button>
+  </div>
+
 
 <div class="container-wrapper">
 <div class="page-wrap">
@@ -420,34 +428,21 @@
           <button onclick="closeComparison()" class="close-btn">✕</button>
           <h3>📊 Phone Comparison</h3>
           <div class="comparison-table" id="comparisonTable"></div>
-
-
-        <div class="compare-bar" id="compareBar" style="display:none;">
-          <span id="compareCount">Selected: 0/3</span>
-          <button id="compareBtn" onclick="openComparison()" style="display:none;" class="compare-button">
-            ⚖️ Compare Selected Phones
-          </button>
-        </div>
         </div>
       </div>
     </div>
 
-    <!-- Right Side: Popular Specifications -->
+    <!-- Right Side: Phone Comparison -->
     <div class="specs-sidebar">
-      <div class="section-title-side">Popular Specifications</div>
-      <div class="spec-links">
-        <button onclick="filterBySpec('gaming'); return false;" class="spec-link spec-gaming">
-          🎮 Best for Gaming
-        </button>
-        <button onclick="filterBySpec('camera'); return false;" class="spec-link spec-camera">
-          📷 Best Camera
-        </button>
-        <button onclick="filterBySpec('battery'); return false;" class="spec-link spec-battery">
-          🔋 Best Battery
-        </button>
-        <button onclick="filterBySpec('performance'); return false;" class="spec-link spec-performance">
-          ⚡ Best Performance
-        </button>
+      <div class="section-title-side">Phone Comparison</div>
+      <div class="comparison-sidebar">
+        <p style="margin: 0 0 12px 0; color: #5b667a; font-size: 14px;">Select any 2–3 phones from the results and compare specs side‑by‑side.</p>
+        <div class="compare-bar" id="compareBar">
+          <span id="compareCount">Selected: 0/3</span>
+          <button id="compareBtn" onclick="openComparison()" class="compare-button" disabled>
+            ⚖️ Compare Selected Phones
+          </button>
+        </div>
       </div>
 
       <!-- Popular Brands Alternative -->
@@ -641,17 +636,8 @@
       count.textContent = `Selected: ${selectedPhones.length}/3`;
     }
     const btn = document.getElementById('compareBtn');
-    const bar = document.getElementById('compareBar');
-    if (btn && bar) {
-      if (selectedPhones.length >= 2) {
-        btn.style.display = 'inline-block';
-        bar.style.display = 'flex';
-      } else {
-        btn.style.display = 'none';
-        if (selectedPhones.length === 0) {
-          bar.style.display = 'none';
-        }
-      }
+    if (btn) {
+      btn.disabled = selectedPhones.length < 2;
     }
   }
 
@@ -749,7 +735,80 @@
 
   // Allow search on Enter key
   document.addEventListener('DOMContentLoaded', function() {
-    loadPhones();
+  
+
+  // ===== WISHLIST FEATURE =====
+  let wishlist = JSON.parse(localStorage.getItem('phoneWishlist')) || [];
+
+  function toggleWishlist(phoneName) {
+    const index = wishlist.indexOf(phoneName);
+    if (index > -1) {
+      wishlist.splice(index, 1);
+    } else {
+      wishlist.push(phoneName);
+    }
+    localStorage.setItem('phoneWishlist', JSON.stringify(wishlist));
+    updateWishlistUI();
+  }
+
+  function updateWishlistUI() {
+    const count = document.getElementById('wishlistCount');
+    if (count) {
+      count.textContent = wishlist.length;
+    }
+    
+    // Update all heart icons
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+      const phoneName = btn.dataset.phone;
+      if (wishlist.includes(phoneName)) {
+        btn.classList.add('in-wishlist');
+      } else {
+        btn.classList.remove('in-wishlist');
+      }
+    });
+  }
+
+  function viewWishlist() {
+    if (wishlist.length === 0) {
+      alert('Your wishlist is empty! ❤️');
+      return;
+    }
+    
+    let html = '<div class="wishlist-modal">';
+    html += '<h3>❤️ My Wishlist (' + wishlist.length + ')</h3>';
+    html += '<div class="wishlist-grid">';
+    
+    wishlist.forEach(name => {
+      const phone = allPhones.find(p => p.name === name);
+      if (phone) {
+        html += `
+          <div class="wishlist-card">
+            <button class="remove-wishlist" onclick="toggleWishlist('${phone.name}'); updateWishlistUI(); this.closest('[style*=\"position:fixed\"]').remove();">✕</button>
+            <h4>${phone.name}</h4>
+            <p class="price">₹${phone.price.toLocaleString()}</p>
+            <p class="brand">${phone.company || 'Brand'}</p>
+            <a href="javascript:void(0)" class="compare-link" onclick="document.getElementById('kbSearch').value='${phone.name}'; performKBSearch(); this.closest('[style*=\"position:fixed\"]').remove();">Compare</a>
+          </div>
+        `;
+      }
+    });
+    
+    html += '</div></div>';
+    
+    const modal = document.createElement('div');
+    modal.innerHTML = html;
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:2000;display:flex;align-items:center;justify-content:center;';
+    modal.onclick = function(e) {
+      if (e.target === modal) modal.remove();
+    };
+    document.body.appendChild(modal);
+  }
+
+  // Initialize on page load
+  setTimeout(() => updateWishlistUI(), 500);
+
+
+  loadPhones();
     
     // Knowledge Base search
     const kbSearchInput = document.getElementById('kbSearch');
@@ -801,6 +860,7 @@
     filtered.forEach(phone => {
       html += `
         <div class="kb-phone-card">
+          <button class="wishlist-btn" data-phone="${phone.name}" onclick="toggleWishlist('${phone.name}'); updateWishlistUI(); event.stopPropagation();" style="position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 20px; cursor: pointer; z-index: 10;">❤️</button>
           <input type="checkbox" class="phone-checkbox" onchange="togglePhoneSelection('${phone.name}')" />
           <div class="kb-phone-name">${phone.name}</div>
           <div class="kb-phone-price">₹${phone.price.toLocaleString()}</div>
@@ -897,7 +957,80 @@
     // Show phones
     performKBSearch();
   }
-    loadPhones();
+  
+
+  // ===== WISHLIST FEATURE =====
+  let wishlist = JSON.parse(localStorage.getItem('phoneWishlist')) || [];
+
+  function toggleWishlist(phoneName) {
+    const index = wishlist.indexOf(phoneName);
+    if (index > -1) {
+      wishlist.splice(index, 1);
+    } else {
+      wishlist.push(phoneName);
+    }
+    localStorage.setItem('phoneWishlist', JSON.stringify(wishlist));
+    updateWishlistUI();
+  }
+
+  function updateWishlistUI() {
+    const count = document.getElementById('wishlistCount');
+    if (count) {
+      count.textContent = wishlist.length;
+    }
+    
+    // Update all heart icons
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+      const phoneName = btn.dataset.phone;
+      if (wishlist.includes(phoneName)) {
+        btn.classList.add('in-wishlist');
+      } else {
+        btn.classList.remove('in-wishlist');
+      }
+    });
+  }
+
+  function viewWishlist() {
+    if (wishlist.length === 0) {
+      alert('Your wishlist is empty! ❤️');
+      return;
+    }
+    
+    let html = '<div class="wishlist-modal">';
+    html += '<h3>❤️ My Wishlist (' + wishlist.length + ')</h3>';
+    html += '<div class="wishlist-grid">';
+    
+    wishlist.forEach(name => {
+      const phone = allPhones.find(p => p.name === name);
+      if (phone) {
+        html += `
+          <div class="wishlist-card">
+            <button class="remove-wishlist" onclick="toggleWishlist('${phone.name}'); updateWishlistUI(); this.closest('[style*=\"position:fixed\"]').remove();">✕</button>
+            <h4>${phone.name}</h4>
+            <p class="price">₹${phone.price.toLocaleString()}</p>
+            <p class="brand">${phone.company || 'Brand'}</p>
+            <a href="javascript:void(0)" class="compare-link" onclick="document.getElementById('kbSearch').value='${phone.name}'; performKBSearch(); this.closest('[style*=\"position:fixed\"]').remove();">Compare</a>
+          </div>
+        `;
+      }
+    });
+    
+    html += '</div></div>';
+    
+    const modal = document.createElement('div');
+    modal.innerHTML = html;
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:2000;display:flex;align-items:center;justify-content:center;';
+    modal.onclick = function(e) {
+      if (e.target === modal) modal.remove();
+    };
+    document.body.appendChild(modal);
+  }
+
+  // Initialize on page load
+  setTimeout(() => updateWishlistUI(), 500);
+
+
+  loadPhones();
     const searchInput = document.getElementById('phoneSearch');
     if (searchInput) {
       searchInput.addEventListener('keypress', function(e) {
@@ -1378,6 +1511,13 @@
     transition: all 0.3s;
   }
 
+  .compare-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+
   .compare-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
@@ -1454,6 +1594,124 @@
     cursor: pointer;
     width: 18px;
     height: 18px;
+  }
+
+
+
+  /* ===== WISHLIST STYLES ===== */
+  .wishlist-header-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+
+  .wishlist-btn {
+    transition: all 0.3s;
+    opacity: 0.6;
+  }
+
+  .wishlist-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  .wishlist-btn.in-wishlist {
+    opacity: 1;
+    animation: heartbeat 0.3s;
+  }
+
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .wishlist-modal {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .wishlist-modal h3 {
+    margin: 0 0 20px 0;
+    font-size: 24px;
+    color: #667eea;
+  }
+
+  .wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+  }
+
+  .wishlist-card {
+    background: #f5f7ff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+    border: 2px solid #e8ebf8;
+  }
+
+  .wishlist-card h4 {
+    margin: 10px 0 8px 0;
+    font-size: 14px;
+    color: #1f2a44;
+  }
+
+  .wishlist-card .price {
+    color: #667eea;
+    font-weight: 700;
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .wishlist-card .brand {
+    color: #999;
+    font-size: 12px;
+    margin: 8px 0;
+  }
+
+  .remove-wishlist {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+
+  .remove-wishlist:hover {
+    background: #ff4757;
+    transform: rotate(90deg);
+  }
+
+  .compare-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+    margin-top: 8px;
+    transition: all 0.3s;
+  }
+
+  .compare-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+
+  .kb-phone-card {
+    position: relative;
   }
 
   @media (max-width: 768px) {
