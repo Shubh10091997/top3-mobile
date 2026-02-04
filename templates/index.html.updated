@@ -1,0 +1,9 @@
+# THIS IS A GUIDE - Copy the changes from COMPARISON_SETUP_GUIDE.txt and apply them manually or we can create a Python script to do it
+
+The main changes needed are:
+1. Add comparison functions to JavaScript
+2. Add checkboxes to phone cards 
+3. Add comparison modal HTML
+4. Add CSS styles for comparison feature
+
+These are too extensive for automated patching. Please run the setup script or follow the guide.
