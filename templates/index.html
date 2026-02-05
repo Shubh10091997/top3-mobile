@@ -301,7 +301,7 @@
       <a href="/contact" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">📞 Contact</a>
       <a href="/privacy-policy" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">🔒 Privacy Policy</a>
     </div>
-    <button onclick="openSignIn()" class="wishlist-header-btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-top: 12px; transition: all 0.3s; font-size: 14px;">
+    <button id="signInBtn" onclick="openSignIn()" class="wishlist-header-btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-top: 12px; transition: all 0.3s; font-size: 14px;">
       👤 Sign In
     </button>
   </div>
@@ -452,18 +452,25 @@
   <div id="signInModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; align-items: center; justify-content: center;">
     <div style="background: white; border-radius: 16px; padding: 24px; width: 90%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative;">
       <button onclick="closeSignIn()" style="position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 22px; cursor: pointer;">✕</button>
-      <h3 style="margin: 0 0 6px 0; color: #1f2a44;">👤 Sign In</h3>
-      <p style="margin: 0 0 16px 0; color: #6a7280; font-size: 13px;">Login to save and view your wishlist</p>
+      <h3 style="margin: 0 0 6px 0; color: #1f2a44;">� OTP Login</h3>
+      <p style="margin: 0 0 16px 0; color: #6a7280; font-size: 13px;">Login with mobile number to access wishlist</p>
 
-      <form onsubmit="event.preventDefault(); alert('Login feature coming soon!');">
-        <label style="font-size: 12px; color: #475467;">Email</label>
-        <input type="email" required placeholder="you@example.com" style="width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 6px 0 12px 0;">
-        <label style="font-size: 12px; color: #475467;">Password</label>
-        <input type="password" required placeholder="••••••••" style="width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 6px 0 12px 0;">
-        <button type="submit" style="width: 100%; background: #667eea; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Sign In</button>
-      </form>
+      <label style="font-size: 12px; color: #475467;">Mobile Number</label>
+      <div style="display: flex; gap: 8px; margin: 6px 0 12px 0;">
+        <input id="otpPhone" type="tel" inputmode="numeric" placeholder="Enter 10-digit number" style="flex: 1; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 8px;">
+        <button type="button" onclick="sendOtp()" style="background: #667eea; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer; white-space: nowrap;">Send OTP</button>
+      </div>
 
-      <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #eef0f4;">
+      <label style="font-size: 12px; color: #475467;">OTP</label>
+      <div style="display: flex; gap: 8px; margin: 6px 0 12px 0;">
+        <input id="otpCode" type="text" inputmode="numeric" placeholder="Enter OTP" style="flex: 1; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 8px;">
+        <button type="button" onclick="verifyOtp()" style="background: #10b981; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer; white-space: nowrap;">Verify</button>
+      </div>
+
+      <div id="otpMessage" style="font-size: 12px; color: #6a7280; margin-bottom: 10px;"></div>
+      <div id="demoOtpRow" style="display:none; font-size: 12px; color: #667eea; margin-bottom: 14px;">Demo OTP: <span id="demoOtp"></span></div>
+
+      <div style="margin-top: 8px; padding-top: 12px; border-top: 1px solid #eef0f4;">
         <h4 style="margin: 0 0 8px 0; color: #1f2a44; font-size: 14px;">❤️ My Wishlist</h4>
         <p style="margin: 0 0 10px 0; color: #6a7280; font-size: 12px;">Access your saved phones</p>
         <button onclick="viewWishlist()" style="width: 100%; background: #ff6b6b; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Open Wishlist</button>
@@ -872,6 +879,68 @@
     }
   }
 
+  function sendOtp() {
+    const phoneInput = document.getElementById('otpPhone');
+    const message = document.getElementById('otpMessage');
+    const demoRow = document.getElementById('demoOtpRow');
+    const demoOtp = document.getElementById('demoOtp');
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+
+    if (!/^\d{10}$/.test(phone)) {
+      if (message) message.textContent = 'Please enter a valid 10-digit mobile number.';
+      return;
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const payload = { phone, otp, expiresAt: Date.now() + 5 * 60 * 1000 };
+    localStorage.setItem('otpLogin', JSON.stringify(payload));
+
+    if (message) message.textContent = 'OTP sent (demo). Enter the code below.';
+    if (demoRow && demoOtp) {
+      demoOtp.textContent = otp;
+      demoRow.style.display = 'block';
+    }
+  }
+
+  function verifyOtp() {
+    const codeInput = document.getElementById('otpCode');
+    const message = document.getElementById('otpMessage');
+    const demoRow = document.getElementById('demoOtpRow');
+    const code = codeInput ? codeInput.value.trim() : '';
+
+    const stored = localStorage.getItem('otpLogin');
+    if (!stored) {
+      if (message) message.textContent = 'Please request an OTP first.';
+      return;
+    }
+
+    const data = JSON.parse(stored);
+    if (Date.now() > data.expiresAt) {
+      if (message) message.textContent = 'OTP expired. Please request a new one.';
+      return;
+    }
+
+    if (code !== data.otp) {
+      if (message) message.textContent = 'Invalid OTP. Please try again.';
+      return;
+    }
+
+    localStorage.setItem('otpLoggedIn', 'true');
+    localStorage.setItem('otpPhone', data.phone);
+    if (message) message.textContent = 'OTP verified. You are signed in.';
+    if (demoRow) demoRow.style.display = 'none';
+    updateSignInUI();
+    closeSignIn();
+  }
+
+  function updateSignInUI() {
+    const btn = document.getElementById('signInBtn');
+    const loggedIn = localStorage.getItem('otpLoggedIn') === 'true';
+    if (btn) {
+      btn.textContent = loggedIn ? '👤 Signed In' : '👤 Sign In';
+    }
+  }
+
 
   // Load phones on page load
   async function loadPhones() {
@@ -929,6 +998,7 @@
 
   // Allow search on Enter key
   document.addEventListener('DOMContentLoaded', function() {
+    updateSignInUI();
   
 
   // ===== WISHLIST FEATURE =====
