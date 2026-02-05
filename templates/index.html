@@ -807,6 +807,83 @@
   let allPhones = [];
   let selectedPhones = [];
 
+  // ===== SIGN IN FUNCTIONS =====
+  function openSignIn() {
+    const modal = document.getElementById('signInModal');
+    if (modal) {
+      modal.style.display = 'flex';
+    }
+  }
+
+  function closeSignIn() {
+    const modal = document.getElementById('signInModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  function sendOtp() {
+    const phoneInput = document.getElementById('otpPhone');
+    const message = document.getElementById('otpMessage');
+    const demoRow = document.getElementById('demoOtpRow');
+    const demoOtp = document.getElementById('demoOtp');
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+
+    if (!/^\d{10}$/.test(phone)) {
+      if (message) message.textContent = 'Please enter a valid 10-digit mobile number.';
+      return;
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const payload = { phone, otp, expiresAt: Date.now() + 5 * 60 * 1000 };
+    localStorage.setItem('otpLogin', JSON.stringify(payload));
+
+    if (message) message.textContent = 'OTP sent (demo). Enter the code below.';
+    if (demoRow && demoOtp) {
+      demoOtp.textContent = otp;
+      demoRow.style.display = 'block';
+    }
+  }
+
+  function verifyOtp() {
+    const codeInput = document.getElementById('otpCode');
+    const message = document.getElementById('otpMessage');
+    const demoRow = document.getElementById('demoOtpRow');
+    const code = codeInput ? codeInput.value.trim() : '';
+
+    const stored = localStorage.getItem('otpLogin');
+    if (!stored) {
+      if (message) message.textContent = 'Please request an OTP first.';
+      return;
+    }
+
+    const data = JSON.parse(stored);
+    if (Date.now() > data.expiresAt) {
+      if (message) message.textContent = 'OTP expired. Please request a new one.';
+      return;
+    }
+
+    if (code !== data.otp) {
+      if (message) message.textContent = 'Invalid OTP. Please try again.';
+      return;
+    }
+
+    localStorage.setItem('otpLoggedIn', 'true');
+    localStorage.setItem('otpPhone', data.phone);
+    if (message) message.textContent = 'OTP verified. You are signed in.';
+    if (demoRow) demoRow.style.display = 'none';
+    updateSignInUI();
+    closeSignIn();
+  }
+
+  function updateSignInUI() {
+    const btn = document.getElementById('signInBtn');
+    const loggedIn = localStorage.getItem('otpLoggedIn') === 'true';
+    if (btn) {
+      btn.textContent = loggedIn ? '👤 Signed In' : '👤 Sign In';
+    }
+  }
+
   function togglePhoneSelection(phoneName) {
     const index = selectedPhones.indexOf(phoneName);
     if (index > -1) {
