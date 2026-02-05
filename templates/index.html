@@ -177,6 +177,38 @@
       color: #1f2a44;
     }
 
+    .buying-guide-top {
+      background: #f5f7ff;
+      padding: 25px 0 10px;
+    }
+
+    .buying-guide-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+    }
+
+    .buying-guide-card {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .spec-item {
+      border-left: 4px solid #667eea;
+      padding-left: 12px;
+    }
+
     .brand-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -258,6 +290,94 @@
     <button onclick="viewWishlist()" class="wishlist-header-btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-top: 12px; transition: all 0.3s; font-size: 14px;">
       ❤️ My Wishlist <span id="wishlistCount" style="background: #ff6b6b; border-radius: 50%; padding: 0 6px;">0</span>
     </button>
+  </div>
+
+  <div class="buying-guide-top" id="buying-guide">
+    <div class="buying-guide-grid">
+      <div class="buying-guide-card">
+        <h3 style="font-size: 24px; color: #1f2a44; margin: 0 0 6px 0;">📚 Complete Phone Buying Guide</h3>
+        <p style="color: #6a7280; font-size: 14px; margin: 0 0 16px 0;">Everything you need to know before buying a smartphone</p>
+
+        <h4 style="color: #667eea; font-size: 18px; margin: 0 0 12px 0;">📱 How to Choose the Right Phone?</h4>
+
+        <div style="margin-bottom: 14px;">
+          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">🎮 For Gaming & Heavy Use</h5>
+          <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
+            <li><strong>Processor:</strong> Snapdragon 8 Gen 2/3, Dimensity 9200+, Apple A16/A17</li>
+            <li><strong>RAM:</strong> 8GB minimum, 12-16GB recommended</li>
+            <li><strong>Display:</strong> 120Hz AMOLED for smooth gaming</li>
+            <li><strong>Battery:</strong> 5000mAh+ with 65W+ fast charging</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">📷 For Photography Lovers</h5>
+          <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
+            <li><strong>Main Camera:</strong> 50MP+ with OIS</li>
+            <li><strong>Sensor Size:</strong> 1/1.56" or larger for low‑light</li>
+            <li><strong>Aperture:</strong> f/1.4 to f/1.8 preferred</li>
+            <li><strong>Video:</strong> 4K 60fps recording</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">🔋 For All‑Day Battery Life</h5>
+          <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
+            <li><strong>Battery:</strong> 5000-6000mAh</li>
+            <li><strong>Fast Charging:</strong> 33W minimum, 65W+ ideal</li>
+            <li><strong>Efficiency:</strong> Snapdragon 7‑series / Dimensity 7000‑series</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">💼 For Business & Productivity</h5>
+          <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
+            <li><strong>RAM:</strong> 6-8GB</li>
+            <li><strong>Storage:</strong> 128GB minimum (UFS 3.1 preferred)</li>
+            <li><strong>Battery:</strong> 5000mAh+</li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">💰 Budget‑Friendly (Under ₹15,000)</h5>
+          <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
+            <li><strong>Processor:</strong> Snapdragon 680/695 or Helio G85/G99</li>
+            <li><strong>RAM:</strong> 4-6GB</li>
+            <li><strong>Battery:</strong> 5000mAh with 18W+ charging</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buying-guide-card">
+        <h4 style="color: #667eea; font-size: 18px; margin: 0 0 12px 0;">🔧 Understanding Phone Specifications</h4>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">💾 RAM</h5>
+            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">3-4GB basic • 6-8GB multitasking • 12GB+ heavy use</p>
+          </div>
+          <div class="spec-item">
+            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🧠 Processor</h5>
+            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">Entry: Helio G35/G85 • Mid: SD 680/695/7 Gen • Flagship: SD 8 Gen</p>
+          </div>
+          <div class="spec-item">
+            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📦 Storage</h5>
+            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">64GB minimum • 128GB recommended • 256GB+ for heavy users</p>
+          </div>
+          <div class="spec-item">
+            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📷 Camera</h5>
+            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">50MP+ with OIS preferred • Sensor size matters more than MP</p>
+          </div>
+          <div class="spec-item">
+            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🔋 Battery</h5>
+            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">4000mAh light • 5000mAh full day • 6000mAh+ heavy use</p>
+          </div>
+          <div class="spec-item">
+            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🖥️ Display</h5>
+            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">AMOLED preferred • 90/120Hz for smooth scrolling</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Secondary Navigation Bar -->
@@ -371,129 +491,8 @@
   <div class="spec-layout">
     <!-- Left Side: Phone Knowledge Base -->
     <div class="knowledge-section" id="knowledge">
-      <h3 style="font-size: 28px; color: #1f2a44; margin-bottom: 10px;">📚 Complete Phone Buying Guide</h3>
-      <p style="color: #6a7280; font-size: 15px; margin-bottom: 30px;">Everything you need to know before buying a smartphone</p>
-
-      <!-- Static Knowledge Content -->
-      <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 25px;">
-        <h4 style="color: #667eea; font-size: 20px; margin-bottom: 15px;">📱 How to Choose the Right Phone?</h4>
-        
-        <div style="margin-bottom: 25px;">
-          <h5 style="color: #1f2a44; font-size: 16px; margin-bottom: 10px;">🎮 For Gaming & Heavy Use</h5>
-          <ul style="color: #475467; line-height: 1.8; margin-left: 20px;">
-            <li><strong>Processor:</strong> Snapdragon 8 Gen 2/3, Dimensity 9200+, Apple A16/A17</li>
-            <li><strong>RAM:</strong> 8GB minimum, 12-16GB recommended</li>
-            <li><strong>Display:</strong> 120Hz AMOLED for smooth gaming</li>
-            <li><strong>Battery:</strong> 5000mAh+ with 65W+ fast charging</li>
-            <li><strong>Cooling:</strong> Vapor chamber cooling system</li>
-          </ul>
-        </div>
-
-        <div style="margin-bottom: 25px;">
-          <h5 style="color: #1f2a44; font-size: 16px; margin-bottom: 10px;">📷 For Photography Lovers</h5>
-          <ul style="color: #475467; line-height: 1.8; margin-left: 20px;">
-            <li><strong>Main Camera:</strong> 50MP+ with OIS (Optical Image Stabilization)</li>
-            <li><strong>Sensor Size:</strong> 1/1.56" or larger for better low-light photos</li>
-            <li><strong>Aperture:</strong> f/1.4 to f/1.8 for more light capture</li>
-            <li><strong>Video:</strong> 4K 60fps recording capability</li>
-            <li><strong>Features:</strong> AI scene detection, night mode, portrait mode</li>
-          </ul>
-        </div>
-
-        <div style="margin-bottom: 25px;">
-          <h5 style="color: #1f2a44; font-size: 16px; margin-bottom: 10px;">🔋 For All-Day Battery Life</h5>
-          <ul style="color: #475467; line-height: 1.8; margin-left: 20px;">
-            <li><strong>Battery Capacity:</strong> 5000-6000mAh for full day backup</li>
-            <li><strong>Fast Charging:</strong> 33W minimum, 65W+ recommended</li>
-            <li><strong>Processor Efficiency:</strong> Snapdragon 7-series or Dimensity 7000-series</li>
-            <li><strong>Display:</strong> AMOLED saves more battery than LCD</li>
-            <li><strong>Software:</strong> Good battery optimization features</li>
-          </ul>
-        </div>
-
-        <div style="margin-bottom: 25px;">
-          <h5 style="color: #1f2a44; font-size: 16px; margin-bottom: 10px;">💼 For Business & Productivity</h5>
-          <ul style="color: #475467; line-height: 1.8; margin-left: 20px;">
-            <li><strong>RAM:</strong> 6-8GB for smooth multitasking</li>
-            <li><strong>Storage:</strong> 128GB minimum (UFS 3.1 preferred)</li>
-            <li><strong>Display:</strong> 6.5"+ for comfortable work</li>
-            <li><strong>Battery:</strong> 5000mAh+ to last full workday</li>
-            <li><strong>Software:</strong> Clean UI with minimal bloatware</li>
-          </ul>
-        </div>
-
-        <div style="margin-bottom: 25px;">
-          <h5 style="color: #1f2a44; font-size: 16px; margin-bottom: 10px;">💰 Budget-Friendly Options (Under ₹15,000)</h5>
-          <ul style="color: #475467; line-height: 1.8; margin-left: 20px;">
-            <li><strong>Processor:</strong> Snapdragon 680/695 or MediaTek Helio G85/G99</li>
-            <li><strong>RAM:</strong> 4-6GB sufficient</li>
-            <li><strong>Display:</strong> 90Hz LCD or 60Hz AMOLED</li>
-            <li><strong>Camera:</strong> 50MP main sensor</li>
-            <li><strong>Battery:</strong> 5000mAh with 18W+ charging</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Technical Specifications Explained -->
-      <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 25px;">
-        <h4 style="color: #667eea; font-size: 20px; margin-bottom: 15px;">🔧 Understanding Phone Specifications</h4>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-          <div style="border-left: 4px solid #667eea; padding-left: 15px;">
-            <h5 style="color: #1f2a44; margin-bottom: 8px;">💾 RAM (Memory)</h5>
-            <p style="color: #475467; font-size: 14px; line-height: 1.6;">
-              • <strong>3-4GB:</strong> Basic calling, WhatsApp<br>
-              • <strong>6-8GB:</strong> Multitasking, social media<br>
-              • <strong>12GB+:</strong> Heavy gaming, professional use
-            </p>
-          </div>
-
-          <div style="border-left: 4px solid #667eea; padding-left: 15px;">
-            <h5 style="color: #1f2a44; margin-bottom: 8px;">🧠 Processor (Chipset)</h5>
-            <p style="color: #475467; font-size: 14px; line-height: 1.6;">
-              • <strong>Entry:</strong> Helio G35/G85<br>
-              • <strong>Mid:</strong> Snapdragon 680/695/7 Gen series<br>
-              • <strong>Flagship:</strong> Snapdragon 8 Gen series
-            </p>
-          </div>
-
-          <div style="border-left: 4px solid #667eea; padding-left: 15px;">
-            <h5 style="color: #1f2a44; margin-bottom: 8px;">📦 Storage</h5>
-            <p style="color: #475467; font-size: 14px; line-height: 1.6;">
-              • <strong>64GB:</strong> Minimum for basic use<br>
-              • <strong>128GB:</strong> Recommended standard<br>
-              • <strong>256GB+:</strong> For photos/videos/gaming
-            </p>
-          </div>
-
-          <div style="border-left: 4px solid #667eea; padding-left: 15px;">
-            <h5 style="color: #1f2a44; margin-bottom: 8px;">📷 Camera Megapixels</h5>
-            <p style="color: #475467; font-size: 14px; line-height: 1.6;">
-              • <strong>8-13MP:</strong> Basic photos<br>
-              • <strong>48-50MP:</strong> Good quality<br>
-              • <strong>108-200MP:</strong> Professional shots
-            </p>
-          </div>
-
-          <div style="border-left: 4px solid #667eea; padding-left: 15px;">
-            <h5 style="color: #1f2a44; margin-bottom: 8px;">🔋 Battery & Charging</h5>
-            <p style="color: #475467; font-size: 14px; line-height: 1.6;">
-              • <strong>4000mAh:</strong> Light use<br>
-              • <strong>5000-5500mAh:</strong> Full day<br>
-              • <strong>6000mAh+:</strong> Heavy users
-            </p>
-          </div>
-
-          <div style="border-left: 4px solid #667eea; padding-left: 15px;">
-            <h5 style="color: #1f2a44; margin-bottom: 8px;">🖥️ Display Type</h5>
-            <p style="color: #475467; font-size: 14px; line-height: 1.6;">
-              • <strong>LCD:</strong> Budget-friendly<br>
-              • <strong>AMOLED:</strong> Better colors, battery<br>
-              • <strong>120Hz:</strong> Smooth scrolling
-            </p>
-          </div>
-        </div>
-      </div>
+      <h3 style="font-size: 26px; color: #1f2a44; margin-bottom: 10px;">📚 Phone Knowledge Base</h3>
+      <p style="color: #6a7280; font-size: 15px; margin-bottom: 20px;">Search phones by specifications and budget</p>
 
       <!-- Search Bar -->
       <div class="kb-search-container">
@@ -1844,6 +1843,10 @@
     .buy-grid {
       grid-template-columns: repeat(2, 1fr) !important;
     }
+
+    .buying-guide-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
 
@@ -2123,6 +2126,15 @@
 
     .buy-grid {
       grid-template-columns: 1fr !important;
+    }
+
+    .buying-guide-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .spec-grid {
+      grid-template-columns: 1fr;
     }
 
     /* Mobile Buying Guide */
