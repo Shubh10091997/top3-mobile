@@ -122,6 +122,14 @@ def render_results(category, budget, use, db=None):
     )
 
 # =========================
+# HEALTH CHECK (for UptimeRobot/monitoring)
+# =========================
+@app.route("/health")
+def health_check():
+    """Lightweight endpoint for uptime monitoring"""
+    return {"status": "healthy", "version": "1.0"}, 200
+
+# =========================
 # HOME PAGE
 # =========================
 @app.route("/", methods=["GET", "POST"])
@@ -136,11 +144,15 @@ def index():
 
     db = load_data()
     mobiles_preview = db.get("mobiles", [])[:4]
+    
+    # Get new launch phones (those with is_new_launch flag or latest added)
+    new_launch_phones = [p for p in db.get("mobiles", []) if p.get("is_new_launch", False)][:4]
 
     return render_template(
         "index.html",
         mobiles_preview=mobiles_preview,
         mobiles_count=len(db.get("mobiles", [])),
+        new_launch_phones=new_launch_phones,
         seo_title="Top 3 Best Options in India",
         seo_desc="Compare top 3 mobiles and bikes in India before buying"
     )

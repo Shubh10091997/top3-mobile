@@ -15,11 +15,21 @@
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FKG2FW3J14"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-FKG2FW3J14');
+    // Exclude yourself from Google Analytics
+    // Set this value to 'true' when you want to opt-out
+    var excludeFromAnalytics = false;
+    
+    // You can also exclude based on localStorage (handy for testing)
+    if(localStorage.getItem('excludeFromGA') === 'true') {
+      excludeFromAnalytics = true;
+    }
+    
+    if(!excludeFromAnalytics) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-FKG2FW3J14');
+    }
   </script>
 
   <style>
@@ -240,14 +250,35 @@
     <h1 style="margin: 0; font-size: 28px; font-weight: 700;">🏆 Top 3 Best Options</h1>
     <p style="margin: 8px 0 0 0; font-size: 14px; opacity: 0.9;">Compare Phones with Our Smart Features</p>
     <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-      <a href="/" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">Home</a>
-      <a href="/about" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">About</a>
-      <a href="/contact" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">Contact</a>
-      <a href="/privacy-policy" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">Privacy Policy</a>
+      <a href="/" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">🏠 Home</a>
+      <a href="/about" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">ℹ️ About</a>
+      <a href="/contact" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">📞 Contact</a>
+      <a href="/privacy-policy" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">🔒 Privacy Policy</a>
     </div>
     <button onclick="viewWishlist()" class="wishlist-header-btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-top: 12px; transition: all 0.3s; font-size: 14px;">
       ❤️ My Wishlist <span id="wishlistCount" style="background: #ff6b6b; border-radius: 50%; padding: 0 6px;">0</span>
     </button>
+  </div>
+
+  <!-- Secondary Navigation Bar -->
+  <div style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px 0; position: sticky; top: 0; z-index: 100;">
+    <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 0 20px;">
+      <a href="#knowledge" onclick="document.getElementById('kbSearch').focus(); return false;" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
+        📚 Knowledge Base
+      </a>
+      <a href="#phones" onclick="performKBSearch(); return false;" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
+        📱 Phone Range
+      </a>
+      <a href="#compare" onclick="openComparison(); return false;" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
+        ⚖️ Compare Phones
+      </a>
+      <a href="/all-brands" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
+        🏷️ Brand-wise Phones
+      </a>
+      <a href="javascript:void(0)" onclick="showAdvancedFilters(); return false;" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
+        🔍 Filter by Specs
+      </a>
+    </div>
   </div>
 
 
@@ -459,7 +490,6 @@
       <div id="comparisonModal" class="comparison-modal" style="display:none;">
         <div class="comparison-modal-content">
           <button onclick="closeComparison()" class="close-btn">✕</button>
-          <h3>📊 Phone Comparison</h3>
           <div class="comparison-table" id="comparisonTable"></div>
         </div>
       </div>
@@ -490,6 +520,24 @@
           <div class="brand-pill" onclick="document.getElementById('kbSearch').value='Apple'; performKBSearch();">Apple</div>
         </div>
       </div>
+
+      <!-- New Launch Mobile Phones -->
+      {% if new_launch_phones %}
+      <div style="margin-top: 30px;">
+        <div class="section-title-side">🚀 New Launch Phones</div>
+        <div style="display: grid; gap: 12px;">
+          {% for phone in new_launch_phones %}
+          <a href="javascript:void(0)" onclick="document.getElementById('kbSearch').value='{{ phone.name }}'; performKBSearch(); return false;" style="text-decoration: none; color: inherit; display: block;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 14px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.3)';">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">{{ phone.name }}</div>
+              <div style="font-size: 12px; opacity: 0.95;">💰 ₹{{ "{:,.0f}".format(phone.price) }}</div>
+              <div style="font-size: 11px; opacity: 0.85; margin-top: 6px;">📱 {{ phone.ram }} | 🎯 {{ phone.processor }}</div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -905,6 +953,11 @@
           <input type="checkbox" class="phone-checkbox" onchange="togglePhoneSelection('${phone.name}')" />
           <div class="kb-phone-name">${phone.name}</div>
           <div class="kb-phone-price">₹${phone.price.toLocaleString()}</div>
+          <div style="font-size: 11px; color: #999; margin: 6px 0;">
+            📱 ${phone.ram || '4GB'} RAM | 💾 ${phone.storage || '64GB'} <br>
+            🎯 ${phone.processor || 'Unknown'} <br>
+            📷 ${phone.main_camera || '50MP'} | 🔋 ${phone.battery || '5000mAh'}
+          </div>
           <div class="kb-phone-score">🎮 Gaming: ${phone.gaming || 5}/10</div>
           <div class="kb-phone-score">📷 Camera: ${phone.camera || 5}/10</div>
           <div class="kb-phone-score">🔋 Battery: ${phone.battery || 5}/10</div>
@@ -995,6 +1048,11 @@
           <input type="checkbox" class="phone-checkbox" onchange="togglePhoneSelection('${phone.name}')" />
           <div class="kb-phone-name">${phone.name}</div>
           <div class="kb-phone-price">₹${phone.price.toLocaleString()}</div>
+          <div style="font-size: 11px; color: #999; margin: 6px 0;">
+            📱 ${phone.ram || '4GB'} RAM | 💾 ${phone.storage || '64GB'} <br>
+            🎯 ${phone.processor || 'Unknown'} <br>
+            📷 ${phone.main_camera || '50MP'} | 🔋 ${phone.battery || '5000mAh'}
+          </div>
           <div class="kb-phone-score">🎮 Gaming: ${phone.gaming || 5}/10</div>
           <div class="kb-phone-score">📷 Camera: ${phone.camera || 5}/10</div>
           <div class="kb-phone-score">🔋 Battery: ${phone.battery || 5}/10</div>
@@ -1225,6 +1283,11 @@
           <input type="checkbox" class="phone-checkbox" onchange="togglePhoneSelection('${phone.name}')" />
           <div class="kb-phone-name">${phone.name}</div>
           <div class="kb-phone-price">₹${phone.price.toLocaleString()}</div>
+          <div style="font-size: 11px; color: #999; margin: 6px 0;">
+            📱 ${phone.ram || '4GB'} RAM | 💾 ${phone.storage || '64GB'} <br>
+            🎯 ${phone.processor || 'Unknown'} <br>
+            📷 ${phone.main_camera || '50MP'} | 🔋 ${phone.battery || '5000mAh'}
+          </div>
           <div class="kb-phone-score">🎮 Gaming: ${phone.gaming || 5}/10</div>
           <div class="kb-phone-score">📷 Camera: ${phone.camera || 5}/10</div>
           <div class="kb-phone-score">🔋 Battery: ${phone.battery || 5}/10</div>
