@@ -53,6 +53,10 @@
       align-items: stretch;
     }
 
+    .hero.hero-single {
+      grid-template-columns: 1fr;
+    }
+
     .hero-card {
       background: white;
       padding: 28px;
@@ -189,6 +193,12 @@
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 24px;
+    }
+
+    .buying-guide-side {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .buying-guide-card {
@@ -369,33 +379,69 @@
           </ul>
         </div>
       </div>
+      <div class="buying-guide-side">
+        <div class="buying-guide-card">
+          <h4 style="color: #667eea; font-size: 18px; margin: 0 0 12px 0;">🔧 Understanding Phone Specifications</h4>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">💾 RAM</h5>
+              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">3-4GB basic • 6-8GB multitasking • 12GB+ heavy use</p>
+            </div>
+            <div class="spec-item">
+              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🧠 Processor</h5>
+              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">Entry: Helio G35/G85 • Mid: SD 680/695/7 Gen • Flagship: SD 8 Gen</p>
+            </div>
+            <div class="spec-item">
+              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📦 Storage</h5>
+              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">64GB minimum • 128GB recommended • 256GB+ for heavy users</p>
+            </div>
+            <div class="spec-item">
+              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📷 Camera</h5>
+              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">50MP+ with OIS preferred • Sensor size matters more than MP</p>
+            </div>
+            <div class="spec-item">
+              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🔋 Battery</h5>
+              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">4000mAh light • 5000mAh full day • 6000mAh+ heavy use</p>
+            </div>
+            <div class="spec-item">
+              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🖥️ Display</h5>
+              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">AMOLED preferred • 90/120Hz for smooth scrolling</p>
+            </div>
+          </div>
+        </div>
 
-      <div class="buying-guide-card">
-        <h4 style="color: #667eea; font-size: 18px; margin: 0 0 12px 0;">🔧 Understanding Phone Specifications</h4>
-        <div class="spec-grid">
-          <div class="spec-item">
-            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">💾 RAM</h5>
-            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">3-4GB basic • 6-8GB multitasking • 12GB+ heavy use</p>
-          </div>
-          <div class="spec-item">
-            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🧠 Processor</h5>
-            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">Entry: Helio G35/G85 • Mid: SD 680/695/7 Gen • Flagship: SD 8 Gen</p>
-          </div>
-          <div class="spec-item">
-            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📦 Storage</h5>
-            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">64GB minimum • 128GB recommended • 256GB+ for heavy users</p>
-          </div>
-          <div class="spec-item">
-            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📷 Camera</h5>
-            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">50MP+ with OIS preferred • Sensor size matters more than MP</p>
-          </div>
-          <div class="spec-item">
-            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🔋 Battery</h5>
-            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">4000mAh light • 5000mAh full day • 6000mAh+ heavy use</p>
-          </div>
-          <div class="spec-item">
-            <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🖥️ Display</h5>
-            <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">AMOLED preferred • 90/120Hz for smooth scrolling</p>
+        <div class="hero-card">
+          <div class="hero-title">Let's Find the Best Option</div>
+          <div class="hero-subtitle">Choose category, budget, and use. We'll show top 3 picks.</div>
+
+          <form method="GET" action="/compare/mobile">
+
+        <!-- CATEGORY -->
+        <select name="category" id="category" required onchange="updateForm()">
+          <option value="">Select Category</option>
+          <option value="mobile">Mobile</option>
+          <option value="laptop">Laptop</option>
+          <option value="tv">TV</option>
+          <option value="audio">Audio</option>
+        </select>
+
+        <!-- BUDGET -->
+        <select name="budget" id="budget" required>
+          <option value="">Select Budget</option>
+        </select>
+
+        <!-- USE / PURPOSE -->
+        <select name="use" id="use" required>
+          <option value="">Select Use</option>
+        </select>
+
+            <button type="submit" class="cta-button">Show Top 3</button>
+          </form>
+          <div class="quick-grid">
+            <div class="quick-item">5G Phones</div>
+            <div class="quick-item">Best Camera</div>
+            <div class="quick-item">Gaming Ready</div>
+            <div class="quick-item">All‑day Battery</div>
           </div>
         </div>
       </div>
@@ -404,41 +450,7 @@
 
 <div class="container-wrapper">
 <div class="page-wrap">
-  <div class="hero">
-    <div class="hero-card">
-      <div class="hero-title">Let's Find the Best Option</div>
-      <div class="hero-subtitle">Choose category, budget, and use. We'll show top 3 picks.</div>
-
-      <form method="GET" action="/compare/mobile">
-
-    <!-- CATEGORY -->
-    <select name="category" id="category" required onchange="updateForm()">
-      <option value="">Select Category</option>
-      <option value="mobile">Mobile</option>
-      <option value="laptop">Laptop</option>
-      <option value="tv">TV</option>
-      <option value="audio">Audio</option>
-    </select>
-
-    <!-- BUDGET -->
-    <select name="budget" id="budget" required>
-      <option value="">Select Budget</option>
-    </select>
-
-    <!-- USE / PURPOSE -->
-    <select name="use" id="use" required>
-      <option value="">Select Use</option>
-    </select>
-
-        <button type="submit" class="cta-button">Show Top 3</button>
-      </form>
-      <div class="quick-grid">
-        <div class="quick-item">5G Phones</div>
-        <div class="quick-item">Best Camera</div>
-        <div class="quick-item">Gaming Ready</div>
-        <div class="quick-item">All‑day Battery</div>
-      </div>
-    </div>
+  <div class="hero hero-single">
     <div class="right-panel">
       <h3>Quick Phone Search</h3>
       <div class="search-container">
