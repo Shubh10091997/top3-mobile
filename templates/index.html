@@ -301,8 +301,8 @@
       <a href="/contact" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">📞 Contact</a>
       <a href="/privacy-policy" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">🔒 Privacy Policy</a>
     </div>
-    <button onclick="viewWishlist()" class="wishlist-header-btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-top: 12px; transition: all 0.3s; font-size: 14px;">
-      ❤️ My Wishlist <span id="wishlistCount" style="background: #ff6b6b; border-radius: 50%; padding: 0 6px;">0</span>
+    <button onclick="openSignIn()" class="wishlist-header-btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-top: 12px; transition: all 0.3s; font-size: 14px;">
+      👤 Sign In
     </button>
   </div>
 
@@ -444,6 +444,29 @@
             <div class="quick-item">All‑day Battery</div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign In Modal -->
+  <div id="signInModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 16px; padding: 24px; width: 90%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative;">
+      <button onclick="closeSignIn()" style="position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 22px; cursor: pointer;">✕</button>
+      <h3 style="margin: 0 0 6px 0; color: #1f2a44;">👤 Sign In</h3>
+      <p style="margin: 0 0 16px 0; color: #6a7280; font-size: 13px;">Login to save and view your wishlist</p>
+
+      <form onsubmit="event.preventDefault(); alert('Login feature coming soon!');">
+        <label style="font-size: 12px; color: #475467;">Email</label>
+        <input type="email" required placeholder="you@example.com" style="width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 6px 0 12px 0;">
+        <label style="font-size: 12px; color: #475467;">Password</label>
+        <input type="password" required placeholder="••••••••" style="width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 6px 0 12px 0;">
+        <button type="submit" style="width: 100%; background: #667eea; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Sign In</button>
+      </form>
+
+      <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #eef0f4;">
+        <h4 style="margin: 0 0 8px 0; color: #1f2a44; font-size: 14px;">❤️ My Wishlist</h4>
+        <p style="margin: 0 0 10px 0; color: #6a7280; font-size: 12px;">Access your saved phones</p>
+        <button onclick="viewWishlist()" style="width: 100%; background: #ff6b6b; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Open Wishlist</button>
       </div>
     </div>
   </div>
@@ -830,6 +853,20 @@
 
   function closeComparison() {
     const modal = document.getElementById('comparisonModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  function openSignIn() {
+    const modal = document.getElementById('signInModal');
+    if (modal) {
+      modal.style.display = 'flex';
+    }
+  }
+
+  function closeSignIn() {
+    const modal = document.getElementById('signInModal');
     if (modal) {
       modal.style.display = 'none';
     }
