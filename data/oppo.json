@@ -1,0 +1,32 @@
+{
+  "brand": "Oppo",
+  "last_updated": "2026-02",
+  "phones": [
+    {
+      "id": "oppo_reno_11",
+      "model": "Oppo Reno 11",
+      "launch_year": 2024,
+      "price": 28999,
+      "processor": "Dimensity 7050",
+      "display": "AMOLED 120Hz",
+      "camera": "50MP",
+      "battery": "5000mAh",
+      "charging": "67W",
+      "rating": 4.3,
+      "best_for": ["camera", "design"]
+    },
+    {
+      "id": "oppo_find_x7",
+      "model": "Oppo Find X7",
+      "launch_year": 2025,
+      "price": 69999,
+      "processor": "Dimensity 9300",
+      "display": "AMOLED",
+      "camera": "50MP",
+      "battery": "5000mAh",
+      "charging": "100W",
+      "rating": 4.7,
+      "best_for": ["flagship"]
+    }
+  ]
+}

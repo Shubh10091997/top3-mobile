@@ -15,19 +15,72 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_URL = "https://top3pick.in"
 
 # =========================
+# AFFILIATE IDS
+# =========================
+AMAZON_ASSOCIATE_ID = "bestofthree-21"
+
+# =========================
 # DATA LOAD FUNCTIONS
 # =========================
 def load_data():
-    with open(os.path.join(BASE_DIR, "data", "data.json"), "r", encoding="utf-8") as f:
-        data = json.load(f)
+    """Load phone data from all brand-specific JSON files and merge them"""
+    brands = ["samsung", "realme", "redmi", "poco", "apple", "vivo", "oppo", "motorola"]
+    all_phones = []
+    
+    # Load each brand's phone data
+    for brand in brands:
+        brand_file = os.path.join(BASE_DIR, "data", f"{brand}.json")
+        try:
+            with open(brand_file, "r", encoding="utf-8") as f:
+                brand_data = json.load(f)
+                if isinstance(brand_data, dict) and "phones" in brand_data:
+                    phones = brand_data.get("phones", [])
+                    # Add brand name and ensure required fields
+                    for phone in phones:
+                        if "brand" not in phone:
+                            phone["brand"] = brand_data.get("brand", brand.capitalize())
+                        
+                        # Set phone name if not present
+                        if "name" not in phone:
+                            phone["name"] = phone.get("model", "Unknown")
+                        
+                        # Add reason/why buy if not present
+                        if "reason" not in phone:
+                            best_for = phone.get("best_for", [])
+                            if best_for:
+                                phone["reason"] = f"Best for {', '.join(best_for)}"
+                            else:
+                                phone["reason"] = "Great choice"
+                        
+                        # Add numeric ratings (1-10) for display
+                        # Use rating field if present, otherwise derive from name/specs
+                        if "rating" not in phone:
+                            phone["rating"] = 4.0
+                        
+                        # Ensure numeric specs for template (default to rating value)
+                        rating = phone.get("rating", 4.0)
+                        specs = ["gaming", "camera", "battery", "performance", "display"]
+                        for spec in specs:
+                            if spec not in phone or not isinstance(phone[spec], (int, float)):
+                                phone[spec] = rating
+                        
+                        # Add image if not present
+                        if "image" not in phone or not phone.get("image"):
+                            phone["image"] = "/static/no-image.png"
+                    
+                    all_phones.extend(phones)
+        except (FileNotFoundError, json.JSONDecodeError):
+            pass  # Skip if file doesn't exist or is invalid
 
-    # Ensure every product has an `image` key to avoid template errors.
-    default_image = "/static/no-image.png"
-    for collection in ("mobiles", "bikes"):
-        for item in data.get(collection, []):
-            if "image" not in item or not item.get("image"):
-                item["image"] = default_image
-
+    # Return data structure that maintains compatibility with existing code
+    data = {
+        "mobiles": all_phones,
+        "bikes": [],
+        "laptops": [],
+        "tvs": [],
+        "audio": []
+    }
+    
     return data
 
 def load_clicks():
@@ -61,14 +114,16 @@ USE_NAMES = {
 # HELPERS
 # =========================
 def overall_score(item):
-    values = [v for v in item.values() if isinstance(v, int)]
-    return sum(values) / len(values) if values else 0
+    values = [v for v in item.values() if isinstance(v, (int, float)) and v != item.get("price") and v != item.get("launch_year")]
+    return round(sum(values) / len(values), 1) if values else 0
 
 def add_badges(top3):
     badges = ["Top Choice", "Best Alternative", "Good Option"]
     for i, item in enumerate(top3):
         if i < len(badges):
             item["badge"] = badges[i]
+        # Add overall score to each item
+        item["overall"] = overall_score(item)
 
 def render_results(category, budget, use, db=None):
     """Helper function to render results page"""
@@ -248,7 +303,7 @@ def go(platform):
         save_clicks(clicks)
 
     if platform == "amazon":
-        return redirect("https://www.amazon.in/")
+        return redirect(f"https://www.amazon.in/?tag={AMAZON_ASSOCIATE_ID}")
     elif platform == "flipkart":
         return redirect("https://www.flipkart.com/")
     return redirect("/")

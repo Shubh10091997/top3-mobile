@@ -1,0 +1,32 @@
+{
+  "brand": "Motorola",
+  "last_updated": "2026-02",
+  "phones": [
+    {
+      "id": "moto_edge_40",
+      "model": "Moto Edge 40",
+      "launch_year": 2024,
+      "price": 26999,
+      "processor": "Dimensity 8020",
+      "display": "POLED 144Hz",
+      "camera": "50MP",
+      "battery": "4400mAh",
+      "charging": "68W",
+      "rating": 4.4,
+      "best_for": ["clean android"]
+    },
+    {
+      "id": "moto_edge_50_pro",
+      "model": "Moto Edge 50 Pro",
+      "launch_year": 2025,
+      "price": 35999,
+      "processor": "Snapdragon 7 Gen 3",
+      "display": "POLED 144Hz",
+      "camera": "50MP",
+      "battery": "4500mAh",
+      "charging": "125W",
+      "rating": 4.6,
+      "best_for": ["fast charging"]
+    }
+  ]
+}

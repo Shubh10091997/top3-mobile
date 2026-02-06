@@ -1,0 +1,45 @@
+{
+  "brand": "Redmi",
+  "last_updated": "2026-02",
+  "phones": [
+    {
+      "id": "redmi_note_13_pro_plus",
+      "model": "Redmi Note 13 Pro+",
+      "launch_year": 2024,
+      "price": 31999,
+      "processor": "Dimensity 7200 Ultra",
+      "display": "AMOLED 120Hz",
+      "camera": "200MP",
+      "battery": "5000mAh",
+      "charging": "120W",
+      "rating": 4.5,
+      "best_for": ["camera", "design"]
+    },
+    {
+      "id": "redmi_note_13",
+      "model": "Redmi Note 13",
+      "launch_year": 2024,
+      "price": 14999,
+      "processor": "Snapdragon 685",
+      "display": "AMOLED 120Hz",
+      "camera": "108MP",
+      "battery": "5000mAh",
+      "charging": "33W",
+      "rating": 4.3,
+      "best_for": ["budget", "display"]
+    },
+    {
+      "id": "redmi_note_14_pro",
+      "model": "Redmi Note 14 Pro",
+      "launch_year": 2025,
+      "price": 32999,
+      "processor": "Snapdragon 7 Gen 3",
+      "display": "AMOLED 120Hz",
+      "camera": "200MP",
+      "battery": "5100mAh",
+      "charging": "67W",
+      "rating": 4.6,
+      "best_for": ["camera", "midrange"]
+    }
+  ]
+}

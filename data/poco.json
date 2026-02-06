@@ -1,0 +1,32 @@
+{
+  "brand": "Poco",
+  "last_updated": "2026-02",
+  "phones": [
+    {
+      "id": "poco_x6_pro",
+      "model": "Poco X6 Pro",
+      "launch_year": 2024,
+      "price": 25999,
+      "processor": "Dimensity 8300 Ultra",
+      "display": "AMOLED 120Hz",
+      "camera": "64MP",
+      "battery": "5000mAh",
+      "charging": "67W",
+      "rating": 4.6,
+      "best_for": ["gaming", "performance"]
+    },
+    {
+      "id": "poco_f6",
+      "model": "Poco F6",
+      "launch_year": 2025,
+      "price": 29999,
+      "processor": "Snapdragon 8s Gen 3",
+      "display": "AMOLED 120Hz",
+      "camera": "50MP",
+      "battery": "5000mAh",
+      "charging": "90W",
+      "rating": 4.7,
+      "best_for": ["flagship killer"]
+    }
+  ]
+}

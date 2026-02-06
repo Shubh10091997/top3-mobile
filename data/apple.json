@@ -1,0 +1,32 @@
+{
+  "brand": "Apple",
+  "last_updated": "2026-02",
+  "phones": [
+    {
+      "id": "iphone_15",
+      "model": "iPhone 15",
+      "launch_year": 2024,
+      "price": 79900,
+      "processor": "A16 Bionic",
+      "display": "6.1 inch OLED",
+      "camera": "48MP",
+      "battery": "3349mAh",
+      "charging": "20W",
+      "rating": 4.7,
+      "best_for": ["camera", "ios"]
+    },
+    {
+      "id": "iphone_16",
+      "model": "iPhone 16",
+      "launch_year": 2025,
+      "price": 84900,
+      "processor": "A18",
+      "display": "OLED",
+      "camera": "48MP",
+      "battery": "3500mAh",
+      "charging": "25W",
+      "rating": 4.8,
+      "best_for": ["ai", "longevity"]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "brand": "Realme",
+  "last_updated": "2026-02",
+  "phones": [
+    {
+      "id": "realme_12_pro_plus",
+      "model": "Realme 12 Pro+ 5G",
+      "launch_year": 2024,
+      "price": 29999,
+      "processor": "Snapdragon 7s Gen 2",
+      "display": "6.7 inch AMOLED 120Hz",
+      "camera": "50MP OIS",
+      "battery": "5000mAh",
+      "charging": "67W",
+      "rating": 4.4,
+      "best_for": ["camera", "design"]
+    },
+    {
+      "id": "realme_narzo_70_pro",
+      "model": "Narzo 70 Pro 5G",
+      "launch_year": 2024,
+      "price": 19999,
+      "processor": "Dimensity 7050",
+      "display": "6.67 inch AMOLED 120Hz",
+      "camera": "50MP OIS",
+      "battery": "5000mAh",
+      "charging": "67W",
+      "rating": 4.3,
+      "best_for": ["gaming", "value"]
+    },
+    {
+      "id": "realme_gt_6",
+      "model": "Realme GT 6",
+      "launch_year": 2025,
+      "price": 35999,
+      "processor": "Snapdragon 8s Gen 3",
+      "display": "AMOLED 120Hz",
+      "camera": "50MP",
+      "battery": "5500mAh",
+      "charging": "120W",
+      "rating": 4.6,
+      "best_for": ["performance", "fast charging"]
+    }
+  ]
+}
