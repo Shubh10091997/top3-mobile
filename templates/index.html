@@ -1614,17 +1614,16 @@
   // Initialize on page load
   setTimeout(() => updateWishlistUI(), 500);
 
-
+  // Initialize search on Enter key
   loadPhones();
-    const searchInput = document.getElementById('phoneSearch');
-    if (searchInput) {
-      searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          searchPhones();
-        }
-      });
-    }
-  });
+  const searchInput = document.getElementById('phoneSearch');
+  if (searchInput) {
+    searchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        searchPhones();
+      }
+    });
+  }
 </script>
 
 <!-- ✅ HOME PAGE INTERNAL SEO LINKS -->
