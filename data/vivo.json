@@ -13,7 +13,7 @@
       "battery": "5000mAh",
       "charging": "80W",
       "rating": 4.4,
-      "best_for": ["camera", "design"]
+      "best_for": ["selfie"]
     },
     {
       "id": "vivo_x100",
@@ -21,7 +21,7 @@
       "launch_year": 2025,
       "price": 63999,
       "processor": "Dimensity 9300",
-      "display": "AMOLED",
+      "display": "LTPO AMOLED 120Hz",
       "camera": "50MP Zeiss",
       "battery": "5000mAh",
       "charging": "120W",

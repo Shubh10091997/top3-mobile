@@ -21,12 +21,12 @@
       "launch_year": 2025,
       "price": 84900,
       "processor": "A18",
-      "display": "OLED",
+      "display": "6.1 inch OLED",
       "camera": "48MP",
       "battery": "3500mAh",
       "charging": "25W",
       "rating": 4.8,
-      "best_for": ["ai", "longevity"]
+      "best_for": ["longevity"]
     }
   ]
 }

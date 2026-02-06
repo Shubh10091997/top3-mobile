@@ -3,21 +3,21 @@
   "last_updated": "2026-02",
   "phones": [
     {
-      "id": "realme_12_pro_plus",
+      "id": "realme_12_pro_plus_5g",
       "model": "Realme 12 Pro+ 5G",
       "launch_year": 2024,
       "price": 29999,
       "processor": "Snapdragon 7s Gen 2",
-      "display": "6.7 inch AMOLED 120Hz",
-      "camera": "50MP OIS",
+      "display": "6.7 inch Curved AMOLED 120Hz",
+      "camera": "50MP + 64MP Periscope",
       "battery": "5000mAh",
       "charging": "67W",
       "rating": 4.4,
-      "best_for": ["camera", "design"]
+      "best_for": ["camera", "portrait"]
     },
     {
-      "id": "realme_narzo_70_pro",
-      "model": "Narzo 70 Pro 5G",
+      "id": "realme_narzo_70_pro_5g",
+      "model": "Realme Narzo 70 Pro 5G",
       "launch_year": 2024,
       "price": 19999,
       "processor": "Dimensity 7050",
@@ -34,8 +34,8 @@
       "launch_year": 2025,
       "price": 35999,
       "processor": "Snapdragon 8s Gen 3",
-      "display": "AMOLED 120Hz",
-      "camera": "50MP",
+      "display": "6.78 inch LTPO AMOLED 120Hz",
+      "camera": "50MP OIS",
       "battery": "5500mAh",
       "charging": "120W",
       "rating": 4.6,

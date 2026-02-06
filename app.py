@@ -538,6 +538,27 @@ def search_results():
 # =========================
 # STATIC PAGES
 # =========================
+# PHONE DETAILS PAGE
+# =========================
+@app.route("/phone/<phone_id>")
+def phone_details(phone_id):
+    """Show detailed specifications for a specific phone"""
+    data = load_data()
+    all_phones = data.get("mobiles", [])
+    
+    # Find the phone by ID
+    phone = None
+    for p in all_phones:
+        if p.get("id") == phone_id:
+            phone = p
+            break
+    
+    if not phone:
+        abort(404)
+    
+    return render_template("phone_details.html", phone=phone)
+
+# =========================
 @app.route("/about")
 def about():
     """About page"""

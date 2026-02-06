@@ -13,20 +13,7 @@
       "battery": "5000mAh",
       "charging": "120W",
       "rating": 4.5,
-      "best_for": ["camera", "design"]
-    },
-    {
-      "id": "redmi_note_13",
-      "model": "Redmi Note 13",
-      "launch_year": 2024,
-      "price": 14999,
-      "processor": "Snapdragon 685",
-      "display": "AMOLED 120Hz",
-      "camera": "108MP",
-      "battery": "5000mAh",
-      "charging": "33W",
-      "rating": 4.3,
-      "best_for": ["budget", "display"]
+      "best_for": ["camera"]
     },
     {
       "id": "redmi_note_14_pro",
@@ -39,7 +26,7 @@
       "battery": "5100mAh",
       "charging": "67W",
       "rating": 4.6,
-      "best_for": ["camera", "midrange"]
+      "best_for": ["midrange", "camera"]
     }
   ]
 }

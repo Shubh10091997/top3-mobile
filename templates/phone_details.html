@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ phone.model }} - Full Specifications | Top 3 Best Options</title>
+  <meta name="description" content="Complete specifications and details of {{ phone.model }}. Price: ₹{{ phone.price }}, {{ phone.processor }}, {{ phone.display }}.">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 20px;
+      transition: all 0.3s;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .back-button:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateX(-5px);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .phone-header {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .phone-image {
+      text-align: center;
+    }
+
+    .phone-image img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .phone-title {
+      font-size: 36px;
+      color: #1f2a44;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+
+    .phone-brand {
+      font-size: 18px;
+      color: #667eea;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .phone-price {
+      font-size: 42px;
+      color: #2e7d32;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .buy-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 16px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      text-align: center;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-amazon {
+      background: linear-gradient(90deg, #ff9f00, #ff6f00);
+      color: white;
+    }
+
+    .btn-flipkart {
+      background: linear-gradient(90deg, #3b82f6, #1e5bd8);
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .spec-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    .spec-category {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1f2a44;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #667eea;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #eef0f4;
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+
+    .spec-label {
+      font-size: 15px;
+      color: #6a7280;
+      font-weight: 600;
+    }
+
+    .spec-value {
+      font-size: 15px;
+      color: #1f2a44;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .highlight-green {
+      color: #2e7d32;
+    }
+
+    .highlight-blue {
+      color: #1976d2;
+    }
+
+    .highlight-purple {
+      color: #667eea;
+    }
+
+    .highlight-orange {
+      color: #ff6f00;
+    }
+
+    .rating-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .rating-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .rating-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .rating-item {
+      background: rgba(255,255,255,0.15);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .rating-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .rating-score {
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 768px) {
+      .phone-header {
+        grid-template-columns: 1fr;
+        padding: 25px;
+      }
+
+      .phone-title {
+        font-size: 28px;
+      }
+
+      .phone-price {
+        font-size: 32px;
+      }
+
+      .buy-buttons {
+        flex-direction: column;
+      }
+
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rating-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-button">
+      ← Back to Home
+    </a>
+
+    <!-- Phone Header -->
+    <div class="phone-header">
+      <div class="phone-image">
+        {% if phone.image %}
+          <img src="{{ phone.image }}" alt="{{ phone.model }}">
+        {% else %}
+          <img src="/static/no-image.png" alt="{{ phone.model }}">
+        {% endif %}
+      </div>
+      <div class="phone-info">
+        <div class="phone-brand">{{ phone.brand }}</div>
+        <h1 class="phone-title">{{ phone.model }}</h1>
+        <div class="phone-price">₹{{ "{:,.0f}".format(phone.price) }}</div>
+        {% if phone.reason %}
+          <p style="color: #6a7280; font-size: 16px; margin-bottom: 10px;">{{ phone.reason }}</p>
+        {% endif %}
+        <div class="buy-buttons">
+          <a href="{{ phone.amazon if phone.amazon else '#' }}" class="btn btn-amazon" target="_blank">
+            Buy on Amazon
+          </a>
+          <a href="{{ phone.flipkart if phone.flipkart else '#' }}" class="btn btn-flipkart" target="_blank">
+            Buy on Flipkart
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating Section -->
+    <div class="rating-section">
+      <div class="rating-title">⭐ Performance Ratings</div>
+      <div class="rating-grid">
+        {% if phone.gaming and phone.gaming is number %}
+        <div class="rating-item">
+          <div class="rating-label">Gaming</div>
+          <div class="rating-score">{{ phone.gaming }}<span style="font-size: 18px;">/10</span></div>
+        </div>
+        {% endif %}
+        {% if phone.camera and phone.camera is number %}
+        <div class="rating-item">
+          <div class="rating-label">Camera Quality</div>
+          <div class="rating-score">{{ phone.camera }}<span style="font-size: 18px;">/10</span></div>
+        </div>
+        {% endif %}
+        {% if phone.battery and phone.battery is number %}
+        <div class="rating-item">
+          <div class="rating-label">Battery Life</div>
+          <div class="rating-score">{{ phone.battery }}<span style="font-size: 18px;">/10</span></div>
+        </div>
+        {% endif %}
+        {% if phone.performance and phone.performance is number %}
+        <div class="rating-item">
+          <div class="rating-label">Performance</div>
+          <div class="rating-score">{{ phone.performance }}<span style="font-size: 18px;">/10</span></div>
+        </div>
+        {% endif %}
+        {% if phone.display and phone.display is number %}
+        <div class="rating-item">
+          <div class="rating-label">Display Quality</div>
+          <div class="rating-score">{{ phone.display }}<span style="font-size: 18px;">/10</span></div>
+        </div>
+        {% endif %}
+        {% if phone.rating and phone.rating is number %}
+        <div class="rating-item">
+          <div class="rating-label">Overall Rating</div>
+          <div class="rating-score">{{ phone.rating }}<span style="font-size: 18px;">/5</span></div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Specifications Grid -->
+    <div class="specs-grid">
+      <!-- Display & Design -->
+      <div class="spec-card">
+        <div class="spec-category">
+          📱 Display & Design
+        </div>
+        {% if phone.display is string or (phone.display and not (phone.display is number)) %}
+        <div class="spec-item">
+          <span class="spec-label">Display</span>
+          <span class="spec-value highlight-blue">{{ phone.display }}</span>
+        </div>
+        {% elif phone.display is mapping %}
+        <div class="spec-item">
+          <span class="spec-label">Screen Size</span>
+          <span class="spec-value highlight-blue">{{ phone.display.size }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Display Type</span>
+          <span class="spec-value">{{ phone.display.type }}</span>
+        </div>
+        {% if phone.display.refresh_rate %}
+        <div class="spec-item">
+          <span class="spec-label">Refresh Rate</span>
+          <span class="spec-value highlight-purple">{{ phone.display.refresh_rate }}</span>
+        </div>
+        {% endif %}
+        {% if phone.display.resolution %}
+        <div class="spec-item">
+          <span class="spec-label">Resolution</span>
+          <span class="spec-value">{{ phone.display.resolution }}</span>
+        </div>
+        {% endif %}
+        {% if phone.display.protection %}
+        <div class="spec-item">
+          <span class="spec-label">Protection</span>
+          <span class="spec-value">{{ phone.display.protection }}</span>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% if phone.launch_year %}
+        <div class="spec-item">
+          <span class="spec-label">Launch Year</span>
+          <span class="spec-value">{{ phone.launch_year }}</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Performance -->
+      <div class="spec-card">
+        <div class="spec-category">
+          ⚡ Performance
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Processor</span>
+          <span class="spec-value highlight-purple">{{ phone.processor if phone.processor else 'Not specified' }}</span>
+        </div>
+        {% if phone.gpu %}
+        <div class="spec-item">
+          <span class="spec-label">GPU</span>
+          <span class="spec-value">{{ phone.gpu }}</span>
+        </div>
+        {% endif %}
+        <div class="spec-item">
+          <span class="spec-label">RAM</span>
+          <span class="spec-value highlight-green">
+            {% if phone.ram is iterable and phone.ram is not string %}
+              {{ phone.ram|join(', ') }}
+            {% else %}
+              {{ phone.ram if phone.ram else 'Not specified' }}
+            {% endif %}
+          </span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Storage</span>
+          <span class="spec-value">
+            {% if phone.storage is iterable and phone.storage is not string %}
+              {{ phone.storage|join(', ') }}
+            {% else %}
+              {{ phone.storage if phone.storage else 'Not specified' }}
+            {% endif %}
+          </span>
+        </div>
+        {% if phone.expandable_storage %}
+        <div class="spec-item">
+          <span class="spec-label">Expandable Storage</span>
+          <span class="spec-value">{{ phone.expandable_storage }}</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Camera -->
+      <div class="spec-card">
+        <div class="spec-category">
+          📷 Camera
+        </div>
+        {% if phone.camera is string or (phone.camera and not (phone.camera is number and phone.camera is mapping) and not (phone.camera is mapping)) %}
+        <div class="spec-item">
+          <span class="spec-label">Main Camera</span>
+          <span class="spec-value highlight-orange">{{ phone.camera }}</span>
+        </div>
+        {% elif phone.camera is mapping and phone.camera.rear %}
+        <div class="spec-item">
+          <span class="spec-label">Main Camera</span>
+          <span class="spec-value highlight-orange">{{ phone.camera.rear.main }}</span>
+        </div>
+        {% if phone.camera.rear.ultrawide and phone.camera.rear.ultrawide != 'NA' %}
+        <div class="spec-item">
+          <span class="spec-label">Ultrawide</span>
+          <span class="spec-value">{{ phone.camera.rear.ultrawide }}</span>
+        </div>
+        {% endif %}
+        {% if phone.camera.rear.telephoto and phone.camera.rear.telephoto != 'NA' %}
+        <div class="spec-item">
+          <span class="spec-label">Telephoto</span>
+          <span class="spec-value">{{ phone.camera.rear.telephoto }}</span>
+        </div>
+        {% endif %}
+        {% if phone.camera.front %}
+        <div class="spec-item">
+          <span class="spec-label">Front Camera</span>
+          <span class="spec-value">{{ phone.camera.front }}</span>
+        </div>
+        {% endif %}
+        {% if phone.camera.rear.features %}
+        <div class="spec-item">
+          <span class="spec-label">Features</span>
+          <span class="spec-value">{{ phone.camera.rear.features|join(', ') }}</span>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% if phone.front_camera %}
+        <div class="spec-item">
+          <span class="spec-label">Front Camera</span>
+          <span class="spec-value">{{ phone.front_camera }}</span>
+        </div>
+        {% endif %}
+        {% if phone.video_recording %}
+        <div class="spec-item">
+          <span class="spec-label">Video Recording</span>
+          <span class="spec-value">{{ phone.video_recording }}</span>
+        </div>
+        {% endif %}
+        {% if phone.camera_features %}
+        <div class="spec-item">
+          <span class="spec-label">Features</span>
+          <span class="spec-value">{{ phone.camera_features }}</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Battery & Charging -->
+      <div class="spec-card">
+        <div class="spec-category">
+          🔋 Battery & Charging
+        </div>
+        {% if phone.battery is string or (phone.battery and not (phone.battery is number) and not (phone.battery is mapping)) %}
+        <div class="spec-item">
+          <span class="spec-label">Battery</span>
+          <span class="spec-value highlight-green">{{ phone.battery }}</span>
+        </div>
+        {% elif phone.battery is mapping %}
+        <div class="spec-item">
+          <span class="spec-label">Battery Capacity</span>
+          <span class="spec-value highlight-green">{{ phone.battery.capacity }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Charging</span>
+          <span class="spec-value highlight-orange">{{ phone.battery.charging }}</span>
+        </div>
+        {% endif %}
+        {% if phone.charging %}
+        <div class="spec-item">
+          <span class="spec-label">Fast Charging</span>
+          <span class="spec-value highlight-orange">{{ phone.charging }}</span>
+        </div>
+        {% endif %}
+        {% if phone.wireless_charging %}
+        <div class="spec-item">
+          <span class="spec-label">Wireless Charging</span>
+          <span class="spec-value">{{ phone.wireless_charging }}</span>
+        </div>
+        {% endif %}
+        {% if phone.battery_life %}
+        <div class="spec-item">
+          <span class="spec-label">Battery Life</span>
+          <span class="spec-value">{{ phone.battery_life }}</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Build Quality -->
+      <div class="spec-card">
+        <div class="spec-category">
+          🏗️ Build Quality
+        </div>
+        {% if phone.build is mapping %}
+        {% if phone.build.frame %}
+        <div class="spec-item">
+          <span class="spec-label">Frame Material</span>
+          <span class="spec-value">{{ phone.build.frame }}</span>
+        </div>
+        {% endif %}
+        {% if phone.build.back %}
+        <div class="spec-item">
+          <span class="spec-label">Back Material</span>
+          <span class="spec-value">{{ phone.build.back }}</span>
+        </div>
+        {% endif %}
+        {% if phone.build.water_resistance and phone.build.water_resistance != 'NA' %}
+        <div class="spec-item">
+          <span class="spec-label">Water Resistance</span>
+          <span class="spec-value highlight-green">{{ phone.build.water_resistance }}</span>
+        </div>
+        {% endif %}
+        {% endif %}
+      </div>
+
+      <!-- Connectivity -->
+      <div class="spec-card">
+        <div class="spec-category">
+          📡 Connectivity
+        </div>
+        {% if phone.connectivity is iterable and phone.connectivity is not string %}
+        <div class="spec-item">
+          <span class="spec-label">Connectivity</span>
+          <span class="spec-value highlight-blue">{{ phone.connectivity|join(', ') }}</span>
+        </div>
+        {% endif %}
+        {% if phone.network %}
+        <div class="spec-item">
+          <span class="spec-label">Network</span>
+          <span class="spec-value highlight-blue">{{ phone.network }}</span>
+        </div>
+        {% endif %}
+        {% if phone.wifi %}
+        <div class="spec-item">
+          <span class="spec-label">WiFi</span>
+          <span class="spec-value">{{ phone.wifi }}</span>
+        </div>
+        {% endif %}
+        {% if phone.bluetooth %}
+        <div class="spec-item">
+          <span class="spec-label">Bluetooth</span>
+          <span class="spec-value">{{ phone.bluetooth }}</span>
+        </div>
+        {% endif %}
+        {% if phone.usb %}
+        <div class="spec-item">
+          <span class="spec-label">USB</span>
+          <span class="spec-value">{{ phone.usb }}</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Software & Security -->
+      <div class="spec-card">
+        <div class="spec-category">
+          💻 Software & Security
+        </div>
+        {% if phone.os %}
+        <div class="spec-item">
+          <span class="spec-label">Operating System</span>
+          <span class="spec-value highlight-purple">{{ phone.os }}</span>
+        </div>
+        {% endif %}
+        {% if phone.security is iterable and phone.security is not string %}
+        <div class="spec-item">
+          <span class="spec-label">Security</span>
+          <span class="spec-value">{{ phone.security|join(', ') }}</span>
+        </div>
+        {% endif %}
+        {% if phone.fingerprint %}
+        <div class="spec-item">
+          <span class="spec-label">Fingerprint</span>
+          <span class="spec-value">{{ phone.fingerprint }}</span>
+        </div>
+        {% endif %}
+        {% if phone.nfc %}
+        <div class="spec-item">
+          <span class="spec-label">NFC</span>
+          <span class="spec-value">{{ phone.nfc }}</span>
+        </div>
+        {% endif %}
+        {% if phone.ip_rating %}
+        <div class="spec-item">
+          <span class="spec-label">IP Rating</span>
+          <span class="spec-value highlight-green">{{ phone.ip_rating }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

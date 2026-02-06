@@ -339,12 +339,16 @@
       sorted.forEach(phone => {
         const avgRating = ((phone.gaming || 5) + (phone.camera || 5) + (phone.battery || 5) + (phone.performance || 5)) / 4;
         
+        const phoneLink = phone.id ? `/phone/${phone.id}` : '#';
+        
         const card = document.createElement('div');
         card.className = 'phone-card';
         card.innerHTML = `
           <div class="phone-image">📱</div>
           <div class="phone-content">
-            <div class="phone-name">${phone.name}</div>
+            <div class="phone-name">
+              ${phone.id ? `<a href="${phoneLink}" style="color: #1f2a44; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#667eea'" onmouseout="this.style.color='#1f2a44'">${phone.name}</a>` : phone.name}
+            </div>
             ${phone.company ? `<div style="font-size: 12px; color: #6a7280; margin-bottom: 8px;">${phone.company}</div>` : ''}
             <div class="phone-price">₹${phone.price.toLocaleString()}</div>
             

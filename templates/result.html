@@ -1093,10 +1093,19 @@
           {% endif %}
         {% endif %}
 
-        <h3>#{{ loop.index }} {{ item.name }}</h3>
+        <h3>
+          #{{ loop.index }} 
+          {% if item.id %}
+            <a href="/phone/{{ item.id }}" style="color: #1f2a44; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#667eea'" onmouseout="this.style.color='#1f2a44'">
+              {{ item.name }}
+            </a>
+          {% else %}
+            {{ item.name }}
+          {% endif %}
+        </h3>
 
       {% for key, value in item.items() %}
-        {% if key not in ["name","price","reason","amazon","flipkart","badge","image"] and value is number %}
+        {% if key not in ["name","price","reason","amazon","flipkart","badge","image","launch_year","overall","rating"] and value is number %}
           <div class="spec">
             <div class="spec-label">
               <span>{{ key.capitalize() }}</span>
@@ -1163,7 +1172,16 @@
     {% for item in others %}
     <div class="other-item">
       <div class="other-item-header">
-        <span>{{ item.name }} – ₹{{ item.price }}</span>
+        <span>
+          {% if item.id %}
+            <a href="/phone/{{ item.id }}" style="color: #333; text-decoration: none; font-weight: 600; transition: color 0.3s;" onmouseover="this.style.color='#667eea'" onmouseout="this.style.color='#333'">
+              {{ item.name }}
+            </a>
+          {% else %}
+            {{ item.name }}
+          {% endif %}
+           – ₹{{ item.price }}
+        </span>
         <a href="{{ item.amazon if item.amazon else '/go/amazon' }}" target="_blank">Amazon</a>
       </div>
       <div class="other-item-rating">

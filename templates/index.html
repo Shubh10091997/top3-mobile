@@ -220,7 +220,9 @@
 
     .spec-item {
       border-left: 4px solid #667eea;
-      padding-left: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
     }
 
     .brand-row {
@@ -291,37 +293,58 @@
 </head>
 
 <body>
+  <!-- Hamburger Menu Button -->
+  <button onclick="toggleMenu()" style="position: fixed; top: 20px; left: 20px; z-index: 2000; background: rgba(102, 126, 234, 0.95); border: none; color: white; width: 45px; height: 45px; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s;" onmouseover="this.style.background='rgba(118, 75, 162, 0.95)'" onmouseout="this.style.background='rgba(102, 126, 234, 0.95)'">
+    <span style="width: 25px; height: 3px; background: white; border-radius: 2px;"></span>
+    <span style="width: 25px; height: 3px; background: white; border-radius: 2px;"></span>
+    <span style="width: 25px; height: 3px; background: white; border-radius: 2px;"></span>
+  </button>
+
+  <!-- Sidebar Menu -->
+  <div id="sidebarMenu" style="position: fixed; top: 0; left: -300px; width: 280px; height: 100vh; background: linear-gradient(180deg, #667eea 0%, #764ba2 100%); z-index: 1999; box-shadow: 4px 0 15px rgba(0,0,0,0.3); transition: left 0.3s ease; overflow-y: auto; padding: 80px 0 20px 0;">
+    <div style="padding: 0 20px;">
+      <h3 style="color: white; margin: 0 0 20px 0; font-size: 18px; font-weight: 700; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 10px;">📊 Categories</h3>
+      
+      <a href="/all-brands" style="display: block; color: white; text-decoration: none; padding: 14px 16px; margin-bottom: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); transition: all 0.3s; font-size: 15px; font-weight: 500;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+        📱 Mobiles
+      </a>
+      
+      <a href="#" style="display: block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 14px 16px; margin-bottom: 8px; border-radius: 8px; background: rgba(255,255,255,0.05); font-size: 15px; font-weight: 500;">
+        💻 Laptops <span style="font-size: 11px; opacity: 0.7;">(Coming Soon)</span>
+      </a>
+      
+      <a href="#" style="display: block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 14px 16px; margin-bottom: 8px; border-radius: 8px; background: rgba(255,255,255,0.05); font-size: 15px; font-weight: 500;">
+        🎧 Audio <span style="font-size: 11px; opacity: 0.7;">(Coming Soon)</span>
+      </a>
+      
+      <a href="#" style="display: block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 14px 16px; margin-bottom: 8px; border-radius: 8px; background: rgba(255,255,255,0.05); font-size: 15px; font-weight: 500;">
+        📺 TVs <span style="font-size: 11px; opacity: 0.7;">(Coming Soon)</span>
+      </a>
+      
+      <a href="#" style="display: block; color: rgba(255,255,255,0.6); text-decoration: none; padding: 14px 16px; margin-bottom: 8px; border-radius: 8px; background: rgba(255,255,255,0.05); font-size: 15px; font-weight: 500;">
+        ⌛ Smartwatches <span style="font-size: 11px; opacity: 0.7;">(Coming Soon)</span>
+      </a>
+      
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid rgba(255,255,255,0.3);">
+        <h3 style="color: white; margin: 0 0 15px 0; font-size: 16px; font-weight: 700;">🔗 Quick Links</h3>
+        <a href="/" style="display: block; color: white; text-decoration: none; padding: 10px 16px; margin-bottom: 4px; border-radius: 6px; transition: all 0.3s; font-size: 14px;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">🏠 Home</a>
+        <a href="/about" style="display: block; color: white; text-decoration: none; padding: 10px 16px; margin-bottom: 4px; border-radius: 6px; transition: all 0.3s; font-size: 14px;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">ℹ️ About</a>
+        <a href="/contact" style="display: block; color: white; text-decoration: none; padding: 10px 16px; margin-bottom: 4px; border-radius: 6px; transition: all 0.3s; font-size: 14px;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">📞 Contact</a>
+        <a href="/privacy-policy" style="display: block; color: white; text-decoration: none; padding: 10px 16px; margin-bottom: 4px; border-radius: 6px; transition: all 0.3s; font-size: 14px;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='transparent'">🔒 Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="menuOverlay" onclick="toggleMenu()" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 1998; display: none; transition: opacity 0.3s;"></div>
+
   <!-- Header with Wishlist Button - Top 3 Style -->
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; text-align: center; color: white;">
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px 20px 20px 75px; text-align: center; color: white;">
     <h1 style="margin: 0; font-size: 28px; font-weight: 700;">🏆 Top 3 Best Options</h1>
     <p style="margin: 8px 0 0 0; font-size: 14px; opacity: 0.9;">Compare Phones with Our Smart Features</p>
-    <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-      <a href="/" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">🏠 Home</a>
-      <a href="/about" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">ℹ️ About</a>
-      <a href="/contact" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">📞 Contact</a>
-      <a href="/privacy-policy" style="color: white; text-decoration: none; font-weight: 600; font-size: 14px;">🔒 Privacy Policy</a>
-    </div>
     <button id="signInBtn" onclick="openSignIn()" class="wishlist-header-btn" style="background: rgba(255,255,255,0.2); border: 2px solid white; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-top: 12px; transition: all 0.3s; font-size: 14px;">
       👤 Sign In
     </button>
-  </div>
-
-  <!-- Secondary Navigation Bar -->
-  <div style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px 0; position: sticky; top: 0; z-index: 100;">
-    <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 0 20px;">
-      <a href="#phones" onclick="performKBSearch(); return false;" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
-        📱 Phone Range
-      </a>
-      <a href="#compare" onclick="openComparison(); return false;" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
-        ⚖️ Compare Phones
-      </a>
-      <a href="/all-brands" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
-        🏷️ Brand-wise Phones
-      </a>
-      <a href="javascript:void(0)" onclick="showAdvancedFilters(); return false;" style="text-decoration: none; color: #667eea; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 8px; transition: all 0.3s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#f0f2ff';" onmouseout="this.style.background='transparent';">
-        🔍 Filter by Specs
-      </a>
-    </div>
   </div>
 
   <div class="buying-guide-top" id="buying-guide">
@@ -333,7 +356,9 @@
         <h4 style="color: #667eea; font-size: 18px; margin: 0 0 12px 0;">📱 How to Choose the Right Phone?</h4>
 
         <div style="margin-bottom: 14px;">
-          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">🎮 For Gaming & Heavy Use</h5>
+          <a href="/mobile/40000/gaming" style="text-decoration: none; color: #667eea; display: block; padding: 8px; margin: -8px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+            <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">🎮 For Gaming & Heavy Use</h5>
+          </a>
           <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
             <li><strong>Processor:</strong> Snapdragon 8 Gen 2/3, Dimensity 9200+, Apple A16/A17</li>
             <li><strong>RAM:</strong> 8GB minimum, 12-16GB recommended</li>
@@ -343,7 +368,9 @@
         </div>
 
         <div style="margin-bottom: 14px;">
-          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">📷 For Photography Lovers</h5>
+          <a href="/mobile/35000/camera" style="text-decoration: none; color: #667eea; display: block; padding: 8px; margin: -8px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+            <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">📷 For Photography Lovers</h5>
+          </a>
           <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
             <li><strong>Main Camera:</strong> 50MP+ with OIS</li>
             <li><strong>Sensor Size:</strong> 1/1.56" or larger for low‑light</li>
@@ -353,7 +380,9 @@
         </div>
 
         <div style="margin-bottom: 14px;">
-          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">🔋 For All‑Day Battery Life</h5>
+          <a href="/mobile/25000/battery" style="text-decoration: none; color: #667eea; display: block; padding: 8px; margin: -8px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+            <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">🔋 For All‑Day Battery Life</h5>
+          </a>
           <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
             <li><strong>Battery:</strong> 5000-6000mAh</li>
             <li><strong>Fast Charging:</strong> 33W minimum, 65W+ ideal</li>
@@ -362,7 +391,9 @@
         </div>
 
         <div style="margin-bottom: 14px;">
-          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">💼 For Business & Productivity</h5>
+          <a href="/mobile/20000/performance" style="text-decoration: none; color: #667eea; display: block; padding: 8px; margin: -8px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+            <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">💼 For Business & Productivity</h5>
+          </a>
           <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
             <li><strong>RAM:</strong> 6-8GB</li>
             <li><strong>Storage:</strong> 128GB minimum (UFS 3.1 preferred)</li>
@@ -371,7 +402,9 @@
         </div>
 
         <div>
-          <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">💰 Budget‑Friendly (Under ₹15,000)</h5>
+          <a href="/mobile/15000/overall" style="text-decoration: none; color: #667eea; display: block; padding: 8px; margin: -8px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+            <h5 style="color: #1f2a44; font-size: 15px; margin: 0 0 6px 0;">💰 Budget‑Friendly (Under ₹15,000)</h5>
+          </a>
           <ul style="color: #475467; line-height: 1.7; margin: 0 0 0 18px; font-size: 13px;">
             <li><strong>Processor:</strong> Snapdragon 680/695 or Helio G85/G99</li>
             <li><strong>RAM:</strong> 4-6GB</li>
@@ -383,30 +416,42 @@
         <div class="buying-guide-card">
           <h4 style="color: #667eea; font-size: 18px; margin: 0 0 12px 0;">🔧 Understanding Phone Specifications</h4>
           <div class="spec-grid">
-            <div class="spec-item">
-              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">💾 RAM</h5>
-              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">3-4GB basic • 6-8GB multitasking • 12GB+ heavy use</p>
-            </div>
-            <div class="spec-item">
-              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🧠 Processor</h5>
-              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">Entry: Helio G35/G85 • Mid: SD 680/695/7 Gen • Flagship: SD 8 Gen</p>
-            </div>
-            <div class="spec-item">
-              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📦 Storage</h5>
-              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">64GB minimum • 128GB recommended • 256GB+ for heavy users</p>
-            </div>
-            <div class="spec-item">
-              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📷 Camera</h5>
-              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">50MP+ with OIS preferred • Sensor size matters more than MP</p>
-            </div>
-            <div class="spec-item">
-              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🔋 Battery</h5>
-              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">4000mAh light • 5000mAh full day • 6000mAh+ heavy use</p>
-            </div>
-            <div class="spec-item">
-              <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🖥️ Display</h5>
-              <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">AMOLED preferred • 90/120Hz for smooth scrolling</p>
-            </div>
+            <a href="/mobile/20000/performance" style="text-decoration: none;">
+              <div class="spec-item" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+                <h5 style="color: #1f2a44; margin: 0 0 6px 0;">💾 RAM</h5>
+                <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">3-4GB basic • 6-8GB multitasking • 12GB+ heavy use</p>
+              </div>
+            </a>
+            <a href="/mobile/30000/performance" style="text-decoration: none;">
+              <div class="spec-item" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+                <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🧠 Processor</h5>
+                <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">Entry: Helio G35/G85 • Mid: SD 680/695/7 Gen • Flagship: SD 8 Gen</p>
+              </div>
+            </a>
+            <a href="/mobile/25000/overall" style="text-decoration: none;">
+              <div class="spec-item" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+                <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📦 Storage</h5>
+                <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">64GB minimum • 128GB recommended • 256GB+ for heavy users</p>
+              </div>
+            </a>
+            <a href="/mobile/30000/camera" style="text-decoration: none;">
+              <div class="spec-item" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+                <h5 style="color: #1f2a44; margin: 0 0 6px 0;">📷 Camera</h5>
+                <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">50MP+ with OIS preferred • Sensor size matters more than MP</p>
+              </div>
+            </a>
+            <a href="/mobile/20000/battery" style="text-decoration: none;">
+              <div class="spec-item" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+                <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🔋 Battery</h5>
+                <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">4000mAh light • 5000mAh full day • 6000mAh+ heavy use</p>
+              </div>
+            </a>
+            <a href="/mobile/25000/display" style="text-decoration: none;">
+              <div class="spec-item" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#f0f2ff'" onmouseout="this.style.background='transparent'">
+                <h5 style="color: #1f2a44; margin: 0 0 6px 0;">🖥️ Display</h5>
+                <p style="color: #475467; font-size: 13px; line-height: 1.6; margin: 0;">AMOLED preferred • 90/120Hz for smooth scrolling</p>
+              </div>
+            </a>
           </div>
         </div>
 
@@ -438,10 +483,10 @@
             <button type="submit" class="cta-button">Show Top 3</button>
           </form>
           <div class="quick-grid">
-            <div class="quick-item">5G Phones</div>
-            <div class="quick-item">Best Camera</div>
-            <div class="quick-item">Gaming Ready</div>
-            <div class="quick-item">All‑day Battery</div>
+            <a href="/mobile/25000/overall" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">5G Phones</a>
+            <a href="/mobile/30000/camera" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">Best Camera</a>
+            <a href="/mobile/35000/gaming" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">Gaming Ready</a>
+            <a href="/mobile/20000/battery" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">All‑day Battery</a>
           </div>
         </div>
       </div>
@@ -470,10 +515,19 @@
       <div id="otpMessage" style="font-size: 12px; color: #6a7280; margin-bottom: 10px;"></div>
       <div id="demoOtpRow" style="display:none; font-size: 12px; color: #667eea; margin-bottom: 14px;">Demo OTP: <span id="demoOtp"></span></div>
 
+        <!-- Logged In Section (Hidden by default) -->
+        <div id="loggedInSection" style="display: none;">
+          <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+            <p style="margin: 0 0 6px 0; color: #1f2a44; font-size: 12px; font-weight: 600;">👤 Logged In As</p>
+            <p id="loggedInPhone" style="margin: 0; color: #667eea; font-size: 14px; font-weight: 700;"></p>
+          </div>
+        </div>
+
       <div style="margin-top: 8px; padding-top: 12px; border-top: 1px solid #eef0f4;">
         <h4 style="margin: 0 0 8px 0; color: #1f2a44; font-size: 14px;">❤️ My Wishlist</h4>
         <p style="margin: 0 0 10px 0; color: #6a7280; font-size: 12px;">Access your saved phones</p>
         <button onclick="viewWishlist()" style="width: 100%; background: #ff6b6b; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">Open Wishlist</button>
+          <button onclick="logoutUser()" style="width: 100%; background: #ef4444; color: white; border: none; padding: 10px 12px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 8px;">Logout</button>
       </div>
     </div>
   </div>
@@ -489,107 +543,7 @@
       </div>
       <div id="searchResults" class="search-results"></div>
 
-      <div class="section-title">What are you looking to buy?</div>
-      <div class="buy-grid">
-        <a href="/all-brands" style="text-decoration: none; color: inherit;">
-        <div class="buy-card" style="cursor: pointer;">
-          <span class="buy-icon">📱</span>
-          <div class="buy-content">
-            <div class="buy-title">Mobiles</div>
-            <div class="buy-subtitle">{{ mobiles_count }} options available</div>
-            <ul class="buy-list">
-              {% for phone in mobiles_preview %}
-                <li>{{ phone.name }} • ₹{{ "{:,.0f}".format(phone.price) }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-        </a>
-        <div class="buy-card">
-          <span class="buy-icon">💻</span>
-          <div class="buy-content">
-            <div class="buy-title">Laptops</div>
-            <div class="buy-subtitle">Top picks coming soon</div>
-          </div>
-        </div>
-        <div class="buy-card">
-          <span class="buy-icon">📺</span>
-          <div class="buy-content">
-            <div class="buy-title">TVs</div>
-            <div class="buy-subtitle">Top picks coming soon</div>
-          </div>
-        </div>
-        <div class="buy-card">
-          <span class="buy-icon">🎧</span>
-          <div class="buy-content">
-            <div class="buy-title">Audio</div>
-            <div class="buy-subtitle">Top picks coming soon</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="spec-layout">
-    <!-- Left Side: Phone Knowledge Base -->
-    <div class="knowledge-section" id="knowledge">
-      <h3 style="font-size: 26px; color: #1f2a44; margin-bottom: 10px;">📚 Phone Knowledge Base</h3>
-      <p style="color: #6a7280; font-size: 15px; margin-bottom: 20px;">Search phones by specifications and budget</p>
-
-      <!-- Search Bar -->
-      <div class="kb-search-container">
-        <input type="text" id="kbSearch" placeholder="Search by name, brand, price..." class="kb-search-input">
-        <select id="kbSpecFilter" class="kb-filter-select">
-          <option value="">All Specifications</option>
-          <option value="gaming">🎮 Best for Gaming</option>
-          <option value="camera">📷 Best Camera</option>
-          <option value="battery">🔋 Best Battery</option>
-          <option value="performance">⚡ Best Performance</option>
-        </select>
-      </div>
-
-      <!-- Educational Info Card -->
-      <div class="education-card" id="educationCard" style="display:none;">
-        <h4 id="educationTitle"></h4>
-        <p id="educationText"></p>
-        <div class="education-points" id="educationPoints"></div>
-      </div>
-      <p style="margin: 0 0 16px 0; font-size: 13px; opacity: 0.95;">Select & compare specs</p>
-      <button onclick="document.getElementById('comparisonGuideModal').style.display='flex';" style="background: rgba(255,255,255,0.3); border: 2px solid white; color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; transition: all 0.3s;">Learn & Compare</button>
-    </div>
-  </div>
-
-      <!-- Quick Filter Cards -->
-      <div class="info-cards">
-        <div class="info-card" onclick="filterBySpec('gaming')">
-          <span class="emoji">🎮</span>
-          <h4>Gaming</h4>
-          <p>High refresh & powerful processors</p>
-        </div>
-        <div class="info-card" onclick="filterBySpec('camera')">
-          <span class="emoji">📷</span>
-          <h4>Camera</h4>
-          <p>Great photo & video quality</p>
-        </div>
-        <div class="info-card" onclick="filterBySpec('battery')">
-          <span class="emoji">🔋</span>
-          <h4>Battery</h4>
-          <p>All-day usage</p>
-        </div>
-        <div class="info-card" onclick="filterBySpec('performance')">
-          <span class="emoji">⚡</span>
-          <h4>Performance</h4>
-          <p>Smooth multitasking</p>
-        </div>
-      </div>
-
-      <!-- Results Container -->
-      <div class="kb-results" id="kbResults" style="display:none;">
-        <h4 id="kbResultsTitle">Top Recommended Phones</h4>
-        <div class="kb-phones-grid" id="kbPhonesGrid">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
 
 
       <!-- Comparison Modal -->
@@ -829,11 +783,41 @@
   let allPhones = [];
   let selectedPhones = [];
 
+  // ===== HAMBURGER MENU FUNCTIONS =====
+  function toggleMenu() {
+    const sidebar = document.getElementById('sidebarMenu');
+    const overlay = document.getElementById('menuOverlay');
+    
+    if (sidebar.style.left === '0px') {
+      sidebar.style.left = '-300px';
+      overlay.style.display = 'none';
+    } else {
+      sidebar.style.left = '0px';
+      overlay.style.display = 'block';
+    }
+  }
+
   // ===== SIGN IN FUNCTIONS =====
   function openSignIn() {
     const modal = document.getElementById('signInModal');
     if (modal) {
       modal.style.display = 'flex';
+        // Check if user is logged in and show appropriate section
+        const isLoggedIn = localStorage.getItem('otpLoggedIn') === 'true';
+        const loginSection = document.querySelector('[style*="display: flex; gap: 8px; margin: 6px 0 12px 0;"]').closest('div');
+        const loggedInSection = document.getElementById('loggedInSection');
+      
+        if (isLoggedIn) {
+          const phone = localStorage.getItem('otpPhone');
+          if (loggedInSection) {
+            document.getElementById('loggedInPhone').textContent = phone;
+            loggedInSection.style.display = 'block';
+          }
+        } else {
+          if (loggedInSection) {
+            loggedInSection.style.display = 'none';
+          }
+        }
     }
   }
 
@@ -843,6 +827,38 @@
       modal.style.display = 'none';
     }
   }
+
+    function logoutUser() {
+      localStorage.removeItem('otpLoggedIn');
+      localStorage.removeItem('otpPhone');
+      localStorage.removeItem('otpLogin');
+      showNotification('👋 Logged out successfully');
+      updateSignInUI();
+      closeSignIn();
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(102, 126, 234, 0.95);
+        color: white;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        z-index: 3000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.3s ease-out;
+      `;
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+      }, 2000);
+    }
 
   function sendOtp() {
     const phoneInput = document.getElementById('otpPhone');
@@ -902,7 +918,18 @@
     const btn = document.getElementById('signInBtn');
     const loggedIn = localStorage.getItem('otpLoggedIn') === 'true';
     if (btn) {
-      btn.textContent = loggedIn ? '👤 Signed In' : '👤 Sign In';
+        if (loggedIn) {
+          const wishlistCount = localStorage.getItem('phoneWishlist') 
+            ? JSON.parse(localStorage.getItem('phoneWishlist')).length 
+            : 0;
+          btn.textContent = wishlistCount > 0 
+            ? `❤️ Wishlist (${wishlistCount})` 
+            : '👤 Signed In';
+          btn.style.background = wishlistCount > 0 ? 'rgba(255, 107, 107, 0.3)' : 'rgba(255,255,255,0.2)';
+        } else {
+          btn.textContent = '👤 Sign In';
+          btn.style.background = 'rgba(255,255,255,0.2)';
+        }
     }
   }
 
@@ -1128,11 +1155,22 @@
   let wishlist = JSON.parse(localStorage.getItem('phoneWishlist')) || [];
 
   function toggleWishlist(phoneName) {
+      // Check if user is logged in
+      const isLoggedIn = localStorage.getItem('otpLoggedIn') === 'true';
+    
+      if (!isLoggedIn) {
+        // Show login modal if not logged in
+        openSignIn();
+        return;
+      }
+    
     const index = wishlist.indexOf(phoneName);
     if (index > -1) {
       wishlist.splice(index, 1);
+        showNotification('❌ Removed from wishlist');
     } else {
       wishlist.push(phoneName);
+        showNotification('❤️ Added to wishlist');
     }
     localStorage.setItem('phoneWishlist', JSON.stringify(wishlist));
     updateWishlistUI();

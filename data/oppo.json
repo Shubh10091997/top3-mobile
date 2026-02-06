@@ -13,7 +13,7 @@
       "battery": "5000mAh",
       "charging": "67W",
       "rating": 4.3,
-      "best_for": ["camera", "design"]
+      "best_for": ["portrait"]
     },
     {
       "id": "oppo_find_x7",
@@ -21,11 +21,11 @@
       "launch_year": 2025,
       "price": 69999,
       "processor": "Dimensity 9300",
-      "display": "AMOLED",
-      "camera": "50MP",
+      "display": "LTPO AMOLED",
+      "camera": "50MP Hasselblad",
       "battery": "5000mAh",
       "charging": "100W",
-      "rating": 4.7,
+      "rating": 4.8,
       "best_for": ["flagship"]
     }
   ]

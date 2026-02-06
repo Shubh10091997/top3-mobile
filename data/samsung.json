@@ -8,141 +8,455 @@
       "series": "S",
       "launch_year": 2025,
       "price": 134999,
+
+      "network": "5G",
+      "os": "Android 15, One UI 7",
       "processor": "Snapdragon 8 Gen 4",
+      "gpu": "Adreno 830",
+
       "ram": ["12GB", "16GB"],
       "storage": ["256GB", "512GB", "1TB"],
-      "display": "6.9 inch Dynamic AMOLED 2X 120Hz",
-      "camera": "200MP",
-      "battery": "5000mAh",
-      "charging": "45W",
+
+      "display": {
+        "size": "6.9 inch",
+        "type": "Dynamic AMOLED 2X",
+        "refresh_rate": "120Hz",
+        "resolution": "QHD+",
+        "protection": "Gorilla Glass Armor"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "200MP OIS",
+          "ultrawide": "12MP",
+          "telephoto": "50MP Periscope",
+          "features": ["8K Video", "AI Zoom", "Nightography"]
+        },
+        "front": "12MP"
+      },
+
+      "battery": {
+        "capacity": "5000mAh",
+        "charging": "45W wired, 15W wireless"
+      },
+
+      "build": {
+        "frame": "Titanium",
+        "back": "Glass",
+        "water_resistance": "IP68"
+      },
+
+      "connectivity": ["5G", "WiFi 7", "Bluetooth 5.4", "NFC", "USB-C"],
+      "security": ["Ultrasonic Fingerprint", "Face Unlock"],
+
       "rating": 4.9,
-      "best_for": ["flagship", "camera", "ai features"]
+      "best_for": ["flagship", "camera", "ai"]
     },
+
     {
       "id": "galaxy_s25_plus",
       "model": "Galaxy S25+",
       "series": "S",
       "launch_year": 2025,
       "price": 99999,
+
+      "network": "5G",
+      "os": "Android 15, One UI 7",
       "processor": "Snapdragon 8 Gen 4",
+      "gpu": "Adreno 830",
+
       "ram": ["12GB"],
       "storage": ["256GB", "512GB"],
-      "display": "6.7 inch Dynamic AMOLED 2X 120Hz",
-      "camera": "50MP",
-      "battery": "4900mAh",
-      "charging": "45W",
+
+      "display": {
+        "size": "6.7 inch",
+        "type": "Dynamic AMOLED 2X",
+        "refresh_rate": "120Hz",
+        "resolution": "QHD+",
+        "protection": "Gorilla Glass Victus 2"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "50MP OIS",
+          "ultrawide": "12MP",
+          "telephoto": "10MP",
+          "features": ["4K Video", "AI HDR"]
+        },
+        "front": "12MP"
+      },
+
+      "battery": {
+        "capacity": "4900mAh",
+        "charging": "45W wired, 15W wireless"
+      },
+
+      "build": {
+        "frame": "Aluminum",
+        "back": "Glass",
+        "water_resistance": "IP68"
+      },
+
+      "connectivity": ["5G", "WiFi 7", "Bluetooth 5.4", "USB-C"],
+      "security": ["Ultrasonic Fingerprint", "Face Unlock"],
+
       "rating": 4.7,
       "best_for": ["premium", "performance"]
     },
+
     {
       "id": "galaxy_s25",
       "model": "Galaxy S25",
       "series": "S",
       "launch_year": 2025,
       "price": 84999,
+
+      "network": "5G",
+      "os": "Android 15, One UI 7",
       "processor": "Snapdragon 8 Gen 4",
+      "gpu": "Adreno 830",
+
       "ram": ["8GB", "12GB"],
       "storage": ["128GB", "256GB"],
-      "display": "6.3 inch Dynamic AMOLED 2X 120Hz",
-      "camera": "50MP",
-      "battery": "4200mAh",
-      "charging": "25W",
+
+      "display": {
+        "size": "6.3 inch",
+        "type": "Dynamic AMOLED 2X",
+        "refresh_rate": "120Hz",
+        "resolution": "FHD+",
+        "protection": "Gorilla Glass Victus 2"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "50MP OIS",
+          "ultrawide": "12MP",
+          "telephoto": "10MP",
+          "features": ["4K Video", "AI HDR"]
+        },
+        "front": "12MP"
+      },
+
+      "battery": {
+        "capacity": "4200mAh",
+        "charging": "25W wired, 15W wireless"
+      },
+
+      "build": {
+        "frame": "Aluminum",
+        "back": "Glass",
+        "water_resistance": "IP68"
+      },
+
+      "connectivity": ["5G", "WiFi 7", "Bluetooth 5.4"],
+      "security": ["Ultrasonic Fingerprint", "Face Unlock"],
+
       "rating": 4.6,
-      "best_for": ["compact flagship", "ai"]
+      "best_for": ["compact flagship"]
     },
+
     {
       "id": "galaxy_s24_ultra",
       "model": "Galaxy S24 Ultra",
       "series": "S",
       "launch_year": 2024,
       "price": 129999,
+
+      "network": "5G",
+      "os": "Android 14, One UI 6",
       "processor": "Snapdragon 8 Gen 3",
+      "gpu": "Adreno 750",
+
       "ram": ["12GB"],
       "storage": ["256GB", "512GB", "1TB"],
-      "display": "6.8 inch Dynamic AMOLED 2X 120Hz",
-      "camera": "200MP",
-      "battery": "5000mAh",
-      "charging": "45W",
+
+      "display": {
+        "size": "6.8 inch",
+        "type": "Dynamic AMOLED 2X",
+        "refresh_rate": "120Hz",
+        "resolution": "QHD+",
+        "protection": "Gorilla Glass Armor"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "200MP OIS",
+          "ultrawide": "12MP",
+          "telephoto": "50MP Periscope",
+          "features": ["8K Video", "Night Mode"]
+        },
+        "front": "12MP"
+      },
+
+      "battery": {
+        "capacity": "5000mAh",
+        "charging": "45W wired, 15W wireless"
+      },
+
+      "build": {
+        "frame": "Titanium",
+        "back": "Glass",
+        "water_resistance": "IP68"
+      },
+
+      "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.3", "NFC", "USB-C"],
+      "security": ["Ultrasonic Fingerprint", "Face Unlock"],
+
       "rating": 4.8,
       "best_for": ["flagship", "camera"]
     },
+
     {
       "id": "galaxy_s24",
       "model": "Galaxy S24",
       "series": "S",
       "launch_year": 2024,
       "price": 79999,
+
+      "network": "5G",
+      "os": "Android 14, One UI 6",
       "processor": "Exynos 2400",
+      "gpu": "Xclipse 940",
+
       "ram": ["8GB"],
       "storage": ["128GB", "256GB"],
-      "display": "6.2 inch Dynamic AMOLED 2X 120Hz",
-      "camera": "50MP",
-      "battery": "4000mAh",
-      "charging": "25W",
+
+      "display": {
+        "size": "6.2 inch",
+        "type": "Dynamic AMOLED 2X",
+        "refresh_rate": "120Hz",
+        "resolution": "FHD+",
+        "protection": "Gorilla Glass Victus 2"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "50MP OIS",
+          "ultrawide": "12MP",
+          "telephoto": "10MP",
+          "features": ["4K Video"]
+        },
+        "front": "12MP"
+      },
+
+      "battery": {
+        "capacity": "4000mAh",
+        "charging": "25W"
+      },
+
+      "build": {
+        "frame": "Aluminum",
+        "back": "Glass",
+        "water_resistance": "IP68"
+      },
+
+      "connectivity": ["5G", "WiFi 6E", "Bluetooth 5.3", "NFC", "USB-C"],
+      "security": ["Ultrasonic Fingerprint", "Face Unlock"],
+
       "rating": 4.6,
       "best_for": ["compact", "performance"]
     },
+
     {
       "id": "galaxy_a55_5g",
       "model": "Galaxy A55 5G",
       "series": "A",
       "launch_year": 2024,
       "price": 39999,
+
+      "network": "5G",
+      "os": "Android 14, One UI 6",
       "processor": "Exynos 1480",
+      "gpu": "Xclipse GPU",
+
       "ram": ["8GB", "12GB"],
       "storage": ["128GB", "256GB"],
-      "display": "6.6 inch Super AMOLED 120Hz",
-      "camera": "50MP",
-      "battery": "5000mAh",
-      "charging": "25W",
+
+      "display": {
+        "size": "6.6 inch",
+        "type": "Super AMOLED",
+        "refresh_rate": "120Hz",
+        "resolution": "FHD+",
+        "protection": "Gorilla Glass Victus+"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "50MP OIS",
+          "ultrawide": "12MP",
+          "telephoto": "NA",
+          "features": ["4K Video"]
+        },
+        "front": "32MP"
+      },
+
+      "battery": {
+        "capacity": "5000mAh",
+        "charging": "25W"
+      },
+
+      "build": {
+        "frame": "Aluminum",
+        "back": "Glass",
+        "water_resistance": "IP67"
+      },
+
+      "connectivity": ["5G", "WiFi 6", "Bluetooth 5.3", "NFC", "USB-C"],
+      "security": ["Optical Fingerprint", "Face Unlock"],
+
       "rating": 4.4,
       "best_for": ["midrange", "camera"]
     },
+
     {
       "id": "galaxy_a35_5g",
       "model": "Galaxy A35 5G",
       "series": "A",
       "launch_year": 2024,
       "price": 30999,
+
+      "network": "5G",
+      "os": "Android 14, One UI 6",
       "processor": "Exynos 1380",
+      "gpu": "Mali-G68",
+
       "ram": ["8GB"],
       "storage": ["128GB", "256GB"],
-      "display": "6.6 inch Super AMOLED 120Hz",
-      "camera": "50MP",
-      "battery": "5000mAh",
-      "charging": "25W",
+
+      "display": {
+        "size": "6.6 inch",
+        "type": "Super AMOLED",
+        "refresh_rate": "120Hz",
+        "resolution": "FHD+",
+        "protection": "Gorilla Glass Victus+"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "50MP OIS",
+          "ultrawide": "8MP",
+          "telephoto": "NA",
+          "features": ["4K Video"]
+        },
+        "front": "13MP"
+      },
+
+      "battery": {
+        "capacity": "5000mAh",
+        "charging": "25W"
+      },
+
+      "build": {
+        "frame": "Aluminum",
+        "back": "Glass",
+        "water_resistance": "IP67"
+      },
+
+      "connectivity": ["5G", "WiFi 6", "Bluetooth 5.3", "USB-C"],
+      "security": ["Optical Fingerprint", "Face Unlock"],
+
       "rating": 4.3,
       "best_for": ["value for money"]
     },
+
     {
       "id": "galaxy_f15_5g",
       "model": "Galaxy F15 5G",
       "series": "F",
       "launch_year": 2024,
       "price": 13999,
+
+      "network": "5G",
+      "os": "Android 14, One UI Core",
       "processor": "Dimensity 6100+",
+      "gpu": "Mali-G57",
+
       "ram": ["4GB", "6GB"],
       "storage": ["128GB"],
-      "display": "6.5 inch Super AMOLED",
-      "camera": "50MP",
-      "battery": "6000mAh",
-      "charging": "25W",
+
+      "display": {
+        "size": "6.5 inch",
+        "type": "Super AMOLED",
+        "refresh_rate": "90Hz",
+        "resolution": "HD+",
+        "protection": "NA"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "50MP",
+          "ultrawide": "NA",
+          "telephoto": "NA",
+          "features": ["HDR"]
+        },
+        "front": "13MP"
+      },
+
+      "battery": {
+        "capacity": "6000mAh",
+        "charging": "25W"
+      },
+
+      "build": {
+        "frame": "Plastic",
+        "back": "Plastic",
+        "water_resistance": "NA"
+      },
+
+      "connectivity": ["5G", "WiFi 5", "Bluetooth 5.3", "USB-C"],
+      "security": ["Side Fingerprint"],
+
       "rating": 4.1,
       "best_for": ["battery", "budget 5g"]
     },
+
     {
       "id": "galaxy_m15_5g",
       "model": "Galaxy M15 5G",
       "series": "M",
       "launch_year": 2024,
       "price": 12999,
+
+      "network": "5G",
+      "os": "Android 14, One UI Core",
       "processor": "Dimensity 6100+",
+      "gpu": "Mali-G57",
+
       "ram": ["4GB", "6GB"],
       "storage": ["128GB"],
-      "display": "6.5 inch Super AMOLED",
-      "camera": "50MP",
-      "battery": "6000mAh",
-      "charging": "25W",
+
+      "display": {
+        "size": "6.5 inch",
+        "type": "Super AMOLED",
+        "refresh_rate": "90Hz",
+        "resolution": "HD+",
+        "protection": "NA"
+      },
+
+      "camera": {
+        "rear": {
+          "main": "50MP",
+          "ultrawide": "NA",
+          "telephoto": "NA",
+          "features": ["HDR"]
+        },
+        "front": "13MP"
+      },
+
+      "battery": {
+        "capacity": "6000mAh",
+        "charging": "25W"
+      },
+
+      "build": {
+        "frame": "Plastic",
+        "back": "Plastic",
+        "water_resistance": "NA"
+      },
+
+      "connectivity": ["5G", "WiFi 5", "Bluetooth 5.3", "USB-C"],
+      "security": ["Side Fingerprint"],
+
       "rating": 4.0,
       "best_for": ["battery"]
     }
