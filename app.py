@@ -130,6 +130,21 @@ def render_results(category, budget, use, db=None):
     if db is None:
         db = load_data()
     
+    import re
+    
+    def _coerce_price(value) -> int:
+        if isinstance(value, (int, float)):
+            return int(value)
+        if isinstance(value, str):
+            digits = re.findall(r"\d+", value)
+            if not digits:
+                return 0
+            try:
+                return int("".join(digits))
+            except ValueError:
+                return 0
+        return 0
+    
     category_map = {
         "mobile": "mobiles",
         "bike": "bikes",
@@ -138,7 +153,7 @@ def render_results(category, budget, use, db=None):
         "audio": "audio"
     }
     items = db.get(category_map.get(category, "mobiles"), [])
-    items = [i for i in items if i.get("price", 0) <= budget]
+    items = [i for i in items if _coerce_price(i.get("price", 0)) <= budget]
 
     if not items:
         return render_template(
