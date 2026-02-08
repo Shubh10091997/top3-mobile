@@ -84,12 +84,23 @@
     }
 
     .quick-item {
-      padding: 10px 12px;
+      padding: 11px 12px;
       border: 1px solid #eef0f4;
-      border-radius: 10px;
+      border-radius: 8px;
       font-size: 13px;
       color: #475467;
       background: #fafbff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      transition: all 0.2s ease;
+    }
+
+    .quick-item:hover {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
     }
 
     .cta-button {
@@ -361,6 +372,103 @@
     </button>
   </div>
 
+  <!-- TOP SECTIONS: Quick Search & Filter -->
+  <div class="container-wrapper">
+  <div class="page-wrap">
+    <!-- Two-Column Layout: Filter Form + AI Search -->
+    <div class="hero">
+      <!-- Left Column: Filter Form -->
+      <div class="hero-card">
+        <div class="hero-title">Let's Find the Best Option</div>
+        <div class="hero-subtitle">Choose category, budget, and use. We'll show top 3 picks.</div>
+
+        <form method="GET" action="/compare/mobile">
+          <!-- CATEGORY -->
+          <select name="category" id="category" required onchange="updateForm()">
+            <option value="">Select Category</option>
+            <option value="mobile">Mobile</option>
+            <option value="laptop">Laptop</option>
+            <option value="tv">TV</option>
+            <option value="audio">Audio</option>
+          </select>
+
+          <!-- BUDGET -->
+          <select name="budget" id="budget" required>
+            <option value="">Select Budget</option>
+          </select>
+
+          <!-- USE / PURPOSE -->
+          <select name="use" id="use" required>
+            <option value="">Select Use</option>
+          </select>
+
+          <button type="submit" class="cta-button">Show Top 3</button>
+        </form>
+        <div class="quick-grid">
+          <a href="/mobile/25000/overall" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">5G Phones</a>
+          <a href="/mobile/30000/camera" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">Best Camera</a>
+          <a href="/mobile/35000/gaming" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">Gaming Ready</a>
+          <a href="/mobile/20000/battery" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">All‑day Battery</a>
+        </div>
+      </div>
+
+      <!-- Right Column: AI Search -->
+      <div class="hero-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; flex-direction: column; gap: 0;">
+        <div style="padding-bottom: 20px; border-bottom: 2px solid rgba(255,255,255,0.2);">
+          <div class="hero-title" style="color: white; margin-bottom: 4px;">🤖 Quick Phone Search</div>
+          <div class="hero-subtitle" style="color: rgba(255,255,255,0.9); margin-bottom: 16px;">AI-Powered Recommendations</div>
+
+          <input type="text" id="phoneSearch" placeholder="e.g., gaming under 20k, best camera..." style="width: 100%; padding: 12px 14px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); color: #1f2a44; border-radius: 8px; font-size: 14px; margin-bottom: 10px; transition: all 0.3s;" onfocus="this.style.borderColor='white'; this.style.background='white'" onblur="this.style.borderColor='rgba(255,255,255,0.3)'; this.style.background='rgba(255,255,255,0.95)'">
+          
+          <button onclick="searchPhonesWithAI()" style="width: 100%; background: white; color: #667eea; border: none; padding: 12px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">🔍 Search with AI</button>
+        </div>
+
+        <!-- Recently Launched Section -->
+        <div style="padding: 16px 0; border-bottom: 2px solid rgba(255,255,255,0.2);">
+          <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 700; color: #ffd700;">⭐ Recently Launched</p>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <a href="/mobile/100000/overall" style="background: rgba(255,255,255,0.15); padding: 10px 12px; border-radius: 6px; color: white; text-decoration: none; font-size: 13px; transition: all 0.2s; border-left: 3px solid #ffd700;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+              📱 iPhone 16 Pro Max
+            </a>
+            <a href="/mobile/80000/overall" style="background: rgba(255,255,255,0.15); padding: 10px 12px; border-radius: 6px; color: white; text-decoration: none; font-size: 13px; transition: all 0.2s; border-left: 3px solid #ffd700;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+              📱 Galaxy S25 Ultra
+            </a>
+            <a href="/mobile/50000/overall" style="background: rgba(255,255,255,0.15); padding: 10px 12px; border-radius: 6px; color: white; text-decoration: none; font-size: 13px; transition: all 0.2s; border-left: 3px solid #ffd700;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">
+              📱 OnePlus 13
+            </a>
+          </div>
+        </div>
+
+        <!-- Upcoming Section -->
+        <div style="padding: 16px 0;">
+          <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 700; color: #ff6b6b;">🚀 Coming Soon</p>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: rgba(255,255,255,0.12); padding: 10px 12px; border-radius: 6px; color: rgba(255,255,255,0.9); font-size: 13px; border-left: 3px solid #ff6b6b;">
+              📱 Pixel 10 Pro (Feb 2026)
+            </div>
+            <div style="background: rgba(255,255,255,0.12); padding: 10px 12px; border-radius: 6px; color: rgba(255,255,255,0.9); font-size: 13px; border-left: 3px solid #ff6b6b;">
+              📱 Oppo Find X8 (Mar 2026)
+            </div>
+            <div style="background: rgba(255,255,255,0.12); padding: 10px 12px; border-radius: 6px; color: rgba(255,255,255,0.9); font-size: 13px; border-left: 3px solid #ff6b6b;">
+              📱 Samsung Fold 7 (Apr 2026)
+            </div>
+          </div>
+        </div>
+
+        <div id="searchResults" class="search-results" style="margin-top: 0;"></div>
+
+        <!-- Comparison Modal -->
+        <div id="comparisonModal" class="comparison-modal" style="display:none;">
+          <div class="comparison-modal-content">
+            <button onclick="closeComparison()" class="close-btn">✕</button>
+            <div class="comparison-table" id="comparisonTable"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
   <div class="buying-guide-top" id="buying-guide">
     <div class="buying-guide-grid">
       <div class="buying-guide-card">
@@ -469,40 +577,7 @@
           </div>
         </div>
 
-        <div class="hero-card">
-          <div class="hero-title">Let's Find the Best Option</div>
-          <div class="hero-subtitle">Choose category, budget, and use. We'll show top 3 picks.</div>
 
-          <form method="GET" action="/compare/mobile">
-
-        <!-- CATEGORY -->
-        <select name="category" id="category" required onchange="updateForm()">
-          <option value="">Select Category</option>
-          <option value="mobile">Mobile</option>
-          <option value="laptop">Laptop</option>
-          <option value="tv">TV</option>
-          <option value="audio">Audio</option>
-        </select>
-
-        <!-- BUDGET -->
-        <select name="budget" id="budget" required>
-          <option value="">Select Budget</option>
-        </select>
-
-        <!-- USE / PURPOSE -->
-        <select name="use" id="use" required>
-          <option value="">Select Use</option>
-        </select>
-
-            <button type="submit" class="cta-button">Show Top 3</button>
-          </form>
-          <div class="quick-grid">
-            <a href="/mobile/25000/overall" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">5G Phones</a>
-            <a href="/mobile/30000/camera" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">Best Camera</a>
-            <a href="/mobile/35000/gaming" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">Gaming Ready</a>
-            <a href="/mobile/20000/battery" class="quick-item" style="text-decoration: none; color: #475467; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#667eea'; this.style.color='#fff'" onmouseout="this.style.background='#fafbff'; this.style.color='#475467'">All‑day Battery</a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -546,34 +621,6 @@
     </div>
   </div>
 
-<div class="container-wrapper">
-<div class="page-wrap">
-  <div class="hero hero-single">
-    <div class="right-panel">
-      <h3>Quick Phone Search (AI Powered)</h3>
-      <div class="search-container">
-        <input type="text" id="phoneSearch" placeholder="e.g., gaming under 20k, best camera..." class="search-bar">
-        <button onclick="searchPhonesWithAI()" class="ai-search-btn">🤖 AI Search</button>
-      </div>
-      <div class="ai-search-hint">Describe what you're looking for, our AI finds the best match</div>
-      <div id="searchResults" class="search-results"></div>
-
-
-
-
-      <!-- Comparison Modal -->
-      <div id="comparisonModal" class="comparison-modal" style="display:none;">
-        <div class="comparison-modal-content">
-          <button onclick="closeComparison()" class="close-btn">✕</button>
-          <div class="comparison-table" id="comparisonTable"></div>
-        </div>
-      </div>
-    </div>
-
-    
-  </div>
-</div>
-
 <script>
   window.AI_API_BASE = "https://ai-phone-recommender.onrender.com";
 
@@ -583,18 +630,18 @@
   const formElement = document.querySelector("form");
 
   const mobileBudgets = [
-    { value: 5000, label: "₹5,000" },
-    { value: 8000, label: "₹8,000" },
-    { value: 10000, label: "₹10,000" },
-    { value: 12000, label: "₹12,000" },
-    { value: 15000, label: "₹15,000" },
     { value: 20000, label: "₹20,000" },
     { value: 25000, label: "₹25,000" },
     { value: 30000, label: "₹30,000" },
+    { value: 35000, label: "₹35,000" },
     { value: 40000, label: "₹40,000" },
     { value: 50000, label: "₹50,000" },
-    { value: 75000, label: "₹75,000" },
-    { value: 100000, label: "₹1,00,000" }
+    { value: 60000, label: "₹60,000" },
+    { value: 70000, label: "₹70,000" },
+    { value: 80000, label: "₹80,000" },
+    { value: 90000, label: "₹90,000" },
+    { value: 100000, label: "₹1,00,000" },
+    { value: 150000, label: "₹1,50,000" }
   ];
 
   const laptopBudgets = [

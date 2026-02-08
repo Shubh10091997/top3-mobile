@@ -20,6 +20,14 @@ BASE_URL = "https://top3pick.in"
 AMAZON_ASSOCIATE_ID = "bestofthree-21"
 
 # =========================
+# HELPER FUNCTION FOR IMAGES
+# =========================
+def get_phone_image_url(model, brand):
+    """Generate a placeholder image for each phone"""
+    safe_name = f"{brand} {model}".replace(" ", "+")
+    return f"https://via.placeholder.com/300x400?text={safe_name}"
+
+# =========================
 # DATA LOAD FUNCTIONS
 # =========================
 def load_data():
@@ -53,7 +61,6 @@ def load_data():
                                 phone["reason"] = "Great choice"
                         
                         # Add numeric ratings (1-10) for display
-                        # Use rating field if present, otherwise derive from name/specs
                         if "rating" not in phone:
                             phone["rating"] = 4.0
                         
@@ -64,9 +71,11 @@ def load_data():
                             if spec not in phone or not isinstance(phone[spec], (int, float)):
                                 phone[spec] = rating
                         
-                        # Add image if not present
+                        # Add image URL
                         if "image" not in phone or not phone.get("image"):
-                            phone["image"] = "/static/no-image.png"
+                            brand_name = phone.get("brand", brand)
+                            model_name = phone.get("model", "")
+                            phone["image"] = get_phone_image_url(model_name, brand_name)
                     
                     all_phones.extend(phones)
         except (FileNotFoundError, json.JSONDecodeError):
@@ -98,58 +107,73 @@ BUDGET_DISPLAY = {
     8000: "8k",
     10000: "10k",
     15000: "15k",
-    20000: "20k"
+    20000: "20k",
+    25000: "25k",
+    30000: "30k",
+    40000: "40k",
+    50000: "50k",
+    75000: "75k",
+    100000: "1 lakh"
 }
-
-BUDGET_REVERSE = {v: k for k, v in BUDGET_DISPLAY.items()}
 
 USE_NAMES = {
-    "overall": "Best Overall",
-    "gaming": "Best for Gaming",
-    "camera": "Best Camera",
-    "battery": "Best Battery"
+    "overall": "Overall",
+    "gaming": "Gaming",
+    "camera": "Camera",
+    "battery": "Battery",
+    "performance": "Performance",
+    "display": "Display"
 }
 
 # =========================
-# HELPERS
+# HELPER FUNCTIONS
 # =========================
+def _coerce_price(p):
+    try:
+        return int(p) if isinstance(p, (int, float, str)) else 0
+    except:
+        return 0
+
 def overall_score(item):
-    values = [v for v in item.values() if isinstance(v, (int, float)) and v != item.get("price") and v != item.get("launch_year")]
-    return round(sum(values) / len(values), 1) if values else 0
+    """Calculate overall score based on specs"""
+    try:
+        specs = [
+            item.get("gaming", 0),
+            item.get("camera", 0),
+            item.get("battery", 0),
+            item.get("performance", 0),
+            item.get("display", 0)
+        ]
+        return sum(s for s in specs if isinstance(s, (int, float))) / 5
+    except:
+        return 0
 
 def add_badges(top3):
     badges = ["Top Choice", "Best Alternative", "Good Option"]
     for i, item in enumerate(top3):
         if i < len(badges):
             item["badge"] = badges[i]
-        # Add overall score to each item
-        item["overall"] = overall_score(item)
 
-def render_results(category, budget, use, db=None):
-    """Helper function to render results page"""
-    if db is None:
-        db = load_data()
+# =========================
+# RESULTS PAGE
+# =========================
+@app.route("/compare/<category>", methods=["GET"])
+def get_results(category):
+    budget = int(request.args.get("budget", 10000))
+    use = request.args.get("use", "overall").lower()
     
-    import re
+    return render_results(category, budget, use)
+
+def render_results(category, budget, use):
+    """Render results for comparison"""
+    db = load_data()
     
-    def _coerce_price(value) -> int:
-        if isinstance(value, (int, float)):
-            return int(value)
-        if isinstance(value, str):
-            digits = re.findall(r"\d+", value)
-            if not digits:
-                return 0
-            try:
-                return int("".join(digits))
-            except ValueError:
-                return 0
-        return 0
-    
+    # Category mapping
     category_map = {
         "mobile": "mobiles",
         "bike": "bikes",
-        "laptop": "laptops",
         "tv": "tvs",
+        "laptop": "laptops",
         "audio": "audio"
     }
     items = db.get(category_map.get(category, "mobiles"), [])
@@ -166,7 +190,8 @@ def render_results(category, budget, use, db=None):
             use=use,
             BASE_URL=BASE_URL,
             breadcrumb_category=category.capitalize(),
-            breadcrumb_use=USE_NAMES.get(use, use.capitalize())
+            breadcrumb_use=USE_NAMES.get(use, use.capitalize()),
+            request=request
         )
 
     items.sort(
@@ -188,16 +213,16 @@ def render_results(category, budget, use, db=None):
         breadcrumb_use=USE_NAMES.get(use, use.capitalize()),
         BASE_URL=BASE_URL,
         seo_title=f"Top 3 Best {category.capitalize()} Under ₹{budget} for {USE_NAMES.get(use, use.capitalize())}",
-        seo_desc=f"Compare the best {category}s under ₹{budget} in India for {use}. Expert recommendations."
+        seo_desc=f"Compare the best {category}s under ₹{budget} in India for {use}. Expert recommendations.",
+        request=request
     )
 
 # =========================
-# HEALTH CHECK (for UptimeRobot/monitoring)
+# HEALTH CHECK
 # =========================
 @app.route("/health")
 def health_check():
-    """Lightweight endpoint for uptime monitoring"""
-    return {"status": "healthy", "version": "1.0"}, 200
+    return {"status": "healthy"}, 200
 
 # =========================
 # HOME PAGE
@@ -208,14 +233,10 @@ def index():
         category = request.form.get("category")
         budget = int(request.form.get("budget"))
         use = request.form.get("use")
-        
-        # Redirect to clean GET URL
         return redirect(f"/{category}/{budget}/{use}")
 
     db = load_data()
     mobiles_preview = db.get("mobiles", [])[:4]
-    
-    # Get new launch phones (those with is_new_launch flag or latest added)
     new_launch_phones = [p for p in db.get("mobiles", []) if p.get("is_new_launch", False)][:4]
 
     return render_template(
@@ -228,369 +249,39 @@ def index():
     )
 
 # =========================
-# SLUG-BASED FRIENDLY ROUTES (e.g., /best-mobiles/under-8k)
-# =========================
-@app.route("/best-<category>")
-def best_category_root(category):
-    """Route: /best-mobiles"""
-    category_map = {"mobiles": "mobile", "bikes": "bike"}
-    cat = category_map.get(category, None)
-    
-    if not cat:
-        abort(404)
-    
-    # Default to 10k budget and overall rating
-    return render_results(cat, 10000, "overall")
-
-@app.route("/best-<category>/under-<budget_slug>")
-def best_category_budget(category, budget_slug):
-    """Route: /best-mobiles/under-8k"""
-    category_map = {"mobiles": "mobile", "bikes": "bike"}
-    cat = category_map.get(category, None)
-    
-    if not cat:
-        abort(404)
-    
-    budget = BUDGET_REVERSE.get(budget_slug.lower(), None)
-    if budget is None:
-        abort(404)
-    
-    return render_results(cat, budget, "overall")
-
-@app.route("/best-<category>/under-<budget_slug>/for-<use>")
-def best_category_full(category, budget_slug, use):
-    """Route: /best-mobiles/under-8k/for-gaming"""
-    category_map = {"mobiles": "mobile", "bikes": "bike"}
-    cat = category_map.get(category, None)
-    
-    if not cat:
-        abort(404)
-    
-    budget = BUDGET_REVERSE.get(budget_slug.lower(), None)
-    if budget is None:
-        abort(404)
-    
-    if use not in ["overall", "gaming", "camera", "battery", "mileage", "performance", "comfort"]:
-        abort(404)
-    
-    return render_results(cat, budget, use)
-
-# =========================
-# LEGACY SEO-FRIENDLY URLS (numeric format)
-# =========================
-@app.route("/<category>/<int:budget>/<use>", methods=["GET"])
-def seo_page(category, budget, use):
-    if category not in ["mobile", "bike"]:
-        abort(404)
-    if use not in ["overall", "gaming", "camera", "battery"]:
-        abort(404)
-    
-    return render_results(category, budget, use)
-
-# =========================
-# QUERY PARAMETER SUPPORT (shareable URLs)
-# =========================
-@app.route("/compare/<category>")
-def compare(category):
-    """Support /compare/mobile?budget=10000&use=overall format"""
-    requested_category = request.args.get("category", "", type=str).lower()
-    if requested_category:
-        category = requested_category
-    budget = request.args.get("budget", "10000", type=int)
-    use = request.args.get("use", "overall", type=str)
-    
-    if category not in ["mobile", "bike", "laptop", "tv", "audio"]:
-        abort(404)
-    if use not in ["overall", "gaming", "camera", "battery", "performance", "display", "sound", "comfort"]:
-        abort(404)
-    
-    return render_results(category, budget, use)
-
-# =========================
-# CLICK TRACKING
-# =========================
-@app.route("/go/<platform>")
-def go(platform):
-    clicks = load_clicks()
-
-    if platform in clicks:
-        clicks[platform] += 1
-        save_clicks(clicks)
-
-    if platform == "amazon":
-        return redirect(f"https://www.amazon.in/?tag={AMAZON_ASSOCIATE_ID}")
-    elif platform == "flipkart":
-        return redirect("https://www.flipkart.com/")
-    return redirect("/")
-
-@app.route("/click-stats")
-def click_stats():
-    return load_clicks()
-
-# =========================
-# ADMIN STATS DASHBOARD
-# =========================
-@app.route("/admin/stats")
-def admin_stats():
-    clicks = load_clicks()
-    total_clicks = sum(clicks.values()) if clicks else 0
-    return render_template(
-        "admin_stats.html",
-        clicks=clicks,
-        total_clicks=total_clicks
-    )
-
-# =========================
-# ROBOTS.TXT  ✅ (MOST IMPORTANT FIX)
-# =========================
-@app.route("/robots.txt")
-def robots_txt():
-    return Response(
-        f"""User-agent: *\nAllow: /\n\nSitemap: {BASE_URL}/sitemap.xml\n""",
-        mimetype="text/plain"
-    )
-
-# =========================
-# SITEMAP.XML
-# =========================
-@app.route("/sitemap.xml")
-def sitemap():
-    db = load_data()
-    urls = set()
-    
-    # Home page
-    urls.add(f"{BASE_URL}/")
-    
-    # Category pages
-    urls.add(f"{BASE_URL}/best-mobiles")
-    urls.add(f"{BASE_URL}/best-bikes")
-    
-    # Budget slug pages
-    for slug, budget in BUDGET_REVERSE.items():
-        urls.add(f"{BASE_URL}/best-mobiles/under-{slug}")
-        urls.add(f"{BASE_URL}/best-mobiles/under-{slug}/for-overall")
-        urls.add(f"{BASE_URL}/best-mobiles/under-{slug}/for-gaming")
-        urls.add(f"{BASE_URL}/best-mobiles/under-{slug}/for-camera")
-        urls.add(f"{BASE_URL}/best-mobiles/under-{slug}/for-battery")
-    
-    # Numeric format routes (legacy support)
-    uses = ["overall", "gaming", "camera", "battery"]
-    for m in db.get("mobiles", []):
-        for use in uses:
-            urls.add(f"{BASE_URL}/mobile/{m['price']}/{use}")
-    
-    # Query parameter format
-    budgets = [8000, 10000, 15000, 20000]
-    for budget in budgets:
-        for use in uses:
-            urls.add(f"{BASE_URL}/compare/mobile?budget={budget}&use={use}")
-
-    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
-    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
-
-    for url in sorted(urls):
-        xml.append(f"<url><loc>{url}</loc></url>")
-
-    xml.append('</urlset>')
-    return Response("\n".join(xml), mimetype="application/xml")
-
-# =========================
-# API ENDPOINTS
-# =========================
-@app.route("/api/phones", methods=["GET"])
-def api_phones():
-    """API endpoint to fetch all phones for frontend knowledge base"""
-    from flask import jsonify
-    db = load_data()
-    return jsonify(db)
-
-@app.route("/api/search", methods=["GET"])
-def api_search():
-    """
-    Advanced phone search API
-    Query parameters:
-    - q: search query (name, price, specs)
-    - category: 'mobile' or 'bike'
-    - min_price: minimum price
-    - max_price: maximum price
-    - sort_by: 'price', 'rating', 'gaming', 'camera', 'battery', 'performance'
-    - limit: number of results (default: 50)
-    """
-    from flask import jsonify
-    
-    db = load_data()
-    query = request.args.get("q", "").lower()
-    category = request.args.get("category", "mobile").lower()
-    min_price = request.args.get("min_price", 0, type=int)
-    max_price = request.args.get("max_price", 500000, type=int)
-    sort_by = request.args.get("sort_by", "price")
-    limit = request.args.get("limit", 50, type=int)
-    
-    # Get the right category
-    items = db.get("mobiles" if category == "mobile" else "bikes", [])
-    
-    # Filter by price range
-    items = [item for item in items if min_price <= item.get("price", 0) <= max_price]
-    
-    # Filter by search query
-    if query:
-        filtered = []
-        for item in items:
-            item_text = f"{item.get('name', '')} {item.get('reason', '')}".lower()
-            if query in item_text or str(item.get('price', '')).startswith(query):
-                filtered.append(item)
-        items = filtered
-    
-    # Sort by criteria
-    if sort_by == "price":
-        items.sort(key=lambda x: x.get("price", 0))
-    elif sort_by == "rating":
-        items.sort(key=lambda x: overall_score(x), reverse=True)
-    elif sort_by in ["gaming", "camera", "battery", "performance", "mileage"]:
-        items.sort(key=lambda x: x.get(sort_by, 0), reverse=True)
-    
-    # Limit results
-    items = items[:limit]
-    
-    return jsonify({
-        "success": True,
-        "query": query,
-        "category": category,
-        "count": len(items),
-        "results": items
-    })
-
-@app.route("/api/phone/<name>", methods=["GET"])
-def api_phone_detail(name):
-    """Get detailed information about a specific phone"""
-    from flask import jsonify
-    
-    db = load_data()
-    
-    # Search in mobiles first, then bikes
-    for item in db.get("mobiles", []) + db.get("bikes", []):
-        if item.get("name", "").lower().replace(" ", "-") == name.lower().replace(" ", "-"):
-            return jsonify({"success": True, "phone": item})
-    
-    return jsonify({"success": False, "error": "Phone not found"}), 404
-
-@app.route("/api/add-phone", methods=["POST"])
-def api_add_phone():
-    """Add a new phone to the database via API"""
-    from flask import jsonify
-    
-    try:
-        phone = request.get_json()
-        
-        # Validate required fields
-        required_fields = ["name", "price", "reason"]
-        for field in required_fields:
-            if not phone.get(field):
-                return jsonify({"success": False, "error": f"Missing required field: {field}"}), 400
-        
-        # Set defaults for optional fields
-        if "gaming" not in phone:
-            phone["gaming"] = 5
-        if "camera" not in phone:
-            phone["camera"] = 5
-        if "battery" not in phone:
-            phone["battery"] = 5
-        if "performance" not in phone:
-            phone["performance"] = 5
-        if "display" not in phone:
-            phone["display"] = 5
-        if "image" not in phone or not phone["image"]:
-            phone["image"] = "/static/no-image.png"
-        if "amazon" not in phone:
-            phone["amazon"] = f"https://www.amazon.in/s?k={phone['name'].replace(' ', '+')}"
-        if "flipkart" not in phone:
-            phone["flipkart"] = f"https://www.flipkart.com/search?q={phone['name']}"
-        
-        # Load existing data
-        db = load_data()
-        
-        # Check if phone already exists
-        for item in db.get("mobiles", []):
-            if item.get("name", "").lower() == phone["name"].lower():
-                return jsonify({"success": False, "error": "Phone already exists in database"}), 400
-        
-        # Add phone to database
-        db["mobiles"].append(phone)
-        save_clicks(db)  # Save updated data
-        
-        # Re-read from file to ensure consistency
-        save_data = lambda data: open(os.path.join(BASE_DIR, "data", "data.json"), "w", encoding="utf-8").write(
-            json.dumps(data, indent=2, ensure_ascii=False)
-        )
-        save_data(db)
-        
-        return jsonify({"success": True, "message": f"Phone '{phone['name']}' added successfully!"})
-    
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
-
-@app.route("/admin/add-phone")
-def admin_add_phone():
-    """Admin page to add phones via web interface"""
-    return render_template("admin_add_phone.html")
-
-# =========================
-# ALL BRANDS PAGE
-# =========================
-@app.route("/all-brands")
-def all_brands():
-    """Show all mobile brands category-wise"""
-    return render_template("all_brands.html")
-
-# =========================
-# SEARCH RESULTS PAGE
-# =========================
-@app.route("/search")
-def search_results():
-    """Display formatted search results for a brand/query"""
-    return render_template("search_results.html")
-
-# =========================
-# STATIC PAGES
-# =========================
-# PHONE DETAILS PAGE
-# =========================
-@app.route("/phone/<phone_id>")
-def phone_details(phone_id):
-    """Show detailed specifications for a specific phone"""
-    data = load_data()
-    all_phones = data.get("mobiles", [])
-    
-    # Find the phone by ID
-    phone = None
-    for p in all_phones:
-        if p.get("id") == phone_id:
-            phone = p
-            break
-    
-    if not phone:
-        abort(404)
-    
-    return render_template("phone_details.html", phone=phone)
-
+# ABOUT PAGE
 # =========================
 @app.route("/about")
 def about():
-    """About page"""
     return render_template("about.html")
 
+# =========================
+# CONTACT PAGE
+# =========================
 @app.route("/contact")
 def contact():
-    """Contact page"""
     return render_template("contact.html")
 
+# =========================
+# PRIVACY POLICY
+# =========================
 @app.route("/privacy-policy")
 def privacy_policy():
-    """Privacy policy page"""
     return render_template("privacy_policy.html")
+
+# =========================
+# ERROR HANDLERS
+# =========================
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template("500.html"), 500
 
 # =========================
 # RUN APP
 # =========================
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
