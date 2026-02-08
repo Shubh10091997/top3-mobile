@@ -554,7 +554,9 @@
       <div class="search-container">
         <input type="text" id="phoneSearch" placeholder="Search by name, price, or specs..." class="search-bar">
         <button onclick="searchPhones()" class="search-btn">Search</button>
+        <button onclick="searchPhonesWithAI()" class="ai-search-btn">AI Search</button>
       </div>
+      <div class="ai-search-hint">AI search uses the separate recommender service.</div>
       <div id="searchResults" class="search-results"></div>
 
 
@@ -574,6 +576,8 @@
 </div>
 
 <script>
+  window.AI_API_BASE = "https://ai-phone-recommender.onrender.com";
+
   const categorySelect = document.getElementById("category");
   const budgetSelect = document.getElementById("budget");
   const useSelect = document.getElementById("use");
@@ -1093,6 +1097,65 @@
     });
     html += '</div>';
     resultsDiv.innerHTML = html;
+  }
+
+  async function searchPhonesWithAI() {
+    const searchInput = document.getElementById('phoneSearch');
+    const searchTerm = searchInput.value.trim();
+    const resultsDiv = document.getElementById('searchResults');
+    resultsDiv.innerHTML = '';
+
+    if (!searchTerm) {
+      resultsDiv.innerHTML = '<p class="no-results">Enter a search term for AI search</p>';
+      return;
+    }
+
+    const aiBase = window.AI_API_BASE || 'http://localhost:5001';
+    resultsDiv.innerHTML = '<p class="no-results">AI search in progress...</p>';
+
+    try {
+      const response = await fetch(`${aiBase}/api/recommend`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: searchTerm, top_k: 6 })
+      });
+
+      if (!response.ok) {
+        throw new Error('AI service error');
+      }
+
+      const data = await response.json();
+      const results = data.recommendations || [];
+
+      if (results.length === 0) {
+        resultsDiv.innerHTML = '<p class="no-results">No AI matches found. Try a different query.</p>';
+        return;
+      }
+
+      let html = '<div class="phone-grid">';
+      results.forEach(item => {
+        const price = item.price ? `₹${Number(item.price).toLocaleString()}` : 'Price N/A';
+        const bestFor = item.best_for ? item.best_for : 'General use';
+        const rating = item.rating ? item.rating : '4.0';
+        html += `
+          <div class="phone-result-card">
+            <img src="/static/no-image.png" alt="${item.model}" class="phone-thumb">
+            <h5>${item.brand} ${item.model}</h5>
+            <p class="price">${price}</p>
+            <p class="reason">${bestFor}</p>
+            <div class="specs-mini">
+              <span>⭐ ${rating}</span>
+              <span>⚙️ ${item.processor || 'Processor N/A'}</span>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      resultsDiv.innerHTML = html;
+    } catch (error) {
+      resultsDiv.innerHTML = '<p class="no-results">AI service is not available. Please try later.</p>';
+      console.error('AI search error:', error);
+    }
   }
 
   // Allow search on Enter key
@@ -1784,6 +1847,28 @@
     background: #ff5252;
   }
 
+  .ai-search-btn {
+    padding: 12px 20px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+
+  .ai-search-btn:hover {
+    background: #1d4ed8;
+  }
+
+  .ai-search-hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+  }
+
   .search-results {
     margin-top: 30px;
   }
@@ -2368,7 +2453,7 @@
       flex-direction: column;
     }
 
-    .search-bar, .search-btn {
+    .search-bar, .search-btn, .ai-search-btn {
       width: 100%;
     }
 
